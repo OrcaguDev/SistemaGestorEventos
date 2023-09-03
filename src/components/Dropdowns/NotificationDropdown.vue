@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div>
     <a
       class="text-blueGray-500 block py-1 px-3"
@@ -66,4 +66,4 @@ export default {
     },
   },
 };
-</script>
+</script> -->

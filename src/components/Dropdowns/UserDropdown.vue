@@ -2,7 +2,7 @@
   <div>
     <a
       class="text-blueGray-500 block"
-      href="#pablo"
+      href="#"
       ref="btnDropdownRef"
       v-on:click="toggleDropdown($event)"
     >
@@ -41,7 +41,7 @@
 <script>
 import { createPopper } from "@popperjs/core";
 
-import image from "@/assets/img/team-1-800x800.jpg";
+import image from "@/assets/img/logo_1.jpg";
 
 export default {
   data() {

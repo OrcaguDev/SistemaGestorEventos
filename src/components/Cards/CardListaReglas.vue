@@ -78,7 +78,6 @@
                   : 'bg-emerald-800 text-emerald-300 border-emerald-700',
               ]"
             >
-            Acciones
             </th>
           </tr>
         </thead>
@@ -112,11 +111,7 @@
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 flex justify-center"
             >
-            <button 
-            class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-2 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" 
-            type="button">
-              Seleccionar
-            </button>
+            <TableRegDropdown />
             </td>
           </tr>
         </tbody>
@@ -124,3 +119,27 @@
     </div>
   </div>
 </template>
+
+
+<script>
+import TableRegDropdown from "@/components/Dropdowns/TableRegDropdown.vue";
+
+export default {
+  data(){
+
+  },
+  components: {
+    TableRegDropdown,
+  },
+  props: {
+    color: {
+      default :"light",
+      validator: function (value) {
+        // The value must match one of these strings
+        return ["light", "dark"].indexOf(value) !== -1;
+      },
+    },
+  },
+};
+
+</script>

@@ -2,7 +2,7 @@
   <div>
     <a
       class="text-blueGray-500 py-1 px-3"
-      href="#pablo"
+      href="#"
       ref="btnDropdownRef"
       v-on:click="toggleDropdown($event)"
     >
@@ -20,19 +20,19 @@
         href="javascript:void(0);"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
       >
-        Action
+        Eliminar
       </a>
       <a
         href="javascript:void(0);"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
       >
-        Another action
+        Editar
       </a>
       <a
-        href="javascript:void(0);"
+        href="/inscripciones/inscripcion"
         class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
       >
-        Something else here
+        Inscripciones
       </a>
     </div>
   </div>

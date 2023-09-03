@@ -38,7 +38,7 @@
                   : 'bg-emerald-800 text-emerald-300 border-emerald-700',
               ]"
             >
-              PERSONA
+              TITULO
             </th>
             <th
               class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
@@ -136,25 +136,18 @@
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 flex justify-center"
             >
-            <button 
-            class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" 
-            type="button">
-              <i class="fas fa-trash"></i>
-            </button>
-            <button 
-            class="bg-yellow-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" 
-            type="button">
-              <i class="fas fa-edit"></i>
-            </button>
+            <table-dropdown />
             </td>
           </tr>
         </tbody>
       </table>
     </div>
+
   </div>
 </template>
 <script>
 import axios from 'axios';
+import TableDropdown from "@/components/Dropdowns/TableDropdown.vue";
 
 
 export default {
@@ -163,11 +156,12 @@ export default {
       eventos:[],
       apii:{
         api_token:''
-      }
+      },
+      showModal:false
     };
   },
   components: {
-    // TableDropdown,
+    TableDropdown,
   },
   props: {
     color: {
