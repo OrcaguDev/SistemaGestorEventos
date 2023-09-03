@@ -17,30 +17,53 @@
         }"
       >
         <a
-          href="javascript:void(0);"
+          href="#"
+          v-on:click="toggleModal()"
           class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
         >
           Eliminar
         </a>
         <a
-          href="javascript:void(0);"
+          href="#"
           class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
         >
           Editar
         </a>
       </div>
+
+
+  <!--Modal-->
+
+  <div v-if="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+      <div class="relative w-auto my-6 mx-auto max-w-sm">
+        <!--content-->
+        <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+          
+        </div>
+      </div>
     </div>
+    <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+
+
+    </div>
+
   </template>
   <script>
   import { createPopper } from "@popperjs/core";
   
   export default {
+    name: "small-modal",
     data() {
       return {
         dropdownPopoverShow: false,
+        showModal: false,
       };
     },
     methods: {
+        toggleModal: function () {
+            this.showModal = !this.showModal;
+        },
+
       toggleDropdown: function (event) {
         event.preventDefault();
         if (this.dropdownPopoverShow) {
