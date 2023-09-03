@@ -25,11 +25,6 @@ import Evento from "@/views/admin/Evento.vue";
 
 import Login from "@/views/Login.vue";
 
-// views without layouts
-
-import Landing from "@/views/Landing.vue";
-
-
 //views for Reglas
 
 import RegistrarReglas from "@/views/admin/reglas/RegistrarRegla.vue";
@@ -38,6 +33,7 @@ import ListaRegla from "@/views/admin/reglas/ListaRegla.vue";
 //views for Inscripcion
 
 import Inscripcion from "@/views/inscripciones/Inscripcion.vue";
+import Pruebas from "@/views/inscripciones/Pruebas.vue";
 
 // routes
 
@@ -81,13 +77,14 @@ const routes = [
       },
     ],
   },
-  {
-    path: "/landing",
-    component: Landing,
-  },
+  
   {
     path: "/inscripciones/inscripcion",
     component: Inscripcion,
+  },
+  {
+    path: "/inscripciones/pruebas",
+    component: Pruebas,
   },
   { path: "/:pathMatch(.*)*", redirect: "/" },
 ];

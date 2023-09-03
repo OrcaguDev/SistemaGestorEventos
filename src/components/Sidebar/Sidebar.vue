@@ -229,7 +229,7 @@
         <h6
           class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
         >
-          Inscripciones
+          Sand Box
         </h6>
         <!-- Navigation -->
 
@@ -237,10 +237,10 @@
           <li class="items-center">
             <router-link
               class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-              to="/inscripciones/inscripcion"
+              to="/inscripciones/pruebas"
             >
               <i class="fas fa-fingerprint text-blueGray-300 mr-2 text-sm"></i>
-              Registrar Inscripción
+              Pruebas
             </router-link>
           </li>
         </ul>
