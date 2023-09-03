@@ -139,7 +139,12 @@
             <button 
             class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" 
             type="button">
-              Seleccionar
+              <i class="fas fa-trash"></i>
+            </button>
+            <button 
+            class="bg-yellow-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" 
+            type="button">
+              <i class="fas fa-edit"></i>
             </button>
             </td>
           </tr>
