@@ -165,6 +165,9 @@
               >
                 Imagen
               </label>
+              <span
+              class="block text-blueGray-600 text-xs font-bold mb-2">
+              (Ingresar imagen de extensión .jpg/.png , de tamaño 800x800)</span>
               <input
                 type="file"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
@@ -180,6 +183,9 @@
               >
                 Informe
               </label>
+              <span
+              class="block text-blueGray-600 text-xs font-bold mb-2">
+              (Ingresar brochure e informa del evento )</span>
               <input
                 type="file"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"

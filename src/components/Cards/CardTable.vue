@@ -144,11 +144,15 @@
               <i class="fas fa-edit"></i>
             </button>
 
+            <!-- Boton de inscripcion -->
+            <router-link to="/inscripciones/inscripcion" target="_blank">
             <button class="bg-emerald-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" 
             type="button"
             >
-              <router-link to="/inscripciones/inscripcion"><i class="fas fa-id-card"></i></router-link>
+            <i class="fas fa-id-card"></i>
             </button>
+            </router-link>
+
             </td>
           </tr>
         </tbody>

@@ -9,9 +9,9 @@
       class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0"
       v-if="showModal"
     >
-      <div class="rounded-t bg-white mb-0 px-6 py-6">
+      <div class="rounded-t bg-blueGray-200 mb-0 px-6 py-6">
         <div class="text-center flex justify-between">
-          <h6 class="text-blueGray-700 text-xl font-bold">Registro de Reglas</h6>
+          <h6 class="text-blueGray-700 text-xl font-bold">Editar Reglas</h6>
         </div>
       </div>
       <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
