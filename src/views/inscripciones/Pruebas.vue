@@ -1,16 +1,16 @@
 <template>
     <div class="flex flex-wrap">
       <div class="w-full lg:w-10/12 px-4">
-        <CardPruebas />
+        <CardEditRegla />
       </div>
     </div>
   </template>
   <script>
-  import CardPruebas from "@/components/Cards/CardPruebas.vue";
+  import CardEditRegla from "@/components/Cards/CardEditRegla.vue";
 
   export default {
     components: {
-      CardPruebas,
+      CardEditRegla,
 },
   };
   </script>

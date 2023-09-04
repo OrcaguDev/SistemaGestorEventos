@@ -1,6 +1,13 @@
 <template>
+    <div class="container px-4 mx-auto mt-6">
+        <button class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" 
+        type="button" 
+        v-on:click="toggleModal()">
+            Open small modal
+        </button>
     <div
-      class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0"
+      class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0"
+      v-if="showModal"
     >
       <div class="rounded-t bg-white mb-0 px-6 py-6">
         <div class="text-center flex justify-between">
@@ -62,18 +69,47 @@
           </div>
   
           <hr class="mt-6 border-b-1 border-blueGray-300" />
-  
-          <div>
+          <div class="flex flex-wrap">
+            <div class="flex-auto lg:px-10 pt-0">
             <button
-                class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                type="submit"
+                class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-4 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-6/12 ease-linear transition-all duration-150"
+                type="button"
+                v-on:click="toggleModal()"
             >
-                Registrar Regla
+                Guardar
             </button>
+            </div>
+            <div class="flex-auto lg:px-10 pt-0">
+            <button
+                class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-4 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-6/12   ease-linear transition-all duration-150"
+                type="button"
+                v-on:click="toggleModal()"
+            >
+                Cancelar
+            </button>
+            </div>
         </div>
-
         </form>
       </div>
+      <div v-if="showModal" class="bg-red-500"></div>
     </div>
-    
+</div>
   </template> 
+
+
+<script>
+export default{
+    name: "small-modal",
+    data(){
+        return {
+            showModal: false
+        }
+    },
+    methods: {
+        toggleModal: function(){
+            this.showModal = !this.showModal;
+        }
+    }
+}
+
+</script>
