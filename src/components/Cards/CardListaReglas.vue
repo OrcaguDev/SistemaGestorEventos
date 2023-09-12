@@ -112,8 +112,10 @@
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 flex justify-center"
             >
-            <button class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" 
+            <button 
+            class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" 
             type="button"
+            v-on:click = "Confirmacion()"
             >
               <i class="fas fa-trash"></i>
             </button>
@@ -137,18 +139,33 @@
 
 
 <script>
-
+import 'sweetalert2/dist/sweetalert2.min.css';
 export default {
-  name: "small-modal",
   data(){
         return {
-            showModal: false
+            Eliminar: false,
         }
     },
   methods: {
-        toggleModal: function(){
-            this.showModal = !this.showModal;
+        Confirmar(){
+          this.Swal.fire({
+            title: '¿Deseas Eliminar?',
+            text: "No podrás recuperar la información",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, Acepto'
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    this.Swal.fire(
+                      'Eliminar',
+                      'Ha sido eliminado correctamente',
+                      'success'
+          )
         }
+      })
+  }
   },
 
 

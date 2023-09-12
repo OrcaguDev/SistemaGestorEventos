@@ -1,16 +1,16 @@
 <template>
   <div class="flex flex-wrap">
     <div class="w-full lg:w-10/12 px-4">
-      <CardEditEvento />
+      <CardTimeLine />
     </div>
   </div>
 </template>
 <script>
-import CardEditEvento from "@/components/Cards/CardEditEvento.vue";
+import CardTimeLine from "@/components/Cards/CardTimeLine.vue";
 
 export default {
   components: {
-  CardEditEvento,
+  CardTimeLine,
 },
 };
 </script>
