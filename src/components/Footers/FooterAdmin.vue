@@ -11,7 +11,7 @@
           >
             Copyright © {{ date }}
             <a
-              href=""
+              href="https://www.creative-tim.com?ref=vn-footer-admin"
               class="text-blueGray-500 hover:text-blueGray-700 text-sm font-semibold py-1"
             >
               Colegio de Ingenieros del Perú

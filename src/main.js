@@ -25,10 +25,6 @@ import Evento from "@/views/admin/Evento.vue";
 
 import Login from "@/views/Login.vue";
 
-// views for edit
-import editEvent from "@/views/admin/editar/EditEvento.vue";
-import editReglas from "@/views/admin/editar/EditRegla.vue";
-
 //views for Reglas
 
 import RegistrarReglas from "@/views/admin/reglas/RegistrarRegla.vue";
@@ -79,14 +75,6 @@ const routes = [
         path: "/admin/reglas/listaRegla",
         component: ListaRegla,
       },
-      {
-        path: "/admin/editar/editEvento",
-        component: editEvent,
-      },
-      {
-        path: "/admin/editar/editReglas",
-        component: editReglas,
-      }
     ],
   },
   
