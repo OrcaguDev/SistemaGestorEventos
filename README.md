@@ -1,1 +1,1 @@
-Hola :v
+Sistema de Gestión de Eventos para el Colegio de Ingenieros de La Libertad - Trujillo
