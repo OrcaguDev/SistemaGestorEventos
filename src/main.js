@@ -2,6 +2,7 @@ import { createApp } from "vue";
 import { createWebHistory, createRouter } from "vue-router";
 import '../node_modules/timeline-vuejs/dist/timeline-vuejs.css'
 
+
 // styles
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
