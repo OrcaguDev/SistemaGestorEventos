@@ -12,47 +12,47 @@ export default {
     VueHorizontalTimeline,
   },
   data() {
-    const example1 = {
-      title: "Etapa 1",
+    const etapa1 = {
+      title: "Registro de Evento",
+      content: "Lunes 18/08/2023 07:00 ",
+    };
+    const etapa2 = {
+      title: "Inscripciones",
+      content: "Lunes 18/08/2023 12:00 (x) personas",
+    };
+    const etapa3 = {
+      title: "",
       content: "Lugar / Fecha",
     };
-    const example2 = {
-      title: "Etapa 2",
-      content: "Lugar / Fecha",
-    };
-    const example3 = {
-      title: "Etapa 3",
-      content: "Lugar / Fecha",
-    };
-    const example4 = {
+    const etapa4 = {
       title: "Etapa 4",
       content: "Lugar / Fecha",
     };
-    const example5 = {
+    const etapa5 = {
       title: "Etapa 5",
       content: "Lugar / Fecha",
     };
-    const example6 = {
+    const etapa6 = {
       title: "Etapa 6",
       content: "Lugar / Fecha",
     };
-    const example7 = {
+    const etapa7 = {
       title: "Etapa 7",
       content: "Lugar / Fecha",
     };
-    const example8 = {
+    const etapa8 = {
       title: "Etapa 8",
       content: "Lugar / Fecha",
     };
-    const example9 = {
+    const etapa9 = {
       title: "Etapa 9",
       content: "Lugar / Fecha",
     };
-    const example10 = {
+    const etapa10 = {
       title: "Etapa 10",
       content: "Lugar / Fecha",
     };
-    const items = [example1, example2, example3, example4, example5, example6, example7, example8, example9, example10];
+    const items = [etapa1, etapa2, etapa3, etapa4, etapa5, etapa6, etapa7, etapa8, etapa9, etapa10];
     return { items };
   },
 };

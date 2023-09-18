@@ -4,7 +4,7 @@
       <div>
 
         <div class="flex flex-wrap">
-          <!-- <div class="w-full lg:w-6/12 xl:w-4/12 px-4">
+          <div class="w-full lg:w-6/12 xl:w-4/12 px-4">
             <card-stats
               statSubtitle="constancias"
               statTitle="350,897"
@@ -39,7 +39,7 @@
               statIconName="fas fa-users"
               statIconColor="bg-pink-500"
             />
-          </div> -->
+          </div>
         </div>
       </div>
     </div>
@@ -47,11 +47,11 @@
 </template>
 
 <script>
-// import CardStats from "@/components/Cards/CardStats.vue";
+import CardStats from "@/components/Cards/CardStats.vue";
 
 export default {
   components: {
-    // CardStats,
+    CardStats,
   },
 };
 </script>
