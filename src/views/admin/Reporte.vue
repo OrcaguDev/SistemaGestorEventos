@@ -4,17 +4,17 @@
       <div
         class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded"
       >
-        <map-example />
+        <CardReporte />
       </div>
     </div>
   </div>
 </template>
 <script>
-import MapExample from "@/components/Maps/MapExample.vue";
+import CardReporte from "@/components/Cards/CardReporte.vue";
 
 export default {
   components: {
-    MapExample,
+    CardReporte,
   },
 };
 </script>

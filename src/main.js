@@ -21,7 +21,7 @@ import Admin from "@/layouts/Admin.vue";
 import Dashboard from "@/views/admin/Dashboard.vue";
 import Settings from "@/views/admin/Settings.vue";
 import ListarEvento from "@/views/admin/Tables.vue";
-import Maps from "@/views/admin/Maps.vue";
+import Reporte from "@/views/admin/Reporte.vue";
 import Evento from "@/views/admin/Evento.vue";
 // views for Auth layout
 
@@ -39,6 +39,7 @@ import ListaRegla from "@/views/admin/reglas/ListaRegla.vue";
 //views for Inscripcion
 
 import Inscripcion from "@/views/inscripciones/Inscripcion.vue";
+import detalleEvento from "@/views/admin/DetalleEvento.vue";
 import Pruebas from "@/views/inscripciones/Pruebas.vue";
 
 // routes
@@ -66,8 +67,8 @@ const routes = [
         component: ListarEvento,
       },
       {
-        path: "/admin/maps",
-        component: Maps,
+        path: "/admin/reporte",
+        component: Reporte,
       },
       {
         path: "/admin/evento",
@@ -88,6 +89,10 @@ const routes = [
       {
         path: "/admin/editar/editReglas",
         component: editReglas,
+      },
+      {
+        path: "/admin/detalleEvento",
+        component: detalleEvento,
       }
     ],
   },
