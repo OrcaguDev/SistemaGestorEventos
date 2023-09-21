@@ -41,6 +41,7 @@ import ListaRegla from "@/views/admin/reglas/ListaRegla.vue";
 import Inscripcion from "@/views/inscripciones/Inscripcion.vue";
 import detalleEvento from "@/views/admin/DetalleEvento.vue";
 import Pruebas from "@/views/inscripciones/Pruebas.vue";
+import timeLine from "@/views/admin/TimeLine.vue";
 
 // routes
 
@@ -93,6 +94,10 @@ const routes = [
       {
         path: "/admin/detalleEvento",
         component: detalleEvento,
+      },
+      {
+        path: "/admin/timeLine",
+        component: timeLine,
       }
     ],
   },

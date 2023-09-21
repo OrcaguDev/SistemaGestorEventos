@@ -42,7 +42,7 @@ export default {
           ],
           datasets: [
             {
-              label: new Date().getFullYear(),
+              label: "Eventos",
               backgroundColor: "#E54C2B",
               borderColor: "#E54C2B",
               data: [30, 78, 56, 34, 100, 45, 13, 34, 24, 12, 43, 12],
@@ -50,7 +50,7 @@ export default {
               barThickness: 8,
             },
             {
-              label: new Date().getFullYear() - 1,
+              label: "Constancias",
               fill: false,
               backgroundColor: "#202020",
               borderColor: "#202020",
