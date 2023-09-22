@@ -48,10 +48,53 @@
 
 <script>
 import CardStats from "@/components/Cards/CardStats.vue";
+import axios from 'axios';
+
 
 export default {
   components: {
     CardStats,
   },
+  data(){
+    return{
+      constancias: 0,
+      eventos: 0,
+      usuarios: 0,
+    };
+  },
+  mounted(){
+    this.getConstancias();
+    this.getEventos();
+    this.getUsuarios();
+  },
+  methods: {
+    getConstancias(){
+      axios.get('http://localhost:3000/constancias')
+      .then(response => {
+        this.constancias = response.data.length;
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    },
+    getEventos(){
+      axios.get('http://localhost:3000/eventos')
+      .then(response => {
+        this.eventos = response.data.length;
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    },
+    getUsuarios(){
+      axios.get('http://localhost:3000/usuarios')
+      .then(response => {
+        this.usuarios = response.data.length;
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    },
+  }
 };
 </script>
