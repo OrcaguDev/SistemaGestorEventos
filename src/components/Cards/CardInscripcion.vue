@@ -101,7 +101,9 @@
                   Buscar Participante por DNI / Cod. CIP
                 </label>
                 <input type="text"
-                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  v-model="inscripcion.dni"
+                  >
               </div>
             </div>
 
@@ -124,8 +126,9 @@
                 <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
                   Nombre
                 </label>
-                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                  Nombre (variable de la bd)
+                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password"
+                >
+                <!-- {{ item.nombre }} -->
                 </label>
               </div>
             </div>
@@ -136,7 +139,7 @@
                   Apellidos
                 </label>
                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                  Apellidos (variable de la bd)
+                  <!-- {{ item.apellido }} -->
                 </label>
               </div>
             </div>
@@ -147,7 +150,7 @@
                   Telefono
                 </label>
                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                  Nro de Celular
+                  <!-- {{ item.telefono }} -->
                 </label>
               </div>
             </div>
@@ -155,10 +158,10 @@
             <div class="w-full lg:w-3/12 px-4">
               <div class="relative w-full mb-3">
                 <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
-                  Registro para Certificación
+                  Codigo
                 </label>
                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                  <input type="checkbox"> Sí, deseo certificación.
+                  <!-- {{ item.codigo }} -->
                 </label>
               </div>
             </div>
@@ -167,12 +170,15 @@
 
           <hr class="mt-6 mb-4 border-b-1 border-blueGray-300" />
 
+
+          <!-- Habilitar despues de validar sus datos con el DNI -->
+        <div hidden>
           <div class="flex flex-wrap">
 
             <div class="w-full lg:w-6/12 px-4">
               <div class="relative w-full mb-3">
                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                  Verificar si se cumple lo requerido para el evento. (Ingrese DNI/CIP)
+                  Verificar si se cumple lo requerido para el evento. (Ingrese CODIGO)
                 </label>
                 <input type="text"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
@@ -188,12 +194,30 @@
             </div>
 
           </div>
+        </div>
 
           <hr class="mt-6 mb-4 border-b-1 border-blueGray-300" />
 
 
-          <div>
-            <button disabled 
+          <!-- Despues de validar los datos de los inputs de arriba, mostrar este div para concluir con la inscripcion -->
+          <div hidden>
+
+            <div class="w-full lg:w-3/12 px-4">
+              <div class="relative w-full mb-3">
+                <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
+                  ¿Desea solicitar un certificado?
+                </label>
+                <input
+                type="checkbox"
+                value=""
+                />
+                <label class="uppercase text-blueGray-600 text-xs font-bold mb-2">
+                  Si
+                </label><br>
+              </div>
+            </div>
+
+            <button  
               class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
               type="submit">
               Inscribirse
@@ -204,39 +228,30 @@
     </div>
   </div>
 </template>
-<!-- <script>
-    import axios from 'axios'
-    export default {
-        data(){
-            return{
-                evento:{
-                    nombre:'',
-                    expositor:'',
-                    lugar:'',
-                    fecha:'',
-                    descripcion:'',
-                    aforo_tot:'',
-                    aforo_dis:'',
-                    fecha_fin:'',
-                    api_token:''
-                },
-               
-            }
-        },
-        methods:{
-          storeEvento(){
-            let objetoString = localStorage.getItem("token");
-            let objeto = JSON.parse(objetoString);
-            this.evento.api_token=objeto;
-            const auth = {
-                  headers: {'Content-Type': 'application/json'} 
-                }
-                console.log(this.evento.fecha)
-                axios.post('http://localhost:8000/storeEvento',this.evento,auth).then(({data}) => {
-                  console.log(data);
-                  this.$router.push('/admin/tables');
-                });
-          }
-        }
-    }
-</script> -->
+
+
+<script>
+export default {
+  data() {
+    return {
+      inscripcion: {
+        dni: '',
+        // nombre: '',
+        apellido: '',
+        telefono: '',
+        certificacion: false,
+      },
+    };
+  },
+  methods: {
+    async validarDni() {
+      const url = `https://dniruc.apisperu.com/api/v1/dni/${this.inscripcion.dni}?token=token`; //RUTA DEL API
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log(data);
+      this.inscripcion.nombre = data.nombres;
+      this.inscripcion.apellido = data.apellidoPaterno + ' ' + data.apellidoMaterno;
+    },
+  },
+};
+</script>
