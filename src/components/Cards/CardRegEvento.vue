@@ -48,7 +48,7 @@
               </label>
               <input type="datetime-local"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="evento.fecha" />
+                v-model="evento.fechaInicio" />
             </div>
           </div>
 
@@ -79,22 +79,21 @@
               </label>
               <input type="datetime-local"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="evento.fecha" />
+                v-model="evento.fechaInscripcion" />
             </div>
           </div>
 
-          <div class="w-full lg:w-3/12 px-4">
-          </div>
-
-          <div class="w-full lg:w-6/12 px-4 ">
+          <div class="w-full lg:w-9/12 px-4 ">
             <div class="relative w-full mb-3">
               <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
                 Reglas para el evento
               </label>
 
-              <select v-for="option in options" :key="option.id" :value="option.id"
-                class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150">
-                {{ option.nombre }}
+              <select v-model="evento.id_regla" @change="reglaChange()" class=" text-blueGray-600 text-sm uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150">
+                <option value="0" selected>Seleccione una regla</option>
+                <option v-for="(regla, index) in reglas" :key="index" :value="regla.id_regla">
+                  {{ regla.id_regla }} {{ regla.nombre }}
+                </option>                
               </select>
 
 
@@ -132,7 +131,7 @@
               </label>
               <input type="number"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="evento.aforo_tot" />
+                v-model="evento.aforo_total" />
             </div>
           </div>
           <div class="w-full lg:w-4/12 px-4">
@@ -142,7 +141,7 @@
               </label>
               <input type="number"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="evento.aforo_dis" />
+                v-model="evento.butacas_reservadas" />
             </div>
           </div>
           <div class="w-full lg:w-4/12 px-4">
@@ -152,7 +151,7 @@
               </label>
               <input type="datetime-local"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="evento.fecha_fin" />
+                v-model="evento.fechaFin" />
             </div>
           </div>
         </div>
@@ -171,7 +170,7 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
+import axios from 'axios';
 export default {
   data() {
     return {
@@ -179,12 +178,18 @@ export default {
         nombre: '',
         expositor: '',
         lugar: '',
-        fecha: '',
+        fechaInscripcion: '',
+        fechaInicio: '',
         descripcion: '',
-        aforo_tot: '',
-        aforo_dis: '',
-        fecha_fin: '',
-        api_token: ''
+        aforo_total: '',
+        butacas_reservadas: '',
+        fechaFin: '',
+        api_token: '',
+        id_regla: 0
+      },
+      reglas:[],
+      apii:{
+        api_token:''
       },
 
     }
@@ -198,11 +203,32 @@ export default {
         headers: { 'Content-Type': 'application/json' }
       }
       console.log(this.evento.fecha)
-      axios.post('http://localhost:8000/storeEvento', this.evento, auth).then(({ data }) => {
-        console.log(data);
+      axios.post('http://localhost:8000/storeEvento', this.evento, auth).then(() => {
+        // console.log(data);
         this.$router.push('/admin/tables');
       });
+    },
+    reglaChange(){
+     
+      console.log(this.evento.id_regla);
+    },
+    getReglas(){
+      let objetoString = localStorage.getItem("token");
+      let objeto = JSON.parse(objetoString);
+      this.apii.api_token=objeto;
+      const auth = {
+        headers: {'Content-Type': 'application/json'} 
+      }
+      axios.post('http://localhost:8000/reglas',this.apii,auth).then(({data}) => {
+          this.reglas = data;
+          console.log(this.reglas);
+      }).catch((error) => {
+          console.log(error);
+      });
     }
+  },
+  created(){
+    this.getReglas();
   }
 }
 </script>

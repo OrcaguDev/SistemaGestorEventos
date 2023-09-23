@@ -24,7 +24,7 @@
                 <input
                   type="text"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                 
+                 v-model="evento.nombre"
                 />
               </div>
             </div>
@@ -39,7 +39,7 @@
                 <input
                   type="text"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                
+                  v-model="evento.expositor"
                 />
               </div>
             </div>
@@ -54,7 +54,7 @@
                 <input
                   type="text"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  
+                  v-model="evento.lugar"
                 />
               </div>
             </div>
@@ -69,8 +69,7 @@
                 <input
                   type="datetime-local"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          
-                  
+                  v-model="evento.fechaInicio"
                 />
               </div>
             </div>
@@ -86,7 +85,7 @@
                 <textarea
                   type="text"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  
+                  v-model="evento.descripcion"
                 >
                 </textarea>
               </div>
@@ -111,8 +110,7 @@
                 <input
                   type="datetime-local"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-          
-                  
+                  v-model="evento.fechaInscripcion"
                 />
               </div>
             </div>
@@ -204,7 +202,7 @@
                 <input
                   type="number"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  
+                  v-model="evento.aforo_total"
                 />
               </div>
             </div>
@@ -219,7 +217,7 @@
                 <input
                   type="number"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  
+                  v-model="evento.butacas_reservadas"
                 />
               </div>
             </div>
@@ -234,7 +232,7 @@
                 <input
                   type="datetime-local"
                   class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-              
+                  v-model="evento.fechaFin"
                 />
               </div>
             </div>
@@ -251,7 +249,7 @@
             </button>
             <button
             class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-            type="button"
+            type="button"  @click="goBack"
             >
             Cancelar
             </button>
@@ -260,7 +258,7 @@
       </div>
     </div>
   </template>
-  <!-- <script>
+  <script>
       import axios from 'axios'
       export default {
           data(){
@@ -269,17 +267,26 @@
                       nombre:'',
                       expositor:'',
                       lugar:'',
-                      fecha:'',
+                      fechaInicio:'',
                       descripcion:'',
-                      aforo_tot:'',
-                      aforo_dis:'',
-                      fecha_fin:'',
+                      aforo_total:'',
+                      butacas_reservadas:'',
+                      fechaFin:'',
+                      fechaInscripcion:'',
+                      id_regla:'',
                       api_token:''
                   },
-                 
+                  apii:{
+                    api_token:''
+                  },
+                  url_id:''
+                  // evento:{}
               }
           },
           methods:{
+            goBack() {
+              window.history.back();
+            },
             storeEvento(){
               let objetoString = localStorage.getItem("token");
               let objeto = JSON.parse(objetoString);
@@ -287,13 +294,39 @@
               const auth = {
                     headers: {'Content-Type': 'application/json'} 
                   }
-                  console.log(this.evento.fecha)
-                  axios.post('http://localhost:8000/storeEvento',this.evento,auth).then(({data}) => {
-                    console.log(data);
+                  axios.post('http://localhost:8000/storeEvento',this.evento,auth).then(() => {
                     this.$router.push('/admin/tables');
                   });
+            },
+            getEditEvento(id){
+              let objetoString = localStorage.getItem("token");
+              let objeto = JSON.parse(objetoString);
+              this.apii.api_token=objeto;
+              const auth = {
+                headers: {'Content-Type': 'application/json'} 
+              }
+              axios.post(`http://localhost:8000/evento/${id}`,this.apii,auth).then(({data}) => {
+                  this.evento.nombre = data[0].nombre;
+                  this.evento.expositor = data[0].expositor;
+                  this.evento.lugar = data[0].lugar;
+                  this.evento.fechaInicio = data[0].fechaInicio;
+                  this.evento.descripcion = data[0].descripcion;
+                  this.evento.aforo_total = data[0].aforo_total;
+                  this.evento.butacas_reservadas = data[0].butacas_reservadas;
+                  this.evento.fechaFin = data[0].fechaFin;
+                  this.evento.id_regla = data[0].id_regla;
+                  this.evento.fechaInscripcion = data[0].fechaInscripcion;
+
+              }).catch((error) => {
+                  console.log(error);
+              });
             }
-          }
+          },
+          mounted() {
+            this.url_id = this.$route.params.id;
+            this.getEditEvento(this.url_id);
+          },
+      
       }
-  </script> -->
+  </script>
   

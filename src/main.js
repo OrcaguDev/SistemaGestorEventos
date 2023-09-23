@@ -84,7 +84,7 @@ const routes = [
         component: ListaRegla,
       },
       {
-        path: "/admin/editar/editEvento",
+        path: "/admin/editar/editEvento/:id",
         component: editEvent,
       },
       {
@@ -92,7 +92,7 @@ const routes = [
         component: editReglas,
       },
       {
-        path: "/admin/detalleEvento",
+        path: "/admin/detalleEvento/:id",
         component: detalleEvento,
       },
       {

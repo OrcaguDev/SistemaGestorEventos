@@ -29,8 +29,10 @@
                   Nombre del Evento
                 </label>
 
-                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                  Nombre del Evento (variable de la bd)
+                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password"
+                :v-model="evento.nombre"
+                >
+                  
                 </label>
 
               </div>
@@ -108,9 +110,9 @@
             </div>
 
             <div class="w-full lg:w-3/12 px-4">
-              <button
+              <button @click="validarDni()"
                 class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-3 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 mt-6 w-full ease-linear transition-all duration-150"
-                type="submit">
+                type="button">
                 Validar
               </button>
             </div>
@@ -128,7 +130,7 @@
                 </label>
                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password"
                 >
-                <!-- {{ item.nombre }} -->
+                {{ inscripcion.nombre }}
                 </label>
               </div>
             </div>
@@ -139,7 +141,7 @@
                   Apellidos
                 </label>
                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                  <!-- {{ item.apellido }} -->
+                  {{ inscripcion.apellido }}
                 </label>
               </div>
             </div>
@@ -150,7 +152,7 @@
                   Telefono
                 </label>
                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                  <!-- {{ item.telefono }} -->
+                  {{ inscripcion.celular }}
                 </label>
               </div>
             </div>
@@ -172,7 +174,7 @@
 
 
           <!-- Habilitar despues de validar sus datos con el DNI -->
-        <div hidden>
+        <div v-if="isVisible===1">
           <div class="flex flex-wrap">
 
             <div class="w-full lg:w-6/12 px-4">
@@ -210,6 +212,7 @@
                 <input
                 type="checkbox"
                 value=""
+                
                 />
                 <label class="uppercase text-blueGray-600 text-xs font-bold mb-2">
                   Si
@@ -231,27 +234,64 @@
 
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
+      evento:{
+        nombre:'',
+        expositor:'',
+        lugar:'',
+        fechaInicio:'',
+        descripcion:'',
+      },
       inscripcion: {
         dni: '',
-        // nombre: '',
+        nombre: '',
         apellido: '',
-        telefono: '',
+        celular: '',
         certificacion: false,
       },
+      isVisible:0,
+      apii:{
+        api_token:''
+      },
+      url_id:''
     };
   },
   methods: {
     async validarDni() {
-      const url = `https://dniruc.apisperu.com/api/v1/dni/${this.inscripcion.dni}?token=token`; //RUTA DEL API
+      const url = `https://app-cipcdll.com:81/obtener_persona_datos_xterceros/${this.inscripcion.dni}`; //RUTA DEL API
       const response = await fetch(url);
       const data = await response.json();
       console.log(data);
-      this.inscripcion.nombre = data.nombres;
-      this.inscripcion.apellido = data.apellidoPaterno + ' ' + data.apellidoMaterno;
+      this.inscripcion.nombre = data.data.nombres;
+      this.inscripcion.apellido = data.data.paterno + ' ' + data.data.materno;
+      this.inscripcion.celular = data.data.celular;
+      this.isVisible=1;
     },
+    getEventoInscri(id){
+      let objetoString = localStorage.getItem("token");
+              let objeto = JSON.parse(objetoString);
+              this.apii.api_token=objeto;
+              const auth = {
+                headers: {'Content-Type': 'application/json'} 
+              }
+              axios.post(`http://localhost:8000/evento/${id}`,this.apii,auth).then(({data}) => {
+                  this.evento.nombre = data[0].nombre;
+                  this.evento.expositor = data[0].expositor;
+                  this.evento.lugar = data[0].lugar;
+                  this.evento.fechaInicio = data[0].fechaInicio;
+                  this.evento.descripcion = data[0].descripcion;
+
+              }).catch((error) => {
+                  console.log(error);
+              });
+          },
   },
+  mounted() {
+            this.url_id = this.$route.params.id;
+            this.getEditEvento(this.url_id);
+          },
 };
 </script>

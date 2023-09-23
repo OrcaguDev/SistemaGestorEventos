@@ -174,11 +174,9 @@
 export default {
     data() {
         return {
-            //    reglas:[],
-            //     Eliminar: false,
-            //     apii:{
-            //       api_token:''
-            //     }
+        detalle:{
+            
+        }
         }
     },
     methods: {

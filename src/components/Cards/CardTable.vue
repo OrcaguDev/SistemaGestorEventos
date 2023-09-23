@@ -121,23 +121,24 @@
              <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
             >
-              {{item.fecha}}
+              {{item.fechaInicio}}
             </td>
              <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
             >
-              {{item.aforo_dis}}
+              {{item.butacas_reservadas}}
             </td>
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
             >
-              {{item.aforo_tot}}
+              {{item.aforo_total}}
             </td>
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 flex justify-center"
             >
 
-            <router-link to="/admin/detalleEvento">
+            <!-- <router-link to="'/admin/detalleEvento/'+item.id_evento"> -->
+            <router-link :to="'/admin/detalleEvento/'+item.id_evento">
               <button class="bg-indigo-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
                 <i class="fas fa-list"></i>
               </button>
@@ -146,7 +147,8 @@
               <i class="fas fa-trash"></i>
             </button>
             
-            <router-link to="/admin/editar/editEvento">            
+            <!-- <router-link to="'/admin/editar/editEvento/'+item.id_regla"> -->
+            <router-link :to="'/admin/editar/editEvento/'+item.id_evento">         
               <button class="bg-yellow-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
                 <i class="fas fa-edit"></i>
               </button>
@@ -154,7 +156,7 @@
 
 
             <!-- Boton de inscripcion -->
-            <router-link to="/inscripciones/inscripcion" target="_blank">
+            <router-link :to="'/inscripciones/inscripcion'+item.id_evento" target="_blank">
             <button class="bg-emerald-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" 
             type="button"
             >
