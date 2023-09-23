@@ -89,11 +89,7 @@ class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded"
         >
         {{index+1}}
         </td>
-        <td
-          class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-        >
-        {{regla.url}}
-        </td>
+        
          <td
           class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
         >
@@ -103,6 +99,11 @@ class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded"
           class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
         >
         {{regla.descripcion}}
+        </td>
+        <td
+          class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+        >
+        {{regla.url}}
         </td>
          <td
           class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
