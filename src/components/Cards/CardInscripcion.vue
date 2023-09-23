@@ -30,9 +30,9 @@
                 </label>
 
                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password"
-                :v-model="evento.nombre"
+                
                 >
-                  
+                {{ evento.nombre }}
                 </label>
 
               </div>
@@ -44,8 +44,9 @@
                 <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
                   Lugar
                 </label>
-                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                  Lugar (variable de la bd)
+                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password"
+                >
+                {{evento.lugar}}
                 </label>
               </div>
             </div>
@@ -57,8 +58,9 @@
                 <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
                   Fecha y hora
                 </label>
-                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                  Fecha y Hora (Variable de la bd)
+                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password"
+                >
+                {{evento.fechaInicio}}
                 </label>
               </div>
             </div>
@@ -70,8 +72,9 @@
                 <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
                   Expositor
                 </label>
-                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                  Expositor (Variable de la bd)
+                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password"
+                >
+                {{ evento.expositor }}
                 </label>
               </div>
             </div>
@@ -83,8 +86,10 @@
                 <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
                   Descripción
                 </label>
-                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                  Descripcion (Variable de la bd)
+                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password"
+                
+                >
+                {{ evento.descripcion }}
                 </label>
               </div>
             </div>
@@ -160,10 +165,10 @@
             <div class="w-full lg:w-3/12 px-4">
               <div class="relative w-full mb-3">
                 <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
-                  Codigo
+                  Email
                 </label>
                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                  <!-- {{ item.codigo }} -->
+                  {{ inscripcion.email }}
                 </label>
               </div>
             </div>
@@ -183,14 +188,15 @@
                   Verificar si se cumple lo requerido para el evento. (Ingrese CODIGO)
                 </label>
                 <input type="text"
-                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
+                  v-model="inscripcion.habilidad"/>
               </div>
             </div>
 
             <div class="w-full lg:w-3/12 px-4">
               <button
                 class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-3 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 mt-6 w-full ease-linear transition-all duration-150"
-                type="submit">
+                type="button" @click="validarHabilidad()">
                 Validar
               </button>
             </div>
@@ -202,7 +208,7 @@
 
 
           <!-- Despues de validar los datos de los inputs de arriba, mostrar este div para concluir con la inscripcion -->
-          <div hidden>
+          <div v-if="isVisiblee===1">
 
             <div class="w-full lg:w-3/12 px-4">
               <div class="relative w-full mb-3">
@@ -250,8 +256,11 @@ export default {
         nombre: '',
         apellido: '',
         celular: '',
+        email:'',
         certificacion: false,
+        habilidad: '',
       },
+      isVisiblee:0,
       isVisible:0,
       apii:{
         api_token:''
@@ -268,10 +277,24 @@ export default {
       this.inscripcion.nombre = data.data.nombres;
       this.inscripcion.apellido = data.data.paterno + ' ' + data.data.materno;
       this.inscripcion.celular = data.data.celular;
+      this.inscripcion.email = data.data.email;
       this.isVisible=1;
     },
-    getEventoInscri(id){
-      let objetoString = localStorage.getItem("token");
+    async validarHabilidad(){
+      const url = `https://app-cipcdll.com:81/deuda_habilidad_xterceros/${this.inscripcion.habilidad}`; //RUTA DEL API
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log(data);
+      // this.inscripcion.nombre = data.data.nombres;
+      // this.inscripcion.apellido = data.data.paterno + ' ' + data.data.materno;
+      // this.inscripcion.celular = data.data.celular;
+      this.isVisiblee=1;
+      },
+    
+
+
+      getEditEvento(id){
+              let objetoString = localStorage.getItem("token");
               let objeto = JSON.parse(objetoString);
               this.apii.api_token=objeto;
               const auth = {
@@ -283,13 +306,18 @@ export default {
                   this.evento.lugar = data[0].lugar;
                   this.evento.fechaInicio = data[0].fechaInicio;
                   this.evento.descripcion = data[0].descripcion;
+                  this.evento.aforo_total = data[0].aforo_total;
+                  this.evento.butacas_reservadas = data[0].butacas_reservadas;
+                  this.evento.fechaFin = data[0].fechaFin;
+                  this.evento.id_regla = data[0].id_regla;
+                  this.evento.fechaInscripcion = data[0].fechaInscripcion;
 
               }).catch((error) => {
                   console.log(error);
               });
+            }
           },
-  },
-  mounted() {
+          mounted() {
             this.url_id = this.$route.params.id;
             this.getEditEvento(this.url_id);
           },

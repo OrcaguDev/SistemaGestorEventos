@@ -34,7 +34,7 @@
                             </label>
 
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                Nombre del Evento (variable de la bd)
+                                {{ detalle.nombre }}
                             </label>
 
                         </div>
@@ -46,7 +46,7 @@
                                 Lugar
                             </label>
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                Lugar (variable de la bd)
+                                {{detalle.lugar}}
                             </label>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                                 Fecha y hora
                             </label>
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                Fecha y Hora (Variable de la bd)
+                                {{detalle.fechaInicio}}
                             </label>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                                 Expositor
                             </label>
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                Expositor (Variable de la bd)
+                                {{detalle.expositor}}
                             </label>
                         </div>
                     </div>
@@ -170,39 +170,62 @@
 
 
 <script>
-// import axios from 'axios';
+import axios from 'axios';
 export default {
     data() {
         return {
-        detalle:{
-            
-        }
+            detalle: {
+                nombre: '',
+                expositor: '',
+                lugar: '',
+                fechaInicio: '',
+                descripcion: '',
+                aforo_total: '',
+                butacas_reservadas: '',
+                fechaFin: '',
+                fechaInscripcion: '',
+                id_regla: '',
+                api_token: ''
+            },
+            apii: {
+                api_token: ''
+            },
+            url_id: ''
         }
     },
     methods: {
         goBack() {
             window.history.back();
         },
-        // getTotal(){
-        //   let objetoString = localStorage.getItem("token");
-        //   let objeto = JSON.parse(objetoString);
-        //   this.apii.api_token=objeto;
-        //   const auth = {
-        //   headers: {'Content-Type': 'application/json'} 
-        //   }
-        //   axios.post('http://localhost:8000/reglas',this.apii,auth).then(({data}) => {
-        //     this.reglas = data;
-        //   }).catch((error) => {
-        //     console.log(error);
-        //   });
+        
+        getEditEvento(id) {
+            let objetoString = localStorage.getItem("token");
+            let objeto = JSON.parse(objetoString);
+            this.apii.api_token = objeto;
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post(`http://localhost:8000/evento/${id}`, this.apii, auth).then(({ data }) => {
+                this.detalle.nombre = data[0].nombre;
+                this.detalle.expositor = data[0].expositor;
+                this.detalle.lugar = data[0].lugar;
+                this.detalle.fechaInicio = data[0].fechaInicio;
+                this.detalle.descripcion = data[0].descripcion;
+                this.detalle.aforo_total = data[0].aforo_total;
+                this.detalle.butacas_reservadas = data[0].butacas_reservadas;
+                this.detalle.fechaFin = data[0].fechaFin;
+                this.detalle.id_regla = data[0].id_regla;
+                this.detalle.fechaInscripcion = data[0].fechaInscripcion;
 
-        // }
+            }).catch((error) => {
+                console.log(error);
+            });
+        }
     },
-    // created(){
-    //     this.getTotal();
-    // },
-
-
+    mounted() {
+        this.url_id = this.$route.params.id;
+        this.getEditEvento(this.url_id);
+    },
     props: {
         color: {
             default: "light",

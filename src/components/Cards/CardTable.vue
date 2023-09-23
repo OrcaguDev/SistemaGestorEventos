@@ -85,7 +85,15 @@
                   ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
                   : 'bg-emerald-800 text-emerald-300 border-emerald-700',
               ]"
-            >AFORO DISPONIBLE</th>
+            >BUTACAS RESERVADAS</th>
+            <th
+              class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+              :class="[
+                color === 'light'
+                  ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                  : 'bg-emerald-800 text-emerald-300 border-emerald-700',
+              ]"
+            >AFORO DISPONIBLE</th>            
           <th
               class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center"
               :class="[
@@ -126,12 +134,17 @@
              <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
             >
-              {{item.butacas_reservadas}}
+            {{item.aforo_total}}
             </td>
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
             >
-              {{item.aforo_total}}
+              {{ item.butacas_reservadas }}
+            </td>
+            <td
+              class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+            >
+              {{item.aforo_total - item.butacas_reservadas }}
             </td>
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 flex justify-center"
@@ -156,7 +169,7 @@
 
 
             <!-- Boton de inscripcion -->
-            <router-link :to="'/inscripciones/inscripcion'+item.id_evento" target="_blank">
+            <router-link :to="'/inscripciones/inscripcion/' + item.id_evento" target="_blank">
             <button class="bg-emerald-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" 
             type="button"
             >

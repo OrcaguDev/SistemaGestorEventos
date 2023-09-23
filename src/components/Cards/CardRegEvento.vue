@@ -92,7 +92,7 @@
               <select v-model="evento.id_regla" @change="reglaChange()" class=" text-blueGray-600 text-sm uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150">
                 <option value="0" selected>Seleccione una regla</option>
                 <option v-for="(regla, index) in reglas" :key="index" :value="regla.id_regla">
-                  {{ regla.id_regla }} {{ regla.nombre }}
+                  {{ regla.nombre }}
                 </option>                
               </select>
 

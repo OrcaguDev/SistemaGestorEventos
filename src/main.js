@@ -103,7 +103,7 @@ const routes = [
   },
   
   {
-    path: "/inscripciones/inscripcion",
+    path: "/inscripciones/inscripcion/:id",
     component: Inscripcion,
   },
   {
