@@ -59,50 +59,73 @@ const routes = [
       {
         path: "/admin/dashboard",
         component: Dashboard,
+        meta: { requiresAuth: true }
       },
       {
         path: "/admin/settings",
         component: Settings,
+        meta: { requiresAuth: true }
+
       },
       {
         path: "/admin/listarEvento",
         component: ListarEvento,
+        meta: { requiresAuth: true }
+
       },
       {
         path: "/admin/reporte",
         component: Reporte,
+        meta: { requiresAuth: true }
+
       },
       {
         path: "/admin/evento",
         component: Evento,
+        meta: { requiresAuth: true }
+
       },
       {
         path: "/admin/reglas/registrarReglas",
         component: RegistrarReglas,
+        meta: { requiresAuth: true }
+
       },
       {
         path: "/admin/reglas/listaRegla",
         component: ListaRegla,
+        meta: { requiresAuth: true }
+
       },
       {
         path: "/admin/editar/editEvento/:id",
         component: editEvent,
+        meta: { requiresAuth: true }
+
       },
       {
         path: "/admin/editar/editReglas",
         component: editReglas,
+        meta: { requiresAuth: true }
+
       },
       {
         path: "/admin/detalleEvento/:id",
         component: detalleEvento,
+        meta: { requiresAuth: true }
+
       },
       {
         path: "/admin/timeLine",
         component: timeLine,
+        meta: { requiresAuth: true }
+
       },
       {
         path: "/admin/usuarios/usuario",
         component: Usuarios,
+        meta: { requiresAuth: true }
+
       }      
     ],
   },
@@ -110,6 +133,7 @@ const routes = [
   {
     path: "/inscripciones/inscripcion/:id",
     component: Inscripcion,
+    
   },
   {
     path: "/inscripciones/pruebas",
@@ -118,9 +142,26 @@ const routes = [
   { path: "/:pathMatch(.*)*", redirect: "/" },
 ];
 
+
+
 const router = createRouter({
   history: createWebHistory(),
   routes,
 });
 
+
 createApp(App).use(router).mount("#app");
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token');
+
+
+  if (to.meta.requiresAuth && !token) {
+    // Redirige a la página de inicio de sesión si la ruta requiere autenticación y no hay token
+    next('/');
+  } else {
+    // Continúa la navegación
+    next();
+  }
+});
+

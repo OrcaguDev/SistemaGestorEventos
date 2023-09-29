@@ -21,6 +21,8 @@
                 </div>
             </div>
             <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+                <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                <div class="flex-auto px-4 lg:px-10 py-10 pt-0"></div>
 
                 <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                     Resumen del Evento
@@ -119,15 +121,25 @@
                                         : 'bg-emerald-800 text-emerald-300 border-emerald-700',
                                 ]">
                                 Certificado
-                            </th>
+                            </th> 
+                            
                             <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 :class="[
                                     color === 'light'
                                         ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
                                         : 'bg-emerald-800 text-emerald-300 border-emerald-700',
                                 ]">
-                                Acciones
+                                Asistencia
                             </th>
+
+                            <!-- <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                :class="[
+                                    color === 'light'
+                                        ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                                        : 'bg-emerald-800 text-emerald-300 border-emerald-700',
+                                ]">
+                                Acciones
+                            </th> -->
                         </tr>
                     </thead>
 
@@ -148,14 +160,24 @@
                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                 Si
                             </td>
-                            <td
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                No
+                            </td>
+                            <!-- <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 flex justify-center">
                                 <button
                                     class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                     type="button">
                                     <i class="fas fa-trash"></i>
                                 </button>
-                            </td>
+
+                                <button
+                                    class="bg-emerald-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                    type="button">
+                                    <i class="fas fa-check"></i>
+                                </button>
+
+                            </td> -->
                         </tr>
 
 

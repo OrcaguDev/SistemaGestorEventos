@@ -18,7 +18,7 @@
                 <label
                   class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                   htmlFor="grid-password" 
-                >
+                > 
                   Nombre del Evento
                 </label>
                 <input
@@ -115,10 +115,7 @@
               </div>
             </div>
   
-            <div class="w-full lg:w-3/12 px-4">
-            </div>
-  
-            <div class="w-full lg:w-6/12 px-4 ">
+            <div class="w-full lg:w-9/12 px-4 ">
               <div class="relative w-full mb-3">
                 <label
                   class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -128,11 +125,11 @@
                 </label>
                 
                 <select v-model="evento.id_regla" @change="reglaChange()" class=" text-blueGray-600 text-sm uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150">
-                  <option value="0" selected>Seleccione una regla</option>
-                  <option v-for="(regla, index) in reglas" :key="index" :value="regla.id_regla">
-                    {{ evento.id_regla }}
-                  </option>                
-                </select>
+                <option value="0" selected>Seleccione una regla</option>
+                <option v-for="(regla, index) in reglas" :key="index" :value="regla.id_regla">
+                  {{ regla.nombre }}
+                </option>                
+              </select>
   
   
               </div>
@@ -256,9 +253,10 @@
                       butacas_reservadas:'',
                       fechaFin:'',
                       fechaInscripcion:'',
-                      id_regla:'',
+                      id_regla:0,
                       api_token:''
                   },
+                  reglas:[],
                   apii:{
                     api_token:''
                   },

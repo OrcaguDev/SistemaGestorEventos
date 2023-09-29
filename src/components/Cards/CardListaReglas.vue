@@ -145,7 +145,7 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 export default {
 data(){
     return {
-       reglas:[],
+        reglas:[],
         Eliminar: false,
         apii:{
           api_token:''
