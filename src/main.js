@@ -19,6 +19,7 @@ import Admin from "@/layouts/Admin.vue";
 // views for Admin layout
 
 import Dashboard from "@/views/admin/Dashboard.vue";
+import Usuarios from "@/views/admin/Usuarios/Usuario.vue";
 import Settings from "@/views/admin/Settings.vue";
 import ListarEvento from "@/views/admin/Tables.vue";
 import Reporte from "@/views/admin/Reporte.vue";
@@ -98,7 +99,11 @@ const routes = [
       {
         path: "/admin/timeLine",
         component: timeLine,
-      }
+      },
+      {
+        path: "/admin/usuarios/usuario",
+        component: Usuarios,
+      }      
     ],
   },
   
