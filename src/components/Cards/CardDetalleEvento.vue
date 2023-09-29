@@ -20,8 +20,31 @@
                     </div>
                 </div>
             </div>
-            <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-                <input type="text" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+
+            <div class="flex flex-col px-4 lg:px-10 py-10 pt-0">
+                
+                <div class="w-full lg:w-12/12 px-4 flex flex-row bg-blueGray-200">
+                    <div class="realtive lg:w-6/12 mb-3">
+                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2 mt-6 "
+                            htmlFor="grid-password">
+                            Buscar Participante por DNI
+                        </label>
+                        <input type="text"
+                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                        
+
+                        <div class=" lg:w-3/12 px-4 flex">
+                            <button
+                                class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-3 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 mt-6 w-full ease-linear transition-all duration-150"
+                                type="button">
+                                Asistencia
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            
+
+
                 <div class="flex-auto px-4 lg:px-10 py-10 pt-0"></div>
 
                 <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
@@ -48,7 +71,7 @@
                                 Lugar
                             </label>
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                {{detalle.lugar}}
+                                {{ detalle.lugar }}
                             </label>
                         </div>
                     </div>
@@ -59,7 +82,7 @@
                                 Fecha y hora
                             </label>
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                {{detalle.fechaInicio}}
+                                {{ detalle.fechaInicio }}
                             </label>
                         </div>
                     </div>
@@ -70,7 +93,7 @@
                                 Expositor
                             </label>
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                {{detalle.expositor}}
+                                {{ detalle.expositor }}
                             </label>
                         </div>
                     </div>
@@ -121,8 +144,8 @@
                                         : 'bg-emerald-800 text-emerald-300 border-emerald-700',
                                 ]">
                                 Certificado
-                            </th> 
-                            
+                            </th>
+
                             <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                 :class="[
                                     color === 'light'
@@ -219,7 +242,7 @@ export default {
         goBack() {
             window.history.back();
         },
-        
+
         getEditEvento(id) {
             let objetoString = localStorage.getItem("token");
             let objeto = JSON.parse(objetoString);

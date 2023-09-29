@@ -54,10 +54,10 @@
                             {{index+1}}
                         </td>
                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            {{usuario.usuario}}
+                            {{usuario.name}}
                         </td>
                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            {{usuario.estado}}
+                            {{usuario.rol_nombre}}
                         </td>
                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                             <router-link to="/">
@@ -103,15 +103,20 @@ export default {
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('', this.apii, auth).then(({ data }) => {
+            axios.post('http://localhost:8000/usuarios', this.apii, auth).then(({ data }) => {
                 this.usuarios = data;
             }).catch(error => {
                 console.log(error);
             });
+        },
+        actualizarMensaje(nuevoMensaje) {
+        // Método para actualizar el mensaje desde ComponenteA
+        this.mensaje = nuevoMensaje;
         }
     },
     created() {
         this.getTotal();
+        
     },
 props: {
 color: {

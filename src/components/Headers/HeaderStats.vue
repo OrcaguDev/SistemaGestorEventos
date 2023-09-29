@@ -6,8 +6,8 @@
         <div class="flex flex-wrap">
           <div class="w-full lg:w-6/12 xl:w-4/12 px-4">
             <card-stats
-              statSubtitle="constancias"
-              statTitle="350,897"
+              statSubtitle="REGLAS"
+              :statTitle="totalReglas"
               statArrow="up"
               statPercent="3.48"
               statPercentColor="text-emerald-500"
@@ -19,7 +19,7 @@
           <div class="w-full lg:w-6/12 xl:w-4/12 px-4">
             <card-stats
               statSubtitle="EVENTOS"
-              statTitle="2,356"
+              :statTitle="totalEventos"
               statArrow="down"
               statPercent="3.48"
               statPercentColor="text-red-500"
@@ -31,7 +31,7 @@
           <div class="w-full lg:w-6/12 xl:w-4/12 px-4">
             <card-stats
               statSubtitle="Usuarios"
-              statTitle="924"
+              :statTitle="totalusuarios"
               statArrow="up"
               statPercent="1.10"
               statPercentColor="text-emerald-500"
@@ -57,43 +57,61 @@ export default {
   },
   data(){
     return{
-      constancias: 0,
-      eventos: 0,
-      usuarios: 0,
+      // constancias: 0,
+      totalEventos: 0,
+      totalusuarios: 0,
+      totalReglas: 0,
+      apii:{
+        api_token:''
+      }
     };
   },
-  mounted(){
-    this.getConstancias();
+  created(){
     this.getEventos();
-    this.getUsuarios();
+    this.getUsersTotal();
+    this.getReglas();
   },
   methods: {
-    getConstancias(){
-      axios.get('http://localhost:3000/constancias')
-      .then(response => {
-        this.constancias = response.data.length;
-      })
-      .catch(error => {
-        console.log(error);
-      })
+    getUsersTotal(){
+        let objetoString = localStorage.getItem("token");
+        let objeto = JSON.parse(objetoString);
+        this.apii.api_token=objeto;
+        const auth = {
+          headers: {'Content-Type': 'application/json'} 
+        }
+        axios.post('http://localhost:8000/getUsers',this.apii,auth).then(({data}) => {
+            this.totalusuarios = data[0].total;
+        }).catch((error) => {
+            console.log(error);
+        });
     },
+
+    getReglas(){
+        let objetoString = localStorage.getItem("token");
+        let objeto = JSON.parse(objetoString);
+        this.apii.api_token=objeto;
+        const auth = {
+          headers: {'Content-Type': 'application/json'} 
+        }
+        axios.post('http://localhost:8000/getReglas',this.apii,auth).then(({data}) => {
+            this.totalReglas = data[0].total;
+        }).catch((error) => {
+            console.log(error);
+        });
+    },
+
     getEventos(){
-      axios.get('http://localhost:3000/eventos')
-      .then(response => {
-        this.eventos = response.data.length;
-      })
-      .catch(error => {
-        console.log(error);
-      })
-    },
-    getUsuarios(){
-      axios.get('http://localhost:3000/usuarios')
-      .then(response => {
-        this.usuarios = response.data.length;
-      })
-      .catch(error => {
-        console.log(error);
-      })
+        let objetoString = localStorage.getItem("token");
+        let objeto = JSON.parse(objetoString);
+        this.apii.api_token=objeto;
+        const auth = {
+          headers: {'Content-Type': 'application/json'} 
+        }
+        axios.post('http://localhost:8000/getEventos',this.apii,auth).then(({data}) => {
+            this.totalEventos = data[0].total;
+        }).catch((error) => {
+            console.log(error);
+        });
     },
   }
 };

@@ -4,7 +4,7 @@
             <CardUsuario />
         </div>
         <div class="w-full lg:w-6/12 px-4">
-            <CardListaUsuario />
+            <CardListaUsuario ref="CardListaUsuario"/>
         </div>
     </div>
 </template>
