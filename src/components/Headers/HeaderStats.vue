@@ -8,8 +8,6 @@
             <card-stats
               statSubtitle="REGLAS"
               :statTitle="totalReglas"
-              statArrow="up"
-              statPercent="3.48"
               statPercentColor="text-emerald-500"
               statDescripiron="Del último año"
               statIconName="far fa-chart-bar"
@@ -20,7 +18,6 @@
             <card-stats
               statSubtitle="EVENTOS"
               :statTitle="totalEventos"
-              statArrow="down"
               statPercent="3.48"
               statPercentColor="text-red-500"
               statDescripiron="Desde la última semana"
@@ -32,7 +29,7 @@
             <card-stats
               statSubtitle="Usuarios"
               :statTitle="totalusuarios"
-              statArrow="up"
+              
               statPercent="1.10"
               statPercentColor="text-emerald-500"
               statDescripiron="Desde ayer"
