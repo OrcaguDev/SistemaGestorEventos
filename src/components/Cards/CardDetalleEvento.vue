@@ -22,7 +22,7 @@
             </div>
 
             <div class="flex flex-col px-4 lg:px-10 py-10 pt-0">
-                
+
                 <div class="w-full lg:w-12/12 px-4 flex flex-row bg-blueGray-200">
                     <div class="realtive lg:w-6/12 mb-3">
                         <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2 mt-6 "
@@ -31,7 +31,7 @@
                         </label>
                         <input type="text"
                             class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                        
+
 
                         <div class=" lg:w-3/12 px-4 flex">
                             <button
@@ -42,7 +42,7 @@
                         </div>
                     </div>
                 </div>
-            
+
 
 
                 <div class="flex-auto px-4 lg:px-10 py-10 pt-0"></div>
@@ -167,21 +167,24 @@
                     </thead>
 
                     <tbody>
-                        <tr>
+                        <tr v-for="(inscripcion, index) in inscripciones" :key="index">
                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                1
+                                {{ index+1 }}
                             </td>
                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                78495612
+                                {{ inscripcion.dni}}
                             </td>
                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                Juan Alberto
+                                {{ inscripcion.nombre}}
                             </td>
                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                Gómez Perez
+                                {{ inscripcion.apellido}}
                             </td>
-                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                            <td v-if="inscripcion.certificacion==1" class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                 Si
+                            </td>
+                            <td v-else class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                No
                             </td>
                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                 No
@@ -235,7 +238,8 @@ export default {
             apii: {
                 api_token: ''
             },
-            url_id: ''
+            url_id: '',
+            inscripciones:[],
         }
     },
     methods: {
@@ -265,21 +269,36 @@ export default {
             }).catch((error) => {
                 console.log(error);
             });
-        }
-    },
-    mounted() {
-        this.url_id = this.$route.params.id;
-        this.getEditEvento(this.url_id);
-    },
-    props: {
-        color: {
-            default: "light",
-            validator: function (value) {
-                // The value must match one of these strings
-                return ["light", "dark"].indexOf(value) !== -1;
+        },
+        getInscripcionesTotal(id) {
+            let objetoString = localStorage.getItem("token");
+            let objeto = JSON.parse(objetoString);
+            this.apii.api_token = objeto;
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post(`http://localhost:8000/getInscripcionesTotal/${id}`, this.apii, auth).then(({ data }) => {
+                this.inscripciones = data;
+            }).catch((error) => {
+                console.log(error);
+            });
+        },
+        
+        props: {
+            color: {
+                default: "light",
+                validator: function (value) {
+                    // The value must match one of these strings
+                    return ["light", "dark"].indexOf(value) !== -1;
+                },
             },
         },
     },
-};
+    created() {
+            this.url_id = this.$route.params.id;
+            this.getEditEvento(this.url_id);
+            this.getInscripcionesTotal(this.url_id);
+        },
+}
 
 </script>

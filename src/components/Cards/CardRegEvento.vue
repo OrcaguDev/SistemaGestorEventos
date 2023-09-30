@@ -110,6 +110,7 @@
               <input type="file"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 accept="image/png, image/jpeg" />
+
             </div>
           </div>
           <div class="w-full lg:w-12/12 px-4">
@@ -202,15 +203,15 @@ export default {
       const auth = {
         headers: { 'Content-Type': 'application/json' }
       }
-      console.log(this.evento.fecha)
+      console.log(this.evento)
       axios.post('http://localhost:8000/storeEvento', this.evento, auth).then(() => {
         // console.log(data);
-        this.$router.push('/admin/tables');
+        this.$router.push('/admin/listarEvento');
       });
     },
     reglaChange(){
      
-      console.log(this.evento.id_regla);
+      // console.log(this.evento.id_regla);
     },
     getReglas(){
       let objetoString = localStorage.getItem("token");
@@ -221,7 +222,6 @@ export default {
       }
       axios.post('http://localhost:8000/reglas',this.apii,auth).then(({data}) => {
           this.reglas = data;
-          console.log(this.reglas);
       }).catch((error) => {
           console.log(error);
       });

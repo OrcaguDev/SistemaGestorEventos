@@ -121,13 +121,13 @@ class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded"
           <i class="fas fa-trash"></i>
         </button>
 
-        <router-link to="/admin/editar/editReglas">
+        <!-- <router-link to="/admin/editar/editReglas">
           <button class="bg-yellow-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" 
           type="button"
           >
             <i class="fas fa-edit"></i>
           </button>
-        </router-link>  
+        </router-link>   -->
         </td>
       </tr>
 
