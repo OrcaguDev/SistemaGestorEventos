@@ -40,6 +40,7 @@ import ListaRegla from "@/views/admin/reglas/ListaRegla.vue";
 //views for Inscripcion
 
 import Inscripcion from "@/views/inscripciones/Inscripcion.vue";
+import InscripcionPublica from "@/views/inscripciones/InscripcionPublica.vue";
 import detalleEvento from "@/views/admin/DetalleEvento.vue";
 import Pruebas from "@/views/inscripciones/Pruebas.vue";
 import timeLine from "@/views/admin/TimeLine.vue";
@@ -133,6 +134,11 @@ const routes = [
   {
     path: "/inscripciones/inscripcion/:id",
     component: Inscripcion,
+    
+  },
+  {
+    path: "/inscripciones/inscripcionPublica:id",
+    component: InscripcionPublica,
     
   },
   {

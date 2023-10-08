@@ -22,26 +22,29 @@
             </div>
 
             <div class="flex flex-col px-4 lg:px-10 py-10 pt-0">
+                <form @submit.prevent="updateAsistencia()">
+                    <div class="w-full lg:w-12/12 px-4 flex flex-row bg-blueGray-200">
+                        <div class="realtive lg:w-6/12 mb-3">
+                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2 mt-6 "
+                                htmlFor="grid-password">
+                                Buscar Participante por DNI
+                            </label>
+                            <input type="text"
+                            v-model="dni"
+                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
 
-                <div class="w-full lg:w-12/12 px-4 flex flex-row bg-blueGray-200">
-                    <div class="realtive lg:w-6/12 mb-3">
-                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2 mt-6 "
-                            htmlFor="grid-password">
-                            Buscar Participante por DNI
-                        </label>
-                        <input type="text"
-                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
 
 
-                        <div class=" lg:w-3/12 px-4 flex">
-                            <button
-                                class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-3 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 mt-6 w-full ease-linear transition-all duration-150"
-                                type="button">
-                                Asistencia
-                            </button>
+                            <div class=" lg:w-3/12 px-4 flex">
+                                <button
+                                    class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-3 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 mt-6 w-full ease-linear transition-all duration-150"
+                                    type="button">
+                                    Asistencia
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
 
 
 
@@ -187,7 +190,7 @@
                                 No
                             </td>
                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                No
+                                {{ inscripcion.asistencia }}
                             </td>
                             <!-- <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 flex justify-center">
@@ -240,6 +243,7 @@ export default {
             },
             url_id: '',
             inscripciones:[],
+            dni:'',
         }
     },
     methods: {
@@ -279,6 +283,19 @@ export default {
             }
             axios.post(`http://localhost:8000/getInscripcionesTotal/${id}`, this.apii, auth).then(({ data }) => {
                 this.inscripciones = data;
+            }).catch((error) => {
+                console.log(error);
+            });
+        },
+        updateAsistencia(){
+            let objetoString = localStorage.getItem("token");
+            let objeto = JSON.parse(objetoString);
+            this.apii.api_token = objeto;
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post(`http://localhost:8000/updateAsistencia`, this.apii, auth).then(({ data }) => {
+                this.getInscripcionesTotal(this.url_id);
             }).catch((error) => {
                 console.log(error);
             });
