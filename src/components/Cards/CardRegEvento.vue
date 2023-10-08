@@ -203,7 +203,6 @@ export default {
       const auth = {
         headers: { 'Content-Type': 'application/json' }
       }
-      console.log(this.evento)
       axios.post('http://localhost:8000/storeEvento', this.evento, auth).then(() => {
         // console.log(data);
         this.$router.push('/admin/listarEvento');
