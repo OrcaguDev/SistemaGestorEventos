@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute w-full h-full bg-red-700 bg-no-repeat bg-full">
+  <div class="absolute w-full h-full bg-red-500 bg-no-repeat bg-full">
     <div class="container mx-auto px-4 h-full">
     <div class="flex content-center items-center justify-center h-full">
       <div class="w-full lg:w-4/12 px-4">
@@ -8,7 +8,7 @@
         >
         <div class="flex flex-row min-w-0 break-words" style="justify-items: center;align-items: center;">
           <img src="../assets/img/logo_CIP.png" style="width: 100px;height: 100px;" class="m-4">
-          <h1 class="text-blueGray-500 text-xl font-bold">COLEGIO DE INGENIEROS DE LA LIBERTAD</h1>
+          <h1 class="text-blueGray-500 text-xl font-bold">SISTEMA GESTOR DE EVENTOS</h1>
         </div>
           <div class="rounded-t mb-0 px-6 py-6">
             <div class="text-center mb-3">

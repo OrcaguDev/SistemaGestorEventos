@@ -179,10 +179,10 @@
 
             <!-- Boton de inscripcion del Publico -->
             <router-link :to="'/inscripciones/inscripcionPublica/' + item.id_evento" target="_blank">
-            <button class="bg-yellow-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" 
+            <button class="bg-black text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" 
             type="button"
             >
-            <i class="fas fa-register"></i>
+            <i class="fas fa-globe"></i>
             </button>
             </router-link>
 

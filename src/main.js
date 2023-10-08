@@ -130,14 +130,14 @@ const routes = [
       }      
     ],
   },
-  
+   
   {
     path: "/inscripciones/inscripcion/:id",
     component: Inscripcion,
     
   },
   {
-    path: "/inscripciones/inscripcionPublica:id",
+    path: "/inscripciones/inscripcionPublica/:id",
     component: InscripcionPublica,
     
   },

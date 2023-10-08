@@ -28,25 +28,17 @@ export default {
     };
     const etapa3 = {
       title: "(DD/MMM/YYYY)",
-      content: "Cantidad de Certificados",
+      content: "Cantidad de Asistentes",
     };
     const etapa4 = {
       title: "(DD/MMM/YYYY)",
-      content: "Cantidad de Asistentes",
+      content: "Cantidad de Certidicados",
     };
     const etapa5 = {
       title: "(DD/MMM/YYYY)",
       content: "Final del Evento",
     };
-    const etapa6 = {
-      title: "(DD/MMM/YYYY)",
-      content: "Fecha de Certificados",
-    };
-    const etapa7 = {
-      title: "(DD/MMM/YYYY)",
-      content: "Fecha de Certificados",
-    };
-    const items = [etapa1, etapa2, etapa3, etapa4, etapa5, etapa6, etapa7];
+    const items = [etapa1, etapa2, etapa3, etapa4, etapa5];
     return { items };
   },
 

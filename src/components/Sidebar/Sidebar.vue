@@ -5,21 +5,14 @@
     <div
       class="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto"
     >
-      <!-- Toggler -->
-      <button
-        class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
-        type="button"
-        v-on:click="toggleCollapseShow('bg-white m-2 py-3 px-6')"
-      >
-        <i class="fas fa-bars"></i>
-      </button>
       <!-- Brand -->
-      <router-link
-        class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
-        to="/"
-      >
-        CIP
-      </router-link>
+    
+        <p  style="word-wrap: break-word;"
+          class="text-center text-blueGray-600 mr-0 inline-block break-words text-sm uppercase font-bold p-4 px-0">
+        SISTEMA GESTOR DE EVENTOS
+        </p>
+
+      
       <!-- User -->
       <ul class="md:hidden items-center flex flex-wrap list-none">
         <li class="inline-block relative">
@@ -250,14 +243,12 @@
         </ul>
 
         <!-- Divider -->
-        <hr class="my-4 md:min-w-full" />
-        <!-- Heading -->
+        <!-- <hr class="my-4 md:min-w-full" />
         <h6
           class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
         >
           Sand Box
         </h6>
-        <!-- Navigation -->
 
         <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
           <li class="items-center">
@@ -269,7 +260,7 @@
               Pruebas
             </router-link>
           </li>
-        </ul>
+        </ul> -->
 
 
         <!-- Divider -->

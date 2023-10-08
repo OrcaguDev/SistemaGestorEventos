@@ -79,6 +79,7 @@ export default {
       apii:{
         api_token:''
       },
+      url_id:'',
     }
   },
   methods: {
@@ -86,6 +87,7 @@ export default {
       let objetoString = localStorage.getItem("token");
       let objeto = JSON.parse(objetoString);
       this.apii.api_token = objeto;
+      console.log(id);
       const auth = {
         Headers: { 'Content-Type': 'application/json' }
       }

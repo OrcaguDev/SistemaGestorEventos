@@ -24,18 +24,19 @@
             <div class="flex flex-col px-4 lg:px-10 py-10 pt-0">
                 <form @submit.prevent="updateAsistencia()">
                     <div class="w-full lg:w-12/12 px-4 flex flex-row bg-blueGray-200">
+
                         <div class="realtive lg:w-6/12 mb-3">
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2 mt-6 "
                                 htmlFor="grid-password">
                                 Buscar Participante por DNI
                             </label>
-                            <input type="text"
-                            v-model="dni"
+                            <input type="text" v-model="dni"
                                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                        </div>
 
-
-
-                            <div class=" lg:w-3/12 px-4 flex">
+                        <div class="relative w-5/12 pl-8 mb-3 mt-6">
+                            <div class=" lg:w-12/12 px-4 flex">
+                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2 mt-6 "></label>
                                 <button
                                     class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-3 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 mt-6 w-full ease-linear transition-all duration-150"
                                     type="button">
@@ -43,6 +44,7 @@
                                 </button>
                             </div>
                         </div>
+
                     </div>
                 </form>
 
@@ -172,25 +174,27 @@
                     <tbody>
                         <tr v-for="(inscripcion, index) in inscripciones" :key="index">
                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                {{ index+1 }}
+                                {{ index + 1 }}
                             </td>
                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                {{ inscripcion.dni}}
+                                {{ inscripcion.dni }}
                             </td>
                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                {{ inscripcion.nombre}}
+                                {{ inscripcion.nombre }}
                             </td>
                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                {{ inscripcion.apellido}}
+                                {{ inscripcion.apellido }}
                             </td>
-                            <td v-if="inscripcion.certificacion==1" class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                            <td v-if="inscripcion.certificacion == 1"
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                 Si
                             </td>
-                            <td v-else class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                            <td v-else
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                 No
                             </td>
                             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                                {{ inscripcion.asistencia }}
+                                No<!-- {{ inscripcion.asistencia }} -->
                             </td>
                             <!-- <td
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 flex justify-center">
@@ -242,8 +246,8 @@ export default {
                 api_token: ''
             },
             url_id: '',
-            inscripciones:[],
-            dni:'',
+            inscripciones: [],
+            dni: '',
         }
     },
     methods: {
@@ -287,7 +291,7 @@ export default {
                 console.log(error);
             });
         },
-        updateAsistencia(){
+        updateAsistencia() {
             let objetoString = localStorage.getItem("token");
             let objeto = JSON.parse(objetoString);
             this.apii.api_token = objeto;
@@ -300,7 +304,7 @@ export default {
                 console.log(error);
             });
         },
-        
+
         props: {
             color: {
                 default: "light",
@@ -312,10 +316,10 @@ export default {
         },
     },
     created() {
-            this.url_id = this.$route.params.id;
-            this.getEditEvento(this.url_id);
-            this.getInscripcionesTotal(this.url_id);
-        },
+        this.url_id = this.$route.params.id;
+        this.getEditEvento(this.url_id);
+        this.getInscripcionesTotal(this.url_id);
+    },
 }
 
 </script>
