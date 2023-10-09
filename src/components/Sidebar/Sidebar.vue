@@ -291,7 +291,6 @@
 ); }
 
 <script>
-import NotificationDropdown from "@/components/Dropdowns/NotificationDropdown.vue";
 import UserDropdown from "@/components/Dropdowns/UserDropdown.vue";
 
 export default {
@@ -306,7 +305,6 @@ export default {
     },
   },
   components: {
-    NotificationDropdown,
     UserDropdown,
   },
 };

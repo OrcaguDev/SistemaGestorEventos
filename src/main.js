@@ -20,7 +20,6 @@ import Admin from "@/layouts/Admin.vue";
 
 import Dashboard from "@/views/admin/Dashboard.vue";
 import Usuarios from "@/views/admin/Usuarios/Usuario.vue";
-import Settings from "@/views/admin/Settings.vue";
 import ListarEvento from "@/views/admin/Tables.vue";
 import Reporte from "@/views/admin/Reporte.vue";
 import Evento from "@/views/admin/Evento.vue";
@@ -42,7 +41,6 @@ import ListaRegla from "@/views/admin/reglas/ListaRegla.vue";
 import Inscripcion from "@/views/inscripciones/Inscripcion.vue";
 import InscripcionPublica from "@/views/inscripciones/InscripcionPublica.vue";
 import detalleEvento from "@/views/admin/DetalleEvento.vue";
-import Pruebas from "@/views/inscripciones/Pruebas.vue";
 import timeLine from "@/views/admin/TimeLine.vue";
 
 // routes
@@ -61,12 +59,6 @@ const routes = [
         path: "/admin/dashboard",
         component: Dashboard,
         meta: { requiresAuth: true }
-      },
-      {
-        path: "/admin/settings",
-        component: Settings,
-        meta: { requiresAuth: true }
-
       },
       {
         path: "/admin/listarEvento",
@@ -140,10 +132,6 @@ const routes = [
     path: "/inscripciones/inscripcionPublica/:id",
     component: InscripcionPublica,
     
-  },
-  {
-    path: "/inscripciones/pruebas",
-    component: Pruebas,
   },
   { path: "/:pathMatch(.*)*", redirect: "/" },
 ];
