@@ -320,12 +320,11 @@ export default {
       const auth = {
         headers: { 'Content-Type': 'application/json' }
       }
-      axios.post('http://localhost:8000/validateInscripciones', this.inscripcion, auth).then((data) => {
+      axios.post('http://localhost:8000/validateInscripcion', this.inscripcion, auth).then((data) => {
         console.log(data);
 
         if (data.data == 1) {
           alert("Ya se encuentra inscrito en este evento.");
-          window.close();
         } else {
           axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then(() => {
             // console.log(data);

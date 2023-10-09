@@ -38,6 +38,7 @@
                             <div class=" lg:w-12/12 px-4 flex">
                                 <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2 mt-6 "></label>
                                 <button
+                                    @click="updateAsistencia()"
                                     class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-3 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 mt-6 w-full ease-linear transition-all duration-150"
                                     type="button">
                                     Asistencia
@@ -300,14 +301,17 @@ export default {
             let objetoString = localStorage.getItem("token");
             let objeto = JSON.parse(objetoString);
             this.apii.api_token = objeto;
-            const auth = {
-                headers: { 'Content-Type': 'application/json' }
-            }
-            axios.post(`http://localhost:8000/updateAsistencia`, this.apii, auth).then(({ data }) => {
-                this.getInscripcionesTotal(this.url_id);
-            }).catch((error) => {
-                console.log(error);
-            });
+            this.dni = objeto;
+            console.log(this.dni);
+            // const auth = {
+            //     headers: { 'Content-Type': 'application/json' }
+            // }
+            // axios.post(`http://localhost:8000/updateAsistencia/${dni},${id_evento}`, this.apii, auth).then(({ data }) => {
+            //     console.log(data);
+            //     this.getInscripcionesTotal(this.url_id);
+            // }).catch((error) => {
+            //     console.log(error);
+            // });
         },
 
         props: {

@@ -140,6 +140,7 @@ export default {
       }
       axios.post('http://localhost:8000/reglas', this.apii, auth).then(({ data }) => {
         this.reglas = data;
+        console.log(data);
       }).catch((error) => {
         console.log(error);
       });
