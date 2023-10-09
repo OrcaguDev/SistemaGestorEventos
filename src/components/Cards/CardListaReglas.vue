@@ -66,7 +66,7 @@
                 color === 'light'
                   ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
                   : 'bg-emerald-800 text-emerald-300 border-emerald-700',
-              ]">
+              ]"> 
               Acciones
             </th>
           </tr>
@@ -93,11 +93,11 @@
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 flex justify-center">
               <button
                 class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                type="button" v-on:click="Confirmacion()">
+                type="button">
                 <i class="fas fa-trash"></i>
               </button>
 
-              <router-link to="/admin/editar/editReglas">
+              <router-link :to="'/admin/editar/editReglas/' + item.id_regla">
                 <button
                   class="bg-yellow-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                   type="button">
@@ -117,14 +117,16 @@
 
 <script>
 import axios from 'axios';
-import 'sweetalert2/dist/sweetalert2.min.css';
 export default {
   data() {
     return {
       reglas: [],
-      Eliminar: false,
       apii: {
         api_token: ''
+      },
+      regla:{
+        api_token:'',
+        codigo:''
       }
     }
   },

@@ -19,7 +19,7 @@
           <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
             Resumen del Evento
           </h6>
-          <div v-if="isVisibleeee==1" class="flex flex-wrap">
+          <div v-if="isVisibleeee == 1" class="flex flex-wrap">
 
 
 
@@ -239,14 +239,14 @@ export default {
         descripcion: '',
       },
       inscripcion: {
-        dni: '',
+        dni: '44867773',
         nombre: '',
         apellido: '',
         celular: '',
         email: '',
         certificacion: false,
         habilidad: '',
-        url_id:'',
+        url_id: '',
       },
       isVisiblee: 0,
       isVisible: 0,
@@ -255,7 +255,7 @@ export default {
       },
       url_id: '',
       mensaje: '',
-      isVisibleeee:1,
+      isVisibleeee: 1,
     };
   },
   methods: {
@@ -263,24 +263,27 @@ export default {
       const url = `https://app-cipcdll.com:81/obtener_persona_datos_xterceros/${this.inscripcion.dni}`; //RUTA DEL API
       const response = await fetch(url);
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       this.inscripcion.nombre = data.data.nombres;
       this.inscripcion.apellido = data.data.paterno + ' ' + data.data.materno;
       this.inscripcion.celular = data.data.celular;
       this.inscripcion.email = data.data.email;
       this.isVisible = 1;
     },
-    async validarHabilidad() {
-      const url = `https://app-cipcdll.com:81/deuda_habilidad_xterceros/${this.inscripcion.habilidad}`; //RUTA DEL API
-      const response = await fetch(url);
-      const data = await response.json();
-      if (data.data) {
-        this.isVisiblee = 1;
-        this.mensaje = ""
-      } else {
-        this.isVisiblee = 0;
-        this.mensaje = "No se encuentra habilitado."
-      }
+    validarHabilidad() {
+      this.inscripcion.url_id = this.$route.params.id;
+      axios.post(`http://localhost:8000/obtenerReglaEvento/${this.inscripcion.url_id}`).then((data) => {
+        let url_first = data.data[0].url;
+        axios.get(`${url_first}/${this.inscripcion.habilidad}`).then((datax) => {
+          if (data.data) {
+            this.isVisiblee = 1;
+            this.mensaje = ""
+          } else {
+            this.isVisiblee = 0;
+            this.mensaje = "No se encuentra habilitado."
+          }
+        });
+      });
 
     },
 
@@ -307,22 +310,34 @@ export default {
         console.log(error);
       });
     },
-    storeInscripcion(){
-            let objetoString = localStorage.getItem("token");
-            let objeto = JSON.parse(objetoString);
-            this.inscripcion.api_token = objeto;
-            const auth = {
-              headers: { 'Content-Type': 'application/json' }
-            }
-            this.inscripcion.url_id = this.url_id;
-            console.log(this.inscripcion)
-            axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then(() => {
-              // console.log(data);
-              this.isVisibleeee==0;
-              alert("Registo completado satisfactoriamente!");
-              window.close();
-            });
-          }
+    storeInscripcion() {
+      this.inscripcion.url_id = this.$route.params.id;
+      // id del evento
+      // console.log(this.inscripcion.url_id);
+      let objetoString = localStorage.getItem("token");
+      let objeto = JSON.parse(objetoString);
+      this.inscripcion.api_token = objeto;
+      const auth = {
+        headers: { 'Content-Type': 'application/json' }
+      }
+      axios.post('http://localhost:8000/validateInscripciones', this.inscripcion, auth).then((data) => {
+        console.log(data);
+
+        if (data.data == 1) {
+          alert("Ya se encuentra inscrito en este evento.");
+          window.close();
+        } else {
+          axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then(() => {
+            // console.log(data);
+            this.isVisibleeee == 0;
+            alert("Registo completado satisfactoriamente!");
+            window.close();
+          });
+        }
+      })
+    }
+
+    
   },
   mounted() {
     this.url_id = this.$route.params.id;

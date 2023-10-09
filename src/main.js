@@ -97,7 +97,7 @@ const routes = [
 
       },
       {
-        path: "/admin/editar/editReglas",
+        path: "/admin/editar/editReglas/:id",
         component: editReglas,
         meta: { requiresAuth: true }
 

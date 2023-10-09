@@ -3,7 +3,7 @@
         <div class="w-full lg:w-6/12 px-4">
             <div class="flex flex-row ">
                 <!-- REGISTRAR USUARIO -->
-                <div v-if="isVisible==1"
+                <div v-if="isVisible == 1"
                     class="relative flex flex-col min-w-0 break-words w-full lg:w-12/12 m-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
                     <div class="rounded-t bg-white mb-0 px-6 py-6">
                         <div class="text-center flex justify-between">
@@ -90,7 +90,7 @@
                     </div>
                 </div>
                 <!-- EDITAR USUARIO -->
-                <div v-if="isVisible==2"
+                <div v-if="isVisible == 2"
                     class="relative flex flex-col min-w-0 break-words w-full lg:w-12/12 m-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
                     <div class="rounded-t bg-white mb-0 px-6 py-6">
                         <div class="text-center flex justify-between">
@@ -142,7 +142,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <span style="color: red;">{{ alert_password }}</span>
+                            <span style="color: red; font-size: 15px;">{{ alert_password }}</span>
                             <hr class="mt-6 border-b-1 border-blueGray-300" />
                             <button
                                 class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
@@ -292,22 +292,38 @@ export default {
         },
         storeUsuario() {
             // this.isVisible=1;
-            if (this.usuario.password == this.usuario.confirmPassword) {
-                this.view_button = true;
-                let objetoString = localStorage.getItem("token");
-                let objeto = JSON.parse(objetoString);
-                this.usuario.api_token = objeto;
-                const auth = {
-                    headers: { 'Content-Type': 'application/json' }
-                }
-                axios.post('http://localhost:8000/storeUsuario', this.usuario, auth).then(() => {
-                    this.getTotal();
-                    this.limpiar();
-                });
-
+            if (this.usuario.name == '' && this.usuario.email == '' && this.usuario.password == '' && this.usuario.rol == 0) {
+                this.alert_password = "Faltan campos por rellenar, por favor ingresa los datos correctamente.";
             } else {
-                // this.view_button = false;
-                this.alert_password = "Las contraseñas no coinciden";
+                if (this.usuario.password == this.usuario.confirmPassword) {
+                    this.view_button = true;
+                    let objetoString = localStorage.getItem("token");
+                    let objeto = JSON.parse(objetoString);
+                    this.usuario.api_token = objeto;
+
+                    const auth = {
+                        headers: { 'Content-Type': 'application/json' }
+                    }
+                    axios.post('http://localhost:8000/validateEmail', this.usuario, auth).then((data) => {
+                        console.log(data);
+                        if(data.data[0].cuentaEmail>0){
+                
+                            this.alert_password = "Ya existe un usuario con este email.";
+                        }else{
+                            axios.post('http://localhost:8000/storeUsuario', this.usuario, auth).then(() => {
+                                this.getTotal();
+                                this.alert_password=''
+                                this.limpiar();
+                            });
+                        }
+                    });
+
+                    
+
+                } else {
+                    // this.view_button = false;
+                    this.alert_password = "Las contraseñas no coinciden";
+                }
             }
 
         },
@@ -330,8 +346,8 @@ export default {
                 this.getTotal();
             });
         },
-        getUSuario(id){
-            this.isVisible=2;
+        getUSuario(id) {
+            this.isVisible = 2;
             let objetoString = localStorage.getItem("token");
             let objeto = JSON.parse(objetoString);
             this.apii.api_token = objeto;
@@ -344,11 +360,11 @@ export default {
                 console.log(error);
             });
         },
-        changeState(){
-            this.isVisible=1;
+        changeState() {
+            this.isVisible = 1;
             this.limpiar();
         },
-        updateUsuario(){
+        updateUsuario() {
             let objetoString = localStorage.getItem("token");
             let objeto = JSON.parse(objetoString);
             this.usuario.api_token = objeto;

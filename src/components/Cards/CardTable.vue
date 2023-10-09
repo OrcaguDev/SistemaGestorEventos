@@ -186,10 +186,7 @@ export default {
         api_token: '',
         codigo: ''
       },
-      showModal: false
     };
-  },
-  components: {
   },
   props: {
     color: {
