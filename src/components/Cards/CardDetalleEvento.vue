@@ -301,17 +301,19 @@ export default {
             let objetoString = localStorage.getItem("token");
             let objeto = JSON.parse(objetoString);
             this.apii.api_token = objeto;
-            this.dni = objeto;
-            console.log(this.dni);
-            // const auth = {
-            //     headers: { 'Content-Type': 'application/json' }
-            // }
-            // axios.post(`http://localhost:8000/updateAsistencia/${dni},${id_evento}`, this.apii, auth).then(({ data }) => {
-            //     console.log(data);
-            //     this.getInscripcionesTotal(this.url_id);
-            // }).catch((error) => {
-            //     console.log(error);
-            // });
+            var dni = this.dni;
+            var id_evento = this.url_id;
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            var url_concatenado = `http://localhost:8000/updateAsistencia/?dni=${dni}&id_evento=${id_evento}`;
+            // console.log(url_concatenado);
+            axios.post(url_concatenado, this.apii, auth).then(({ data }) => {
+                console.log(data);
+                this.getInscripcionesTotal(this.url_id);
+            }).catch((error) => {
+                console.log(error);
+            });
         },
 
         props: {

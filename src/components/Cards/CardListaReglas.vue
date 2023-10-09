@@ -97,7 +97,7 @@
                 <i class="fas fa-trash"></i>
               </button>
 
-              <router-link :to="'/admin/editar/editReglas/' + item.id_regla">
+              <router-link :to="'/admin/editar/editReglas/' + id_regla">
                 <button
                   class="bg-yellow-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                   type="button">
@@ -145,7 +145,7 @@ export default {
         console.log(error);
       });
 
-    }
+    },
   },
   created() {
     this.getTotal();

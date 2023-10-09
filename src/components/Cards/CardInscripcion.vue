@@ -317,22 +317,23 @@ export default {
       let objetoString = localStorage.getItem("token");
       let objeto = JSON.parse(objetoString);
       this.inscripcion.api_token = objeto;
+      
       const auth = {
         headers: { 'Content-Type': 'application/json' }
       }
       axios.post('http://localhost:8000/validateInscripcion', this.inscripcion, auth).then((data) => {
         console.log(data);
 
-        if (data.data == 1) {
-          alert("Ya se encuentra inscrito en este evento.");
-        } else {
-          axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then(() => {
-            // console.log(data);
-            this.isVisibleeee == 0;
-            alert("Registo completado satisfactoriamente!");
-            window.close();
-          });
-        }
+        // if (data.data == 1) {
+        //   alert("Ya se encuentra inscrito en este evento.");
+        // } else {
+        //   axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then(() => {
+        //     // console.log(data);
+        //     this.isVisibleeee == 0;
+        //     alert("Registo completado satisfactoriamente!");
+        //     window.close();
+        //   });
+        // }
       })
     }
 
