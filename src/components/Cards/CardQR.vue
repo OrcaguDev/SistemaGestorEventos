@@ -1,5 +1,5 @@
 <template>
-    <div class="container px-4 mx-auto mt-6 bg-red-500">
+    <div class="container px-4 mx-auto mt-6 ">
         <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
             <div class="rounded-t bg-white mb-0 px-6 py-6">
                 <div class="text-center flex justify-between">
@@ -10,7 +10,7 @@
                 <div class="flex flex-col items-center">
                     <div class="flex flex-wrap justify-center">
                         <div class="w-6/12 sm:w-6/12 px-4">
-                            <vue-qrcode ref="qrcode" :value="this.hello" :options="options"></vue-qrcode>
+                            <vue-qrcode ref="qrcode" :value="hello" :options="options"></vue-qrcode>
                             <div class="container"> <button
                                     v-on:click="getinput(InputData, hexCode, hexCode2, InputData2, InputData3, selectedImage, this.$refs.qrcode.$el)"></button>
                             </div>
@@ -156,8 +156,32 @@
                             <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
                                 Constancia
                             </label>
-                            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                {{ detalle.certificacion }}
+                            <label v-if="detalle.certificacion=1" class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                                Si
+                            </label>
+
+                            <label v-else class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                                No
+                            </label>
+
+                        </div>
+                    </div>
+
+                    <div class="w-full lg:w-6/12 px-4">
+                        <div class="relative w-full mb-6">
+                            <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
+                                Link de Pago
+                            </label>
+                            <label v-if="detalle.certificacion == 1"
+                            class="block uppercase text-blueGray-600 text-xs font-bold mb-2 mt-4" htmlFor="grid-password">
+                                <a href="https://www.google.com/"  class="mt-4 bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-2 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150" 
+                                alt="" 
+                                target="_blank">Realice el pago aquí</a>
+                            </label>
+
+                            <label v-else
+                            class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                                
                             </label>
                         </div>
                     </div>
@@ -275,6 +299,7 @@ export default {
                 this.options.scale = InputData3
                 this.options.color.dark = hexCode
                 this.options.color.light = hexCode2
+                console.log(this.hello)
             } catch (error) {
                 console.log(error)
             }
