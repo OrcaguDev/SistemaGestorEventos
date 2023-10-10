@@ -93,7 +93,7 @@
                 <hr class="mt-6 mb-4 border-b-1 border-blueGray-300" />
 
                 <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                    Detalles del Evento
+                    Detalles del Participante
                 </h6>
                 <div class="flex flex-wrap">
 
@@ -106,7 +106,7 @@
                             </label>
 
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                <!-- {{ evento.nombre }} -->
+                                <!-- {{ data.data }} -->
                             </label>
 
                         </div>
@@ -174,7 +174,20 @@
 
 <script>
 import VueQrcode from '@chenfengyuan/vue-qrcode'
+import axios from 'axios'
 export default {
+    data(){
+        return{
+            inscripcion: {
+                dni: '',
+                nombre: '',
+                apellido:'',
+                celular:'',
+                email:'',
+                certificacion:'',
+            }
+        };  
+    },
     components: { VueQrcode },
     props: ['InputData', 'hexCode', 'hexCode2', 'InputData2', 'InputData3', 'selectedImage'],
     data() {
