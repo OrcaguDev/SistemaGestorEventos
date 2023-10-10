@@ -301,8 +301,8 @@ export default {
             let objetoString = localStorage.getItem("token");
             let objeto = JSON.parse(objetoString);
             this.apii.api_token = objeto;
-            var dni = this.dni;
-            var id_evento = this.url_id;
+            let dni = this.dni;
+            let id_evento = this.url_id;
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }

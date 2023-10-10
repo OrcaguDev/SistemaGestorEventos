@@ -36,7 +36,7 @@
               <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
                 Descripción
               </label>
-              <textarea type="text" v-model="descripcion"
+              <textarea type="text" v-model="regla.descripcion"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
               </textarea>
             </div>
@@ -47,15 +47,15 @@
         <hr class="mt-6 border-b-1 border-blueGray-300" />
 
         <div class="flex">
-          <button
+          <button 
             class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-            type="submit">
+            type="button">
             Guardar
           </button>
 
           <button
             class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-            type="submit">
+            type="button" @click="goBack">
             Cerrar
           </button>
         </div>
@@ -71,34 +71,42 @@ export default {
   data() {
     return {
       regla: {
-        nombre:'',
-        url:'',
-        descripcion:'',
-        api_token:''
+        nombre: '',
+        url: '',
+        descripcion: '',
+        api_token: '',
+        codigo:''
       },
-      apii:{
-        api_token:''
+      apii: {
+        api_token: ''
       },
-      url_id:'',
+      url_id: '',
     }
   },
   methods: {
+    goBack() {
+      window.history.back();
+    },
     getEditRegla(id) {
+      console.log(id);
       let objetoString = localStorage.getItem("token");
       let objeto = JSON.parse(objetoString);
       this.apii.api_token = objeto;
-      console.log(id);
       const auth = {
         Headers: { 'Content-Type': 'application/json' }
       }
-      axios.post(`http://localhost:8000/regla/${id}`,this.apii,auth).then(({data}) => {
+      axios.post(`http://localhost:8000/regla/${id}`, this.apii, auth).then(({ data }) => {
         this.regla.nombre = data[0].nombre;
-        this.regla.nombre = data[0].url;
-        this.regla.nombre = data[0].descripcion;
+        this.regla.url = data[0].url;
+        this.regla.descripcion = data[0].descripcion;
       }).catch((error) => {
         console.log(error);
       });
-    }
+    },
+  },
+  mounted(){
+    this.url_id = this.$route.params.id;
+    this.getEditRegla(this.url_id);
   }
 }
 </script>

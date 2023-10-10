@@ -8,13 +8,18 @@
       </div>
       <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
         <form @submit.prevent="storeInscripcion()">
-          <div class="flex flex-wrap justify-center">
-            <div class="w-6/12 sm:w-4/12 px-4">
-              <img
-                src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80"
-                alt="..." class="shadow-lg rounded max-w-full h-auto align-middle border-none" />
+          <div class="flex flex-col items-center">
+            <div class="flex flex-wrap justify-center">
+              <div class="w-6/12 sm:w-6/12 px-4">
+                <img :src="`http://localhost:8000/img/${evento.img}`" alt="..."
+                  class="shadow-lg rounded max-w-full h-auto align-middle border-none" /><br>
+                <a :href="`http://localhost:8000/informe/${evento.informe}`" target="_blank"
+                  class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-2 py-3 rounded shadow ml-4 hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150">
+                  DESCARGAR BROCHURE</a>
+              </div>
             </div>
           </div>
+
 
           <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
             Resumen del Evento
@@ -237,6 +242,8 @@ export default {
         lugar: '',
         fechaInicio: '',
         descripcion: '',
+        img: '',
+        informe: '',
       },
       inscripcion: {
         dni: '44867773',
@@ -256,6 +263,7 @@ export default {
       url_id: '',
       mensaje: '',
       isVisibleeee: 1,
+      alert: '',
     };
   },
   methods: {
@@ -305,6 +313,8 @@ export default {
         this.evento.fechaFin = data[0].fechaFin;
         this.evento.id_regla = data[0].id_regla;
         this.evento.fechaInscripcion = data[0].fechaInscripcion;
+        this.evento.img = data[0].img;
+        this.evento.informe = data[0].informe;
 
       }).catch((error) => {
         console.log(error);
@@ -312,32 +322,36 @@ export default {
     },
     storeInscripcion() {
       this.inscripcion.url_id = this.$route.params.id;
-      // id del evento
       // console.log(this.inscripcion.url_id);
       let objetoString = localStorage.getItem("token");
       let objeto = JSON.parse(objetoString);
       this.inscripcion.api_token = objeto;
-      
+      let dni = this.inscripcion.dni;
+      let id_evento = this.inscripcion.url_id;
+      console.log(dni);
+      console.log(id_evento);
+      // console.log(this.inscripcion);
       const auth = {
         headers: { 'Content-Type': 'application/json' }
       }
-      axios.post('http://localhost:8000/validateInscripcion', this.inscripcion, auth).then((data) => {
-        console.log(data);
-
-        // if (data.data == 1) {
-        //   alert("Ya se encuentra inscrito en este evento.");
-        // } else {
+      let url_combinado = `http://localhost:8000/validateInscripciones/?dni=${dni}&id_evento=${id_evento}`;
+      console.log(url_combinado);
+      axios.post(url_combinado, this.inscripcion, auth).then((data) => {
+        console.log(data.data[0]);
+        // if(data.data[0].cuentaInscripciones>0){
+        //   this.alert ="Ya se encuentra registrado en este evento.";
+        //   window.alert(this.alert);
+        // }else{
         //   axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then(() => {
-        //     // console.log(data);
-        //     this.isVisibleeee == 0;
-        //     alert("Registo completado satisfactoriamente!");
-        //     window.close();
-        //   });
-        // }
+        //       // console.log(data);
+        //       this.isVisibleeee == 0;
+        //       window.alert("Registo completado satisfactoriamente!");
+        //     });
+        //   }
       })
     }
 
-    
+
   },
   mounted() {
     this.url_id = this.$route.params.id;
