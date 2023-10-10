@@ -146,19 +146,20 @@ export default {
       });
 
     },
-    eliminarRegla(id){
-      let objetoString = localStorage.getItem("token");
-      let objeto = JSON.parse(objetoString);
-      this.regla.api_token = objeto;
-      this.regla.codigo = id;
-      const auth = {
-        Headers: { 'Content-Type': 'application/json' }
-      }
-      axios.post(`http://localhost:8000/eliminarRegla`, this.regla, auth).then(() => {
-        // console.log(data);
-        this.getTotal();
-      });
-    },
+    // eliminarRegla(id){
+    //   console.log(this.reglas);
+      // let objetoString = localStorage.getItem("token");
+      // let objeto = JSON.parse(objetoString);
+      // this.regla.api_token = objeto;
+      // this.regla.codigo = id;
+      // const auth = {
+      //   Headers: { 'Content-Type': 'application/json' }
+      // }
+      // axios.post(`http://localhost:8000/eliminarRegla`, this.regla, auth).then(() => {
+      //   // console.log(data);
+      //   this.getTotal();
+      // });
+    // },
   },
   created() {
     this.getTotal();

@@ -306,11 +306,12 @@ export default {
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            var url_concatenado = `http://localhost:8000/updateAsistencia/?dni=${dni}&id_evento=${id_evento}`;
+            let url_concatenado = `http://localhost:8000/updateAsistencia/?dni=${dni}&id_evento=${id_evento}`;
             // console.log(url_concatenado);
             axios.post(url_concatenado, this.apii, auth).then(({ data }) => {
-                console.log(data);
+                // console.log(data);
                 this.getInscripcionesTotal(this.url_id);
+                this.dni='';
             }).catch((error) => {
                 console.log(error);
             });

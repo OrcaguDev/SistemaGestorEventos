@@ -18,7 +18,7 @@
               </label>
               <input type="text"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="evento.nombre" />
+                v-model="evento.nombre"  required/>
             </div>
           </div>
           <div class="w-full lg:w-6/12 px-4">
@@ -28,7 +28,7 @@
               </label>
               <input type="text"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="evento.expositor" />
+                v-model="evento.expositor"  required/>
             </div>
           </div>
           <div class="w-full lg:w-6/12 px-4">
@@ -38,7 +38,7 @@
               </label>
               <input type="text"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="evento.lugar" />
+                v-model="evento.lugar"  required/>
             </div>
           </div>
           <div class="w-full lg:w-6/12 px-4">
@@ -48,7 +48,7 @@
               </label>
               <input type="datetime-local"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="evento.fechaInicio" />
+                v-model="evento.fechaInicio" required/>
             </div>
           </div>
 
@@ -59,7 +59,7 @@
               </label>
               <textarea type="text"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="evento.descripcion">
+                v-model="evento.descripcion" required>
               </textarea>
             </div>
           </div>
@@ -79,7 +79,7 @@
               </label>
               <input type="datetime-local"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="evento.fechaInscripcion" />
+                v-model="evento.fechaInscripcion" required />
             </div>
           </div>
 
@@ -89,7 +89,7 @@
                 Reglas para el evento
               </label>
 
-              <select v-model="evento.id_regla" @change="reglaChange()" class=" text-blueGray-600 text-sm uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150">
+              <select v-model="evento.id_regla" @change="reglaChange()" class=" text-blueGray-600 text-sm uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150" required>
                 <option value="0" selected>Seleccione una regla</option>
                 <option v-for="(regla, index) in reglas" :key="index" :value="regla.id_regla">
                   {{ regla.nombre }}
@@ -127,32 +127,32 @@
           </div>
           <div class="w-full lg:w-4/12 px-4">
             <div class="relative w-full mb-3">
-              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password" >
                 Aforo Total
               </label>
               <input type="number"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="evento.aforo_total" />
+                v-model="evento.aforo_total" required/>
             </div>
           </div>
           <div class="w-full lg:w-4/12 px-4">
             <div class="relative w-full mb-3">
-              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password" >
                 Butacas Reservadas
               </label>
               <input type="number"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="evento.butacas_reservadas" />
+                v-model="evento.butacas_reservadas" required/>
             </div>
           </div>
           <div class="w-full lg:w-4/12 px-4">
             <div class="relative w-full mb-3">
-              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password" >
                 Fecha y Hora de Fin
               </label>
               <input type="datetime-local"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="evento.fechaFin" />
+                v-model="evento.fechaFin" required/>
             </div>
           </div>
         </div>

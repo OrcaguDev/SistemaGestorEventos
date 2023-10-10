@@ -24,7 +24,7 @@
               <input
                 type="text"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
-                 v-model="regla.nombre"                 
+                 v-model="regla.nombre "   required              
               />
             </div>
           </div>
@@ -39,7 +39,7 @@
               <input
                 type="text"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"   
-                 v-model="regla.url"               
+                 v-model="regla.url" required       
               />
             </div>
           </div>
@@ -56,7 +56,7 @@
               <textarea
                 type="text"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                 v-model="regla.descripcion"
+                 v-model="regla.descripcion" required
               >
               </textarea>
             </div>

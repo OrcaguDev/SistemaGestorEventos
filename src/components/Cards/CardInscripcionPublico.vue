@@ -8,10 +8,15 @@
             </div>
             <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
                 <form @submit.prevent="storeInscripcion()">
-                    <div class="flex flex-wrap justify-center">
-                        <div class="w-6/12 sm:w-4/12 px-4">
-                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80"
-                                alt="..." class="shadow-lg rounded max-w-full h-auto align-middle border-none" />
+                    <div class="flex flex-col items-center">
+                        <div class="flex flex-wrap justify-center">
+                            <div class="w-6/12 sm:w-6/12 px-4">
+                                <img :src="`http://localhost:8000/img/${evento.img}`" alt="..."
+                                    class="shadow-lg rounded max-w-full h-auto align-middle border-none" /><br>
+                                <a :href="`http://localhost:8000/informe/${evento.informe}`" target="_blank"
+                                    class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-2 py-3 rounded shadow ml-4 hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150">
+                                    DESCARGAR BROCHURE</a>
+                            </div>
                         </div>
                     </div>
 
@@ -95,13 +100,14 @@
                     <hr class="mt-6 mb-4 border-b-1 border-blueGray-300" />
 
                     <div class="flex flex-wrap">
-                        
+
                         <div class="w-full lg:w-3/12 px-4">
                             <div class="relative w-full mb-3">
                                 <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
                                     DNI
                                 </label>
-                                <input type="text" v-model="dni" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"/>
+                                <input type="text" v-model="inscripcion.dni"
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" required />
                             </div>
                         </div>
 
@@ -110,7 +116,8 @@
                                 <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
                                     Telefono
                                 </label>
-                                <input type="text" v-model="telefono" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"/>
+                                <input type="text" v-model="inscripcion.celular"
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" required />
                             </div>
                         </div>
 
@@ -119,7 +126,8 @@
                                 <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
                                     Email
                                 </label>
-                                <input type="text" v-model="email" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"/>
+                                <input type="text" v-model="inscripcion.email"
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" required />
                             </div>
                         </div>
 
@@ -128,7 +136,8 @@
                                 <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
                                     Nombre
                                 </label>
-                                <input type="text" v-model="nombre" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"/>
+                                <input type="text" v-model="inscripcion.nombre"
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" required />
                             </div>
                         </div>
 
@@ -137,7 +146,8 @@
                                 <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
                                     Apellidos
                                 </label>
-                                <input type="text" v-model="apellido" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"/>
+                                <input type="text" v-model="inscripcion.apellido"
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"  required/>
                             </div>
                         </div>
 
@@ -146,11 +156,12 @@
                                 <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
                                     Certificacion
                                 </label>
-                                <input type="checkbox" v-model="certificacion" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"/>
+                                <input type="checkbox" v-model="inscripcion.certificacion"
+                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                             </div>
                         </div>
 
-                        
+
                     </div>
 
                     <hr class="mt-6 mb-4 border-b-1 border-blueGray-300" />
@@ -193,6 +204,8 @@ export default {
                 lugar: '',
                 fechaInicio: '',
                 descripcion: '',
+                img: '',
+                informe: '',
             },
             inscripcion: {
                 dni: '',
@@ -212,30 +225,6 @@ export default {
         };
     },
     methods: {
-        // async validarDni() {
-        //     const url = `https://app-cipcdll.com:81/obtener_persona_datos_xterceros/${this.inscripcion.dni}`; //RUTA DEL API
-        //     const response = await fetch(url);
-        //     const data = await response.json();
-        //     console.log(data);
-        //     this.inscripcion.nombre = data.data.nombres;
-        //     this.inscripcion.apellido = data.data.paterno + ' ' + data.data.materno;
-        //     this.inscripcion.celular = data.data.celular;
-        //     this.inscripcion.email = data.data.email;
-        //     this.isVisible = 1;
-        // },
-        // async validarHabilidad() {
-        //     const url = `https://app-cipcdll.com:81/deuda_habilidad_xterceros/${this.inscripcion.habilidad}`; //RUTA DEL API
-        //     const response = await fetch(url);
-        //     const data = await response.json();
-        //     if (data.data) {
-        //         this.isVisiblee = 1;
-        //         this.mensaje = ""
-        //     } else {
-        //         this.isVisiblee = 0;
-        //         this.mensaje = "No se encuentra habilitado."
-        //     }
-
-        // },
 
         getEditEvento(id) {
             let objetoString = localStorage.getItem("token");
@@ -255,26 +244,42 @@ export default {
                 this.evento.fechaFin = data[0].fechaFin;
                 this.evento.id_regla = data[0].id_regla;
                 this.evento.fechaInscripcion = data[0].fechaInscripcion;
+                this.evento.img = data[0].img;
+                this.evento.informe = data[0].informe;
 
             }).catch((error) => {
                 console.log(error);
             });
         },
         storeInscripcion() {
+            this.inscripcion.url_id = this.$route.params.id;
+            // console.log(this.inscripcion.url_id);
             let objetoString = localStorage.getItem("token");
             let objeto = JSON.parse(objetoString);
             this.inscripcion.api_token = objeto;
+            let dni = this.inscripcion.dni;
+            let id_evento = this.inscripcion.url_id;
+            // console.log(dni);
+            // console.log(id_evento);
+            // console.log(this.inscripcion);
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            this.inscripcion.url_id = this.url_id;
-            console.log(this.inscripcion)
-            axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then(() => {
-                // console.log(data);
-                this.isVisibleeee == 0;
-                alert("Registo completado satisfactoriamente!");
-                window.close();
-            });
+            let url_combinado = `http://localhost:8000/validateInscripciones/?dni=${dni}&id_evento=${id_evento}`;
+            // console.log(url_combinado);
+            axios.post(url_combinado, this.inscripcion, auth).then((data) => {
+                // console.log(data.data[0]);
+                if (data.data[0].cuentaInscripcion > 0) {
+                    this.alert = "Ya se encuentra registrado en este evento.";
+                    window.alert(this.alert);
+                } else {
+                    axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then(() => {
+                        // console.log(data);
+                        this.isVisibleeee == 0;
+                        window.alert("Registo completado satisfactoriamente!");
+                    });
+                }
+            })
         }
     },
     mounted() {

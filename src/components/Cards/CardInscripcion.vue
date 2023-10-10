@@ -328,26 +328,26 @@ export default {
       this.inscripcion.api_token = objeto;
       let dni = this.inscripcion.dni;
       let id_evento = this.inscripcion.url_id;
-      console.log(dni);
-      console.log(id_evento);
+      // console.log(dni);
+      // console.log(id_evento);
       // console.log(this.inscripcion);
       const auth = {
         headers: { 'Content-Type': 'application/json' }
       }
       let url_combinado = `http://localhost:8000/validateInscripciones/?dni=${dni}&id_evento=${id_evento}`;
-      console.log(url_combinado);
+      // console.log(url_combinado);
       axios.post(url_combinado, this.inscripcion, auth).then((data) => {
-        console.log(data.data[0]);
-        // if(data.data[0].cuentaInscripciones>0){
-        //   this.alert ="Ya se encuentra registrado en este evento.";
-        //   window.alert(this.alert);
-        // }else{
-        //   axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then(() => {
-        //       // console.log(data);
-        //       this.isVisibleeee == 0;
-        //       window.alert("Registo completado satisfactoriamente!");
-        //     });
-        //   }
+        // console.log(data.data[0]);
+        if(data.data[0].cuentaInscripcion>0){
+          this.alert ="Ya se encuentra registrado en este evento.";
+          window.alert(this.alert);
+        }else{
+          axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then(() => {
+              // console.log(data);
+              this.isVisibleeee == 0;
+              window.alert("Registo completado satisfactoriamente!");
+            });
+          }
       })
     }
 
