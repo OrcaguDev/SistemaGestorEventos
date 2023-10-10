@@ -49,7 +49,7 @@
         <div class="flex">
           <button 
             class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-            type="button">
+            type="button" @click="updateRegla()">
             Guardar
           </button>
 
@@ -99,6 +99,25 @@ export default {
         this.regla.nombre = data[0].nombre;
         this.regla.url = data[0].url;
         this.regla.descripcion = data[0].descripcion;
+      }).catch((error) => {
+        console.log(error);
+      });
+    },
+    updateRegla(){
+      let objeroString = localStorage.getItem("token");
+      let objeto = JSON.parse(objeroString);
+      this.regla.api_token = objeto;
+      this.regla.codigo = this.url_id;
+      // console.log(this.regla.nombre);
+      // console.log(this.regla.url);
+      // console.log(this.regla.descripcion);
+      
+      const auth = {
+        Headers: { 'Content-Type': 'application/json' }
+      }
+      axios.post(`http://localhost:8000/actualizarRegla/?nombre=${this.regla.nombre}&descripcion=${this.regla.descripcion}&url=${this.regla.url}&id=${this.regla.codigo}`, this.regla, auth).then(() => {
+        window.alert("Ha sido editado correctamente!");
+        this.goBack();
       }).catch((error) => {
         console.log(error);
       });

@@ -91,7 +91,7 @@
             </td>
             <td
               class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 flex justify-center">
-              <button @click="eliminarRegla(regla.codigo)"
+              <button @click="eliminarRegla()"
                 class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 type="button">
                 <i class="fas fa-trash"></i>
@@ -106,8 +106,6 @@
               </router-link>
             </td>
           </tr>
-
-
         </tbody>
       </table>
     </div>
@@ -144,22 +142,10 @@ export default {
       }).catch((error) => {
         console.log(error);
       });
-
     },
-    // eliminarRegla(id){
-    //   console.log(this.reglas);
-      // let objetoString = localStorage.getItem("token");
-      // let objeto = JSON.parse(objetoString);
-      // this.regla.api_token = objeto;
-      // this.regla.codigo = id;
-      // const auth = {
-      //   Headers: { 'Content-Type': 'application/json' }
-      // }
-      // axios.post(`http://localhost:8000/eliminarRegla`, this.regla, auth).then(() => {
-      //   // console.log(data);
-      //   this.getTotal();
-      // });
-    // },
+    eliminarRegla(){
+      console.log(this.regla.id_regla);
+    }
   },
   created() {
     this.getTotal();

@@ -187,7 +187,7 @@
                                 {{ inscripcion.apellido }}
                             </td>
                             <td v-if="inscripcion.certificacion == 1"
-                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 ">
                                 Si
                             </td>
                             <td v-else
@@ -289,8 +289,7 @@ export default {
             }
             let url_concatenado = `http://localhost:8000/updateAsistencia/?dni=${dni}&id_evento=${id_evento}`;
             // console.log(url_concatenado);
-            axios.post(url_concatenado, this.apii, auth).then(({ data }) => {
-                // console.log(data);
+            axios.post(url_concatenado, this.apii, auth).then(() => {
                 this.getInscripcionesTotal(this.url_id);
                 this.dni='';
             }).catch((error) => {

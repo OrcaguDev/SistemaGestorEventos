@@ -282,7 +282,7 @@ export default {
       this.inscripcion.url_id = this.$route.params.id;
       axios.post(`http://localhost:8000/obtenerReglaEvento/${this.inscripcion.url_id}`).then((data) => {
         let url_first = data.data[0].url;
-        axios.get(`${url_first}/${this.inscripcion.habilidad}`).then((datax) => {
+        axios.get(`${url_first}/${this.inscripcion.habilidad}`).then((data) => {
           if (data.data) {
             this.isVisiblee = 1;
             this.mensaje = ""
@@ -341,6 +341,7 @@ export default {
         if(data.data[0].cuentaInscripcion>0){
           this.alert ="Ya se encuentra registrado en este evento.";
           window.alert(this.alert);
+          window.location.reload();
         }else{
           axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then((data) => {
               // console.log(data.data.inscripcion_id);

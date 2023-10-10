@@ -4,14 +4,14 @@
             <div class="flex flex-wrap items-center">
                 <div class="relative w-full max-w-full flex-grow flex-1">
                     <h2 class="text-blueGray-700 text-xl font-semibold">
-                        CALENDARIO DE EVENTOS
+                        SISTEMA GESTOR DE EVENTOS DEL COLEGIO DE INGENIEROS
                     </h2>
                 </div>
             </div>
         </div>
         <div class="p-4 flex-auto">
             <div class="relative h-350-px">
-                <canvas id="bar-chart"></canvas>
+                
             </div>
         </div>
     </div>

@@ -256,6 +256,7 @@ export default {
                 this.detalle.apellido= data[0].apellido;
                 this.detalle.celular= data[0].celular;
                 this.detalle.certificacion= data[0].certificacion;
+                this.hello = this.detalle.dni;
             });
         },
         getEvento(id){
