@@ -1,5 +1,5 @@
 <template>
-    <div class="container px-4 mx-auto mt-6">
+    <div class="container px-4 mx-auto mt-6 bg-red-500">
         <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
             <div class="rounded-t bg-white mb-0 px-6 py-6">
                 <div class="text-center flex justify-between">
@@ -10,7 +10,7 @@
                 <div class="flex flex-col items-center">
                     <div class="flex flex-wrap justify-center">
                         <div class="w-6/12 sm:w-6/12 px-4">
-                            <vue-qrcode ref="qrcode" :value="hello" :options="options"></vue-qrcode>
+                            <vue-qrcode ref="qrcode" :value="this.hello" :options="options"></vue-qrcode>
                             <div class="container"> <button
                                     v-on:click="getinput(InputData, hexCode, hexCode2, InputData2, InputData3, selectedImage, this.$refs.qrcode.$el)"></button>
                             </div>
@@ -32,7 +32,7 @@
                             </label>
 
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                <!-- {{ evento.nombre }} -->
+                                {{detalle.titulo}}
                             </label>
 
                         </div>
@@ -45,7 +45,7 @@
                                 Lugar
                             </label>
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                <!-- {{ evento.lugar }} -->
+                                {{ detalle.lugar }}
                             </label>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                                 Fecha y hora
                             </label>
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                <!-- {{ evento.fechaInicio }} -->
+                                {{ detalle.fechaInicio }}
                             </label>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                                 Expositor
                             </label>
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                <!-- {{ evento.expositor }} -->
+                                {{ detalle.expositor }}
                             </label>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                                 Descripción
                             </label>
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                <!-- {{ evento.descripcion }} -->
+                                {{ detalle.descripcion }}
                             </label>
                         </div>
                     </div>
@@ -106,7 +106,7 @@
                             </label>
 
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                <!-- {{ data.data }} -->
+                                {{ detalle.nombre }}
                             </label>
 
                         </div>
@@ -119,7 +119,7 @@
                                 Apellidos
                             </label>
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                <!-- {{ evento.lugar }} -->
+                                {{ detalle.apellido }}
                             </label>
                         </div>
                     </div>
@@ -132,7 +132,7 @@
                                 Telefono
                             </label>
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                <!-- {{ evento.fechaInicio }} -->
+                                {{ detalle.celular }}
                             </label>
                         </div>
                     </div>
@@ -145,11 +145,10 @@
                                 DNI
                             </label>
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                <!-- {{ evento.expositor }} -->
+                                {{ detalle.dni }}
                             </label>
                         </div>
                     </div>
-
 
 
                     <div class="w-full lg:w-6/12 px-4">
@@ -158,53 +157,104 @@
                                 Constancia
                             </label>
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                <!-- {{ evento.descripcion }} -->
+                                {{ detalle.certificacion }}
                             </label>
                         </div>
                     </div>
                 </div>
 
 
-                </div>
-                <hr class="mt-6 mb-4 border-b-1 border-blueGray-300" />
-
             </div>
+            <hr class="mt-6 mb-4 border-b-1 border-blueGray-300" />
+
         </div>
+    </div>
 </template>
 
 <script>
 import VueQrcode from '@chenfengyuan/vue-qrcode'
 import axios from 'axios'
 export default {
-    data(){
-        return{
-            inscripcion: {
-                dni: '',
-                nombre: '',
-                apellido:'',
-                celular:'',
-                email:'',
-                certificacion:'',
-            }
-        };  
-    },
-    components: { VueQrcode },
-    props: ['InputData', 'hexCode', 'hexCode2', 'InputData2', 'InputData3', 'selectedImage'],
     data() {
-        return {
-            hello: "aqui va el dni",
+        return {      
+            hello: "dasd",
             options: {
                 maskPattern: 7,
-                scale: 18,
+                scale: 20,
                 color: {
                     dark: '#000000',
                     light: '#ffffff',
                 },
                 margin: 0
-            }
-        }
+            },
+            detalle:{
+                dni: '',
+                nombre: '',
+                apellido: '',
+                celular: '',
+                email: '',
+                certificacion: '',
+                titulo:'',
+                descripcion:'',
+                lugar:'',
+                fechaInicio:'',
+                fechaFin:'',
+                expositor:'',
+            },
+            apii:{
+                api_token:''
+            },
+            url_id:'',
+            inscripcion: [],
+            evento: [],
+        };
     },
+    components: { VueQrcode },
+    
+    props: ['InputData', 'hexCode', 'hexCode2', 'InputData2', 'InputData3', 'selectedImage'],
+
+
     methods: {
+        getInscripciones(id) {
+            // console.log(id);
+            let objetoString = localStorage.getItem("token");
+            let objeto = JSON.parse(objetoString);
+            this.apii.api_token = objeto;
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post(`http://localhost:8000/getInscripciones/${id}`, this.apii, auth).then(({ data }) => {
+                // console.log(data[0]);
+                this.inscripcion= data[0];
+                // console.log(this.inscripcion);
+                this.detalle.dni= data[0].dni;
+                this.detalle.nombre= data[0].nombre;
+                this.detalle.apellido= data[0].apellido;
+                this.detalle.celular= data[0].celular;
+                this.detalle.certificacion= data[0].certificacion;
+            });
+        },
+        getEvento(id){
+            // console.log(id);
+            let objetoString = localStorage.getItem("token");
+            let objeto = JSON.parse(objetoString);
+            this.apii.api_token = objeto;
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post(`http://localhost:8000/eventoDetalle/${id}`, this.apii, auth).then(({ data }) => {
+                // console.log(data[0]);
+                // this.evento = data[0];
+                // this.evento= data[0];
+                // console.log(this.evento);
+                this.detalle.titulo = data[0].nombre;
+                this.detalle.expositor = data[0].expositor;
+                this.detalle.descripcion = data[0].descripcion;
+                this.detalle.lugar = data[0].lugar;
+                this.detalle.fechaInicio = data[0].fechaInicio;
+                this.detalle.fechaFin = data[0].fechaFin;
+            });
+        },
         getinput(InputData, hexCode, hexCode2, InputData2, InputData3, selectedImage, canvas) {
             try {
                 if (!InputData) throw new Error("InputData is not defined")
@@ -219,7 +269,8 @@ export default {
                     console.log(canvas.width)
                     this.drawImage(context, image, x, x, width, width);
                 };
-                this.hello = InputData
+                this.hello=''
+                this.hello = this.detalle.dni
                 this.options.maskPattern = InputData2
                 this.options.scale = InputData3
                 this.options.color.dark = hexCode
@@ -248,6 +299,11 @@ export default {
             context.fillRect(x, x, width, height);
             context.drawImage(image, x, x, width, height);
         },
+    },
+    mounted(){
+        this.url_id = this.$route.params.id;
+        this.getInscripciones(this.url_id);
+        this.getEvento(this.url_id);
     }
 }
 </script>

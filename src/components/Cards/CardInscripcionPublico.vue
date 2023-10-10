@@ -277,6 +277,7 @@ export default {
                         // console.log(data);
                         this.isVisibleeee == 0;
                         window.alert("Registo completado satisfactoriamente!");
+                        this.$router.push({ path: `/inscripciones/QR/${data.data.inscripcion_id}` });
                     });
                 }
             })

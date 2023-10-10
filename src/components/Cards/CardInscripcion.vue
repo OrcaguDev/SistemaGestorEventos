@@ -343,7 +343,7 @@ export default {
           window.alert(this.alert);
         }else{
           axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then((data) => {
-              console.log(data.data.inscripcion_id);
+              // console.log(data.data.inscripcion_id);
               this.isVisibleeee == 0;
               window.alert("Registo completado satisfactoriamente!");
               // window.close();
