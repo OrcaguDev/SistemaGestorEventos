@@ -40,6 +40,7 @@ import ListaRegla from "@/views/admin/reglas/ListaRegla.vue";
 
 import Inscripcion from "@/views/inscripciones/Inscripcion.vue";
 import InscripcionPublica from "@/views/inscripciones/InscripcionPublica.vue";
+import QR from "@/views/inscripciones/QR.vue";
 import detalleEvento from "@/views/admin/DetalleEvento.vue";
 import timeLine from "@/views/admin/TimeLine.vue";
 
@@ -131,6 +132,11 @@ const routes = [
   {
     path: "/inscripciones/inscripcionPublica/:id",
     component: InscripcionPublica,
+    
+  },
+  {
+    path: "/inscripciones/QR/:id",
+    component: QR,
     
   },
   { path: "/:pathMatch(.*)*", redirect: "/" },

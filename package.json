@@ -10,6 +10,7 @@
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm run build:tailwind && npm run serve"
   },
   "dependencies": {
+    "@chenfengyuan/vue-qrcode": "^2.0.0",
     "@fortawesome/fontawesome-free": "5.15.3",
     "@growthbunker/vuetimeline": "^0.1.17",
     "@lbgm/pro-calendar-vue": "^1.1.6",

@@ -342,10 +342,13 @@ export default {
           this.alert ="Ya se encuentra registrado en este evento.";
           window.alert(this.alert);
         }else{
-          axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then(() => {
-              // console.log(data);
+          axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then((data) => {
+              console.log(data.data.inscripcion_id);
               this.isVisibleeee == 0;
               window.alert("Registo completado satisfactoriamente!");
+              // window.close();
+              // this.$router.push({ path: `/inscripciones/QR/${this.inscripcion.url_id}` });
+              this.$router.push({ path: `/inscripciones/QR/${this.inscripcion.url_id}` });
             });
           }
       })
