@@ -9,7 +9,7 @@
             <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
                 <div class="flex flex-col items-center">
                     <div class="flex flex-wrap justify-center">
-                        <div class="w-6/12 sm:w-6/12 px-4">
+                        <div class="w-12/12 sm:w-12/12 px-4">
                             <vue-qrcode ref="qrcode" :value="hello" :options="options"></vue-qrcode>
                             <div class="container"> <button
                                     v-on:click="getinput(InputData, hexCode, hexCode2, InputData2, InputData3, selectedImage, this.$refs.qrcode.$el)"></button>
