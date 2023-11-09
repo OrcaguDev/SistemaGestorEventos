@@ -28,7 +28,7 @@
                 <div>
                     <p class="mt-4 text-lg font-semibold text-center">{{ currentMonth }}</p>
                 </div>
-                
+
                 <div>
                     <div id="calendar" style="height: 800px"></div>
                 </div>
@@ -58,7 +58,7 @@ const prevCalendar = () => {
     updateCurrentMonth();
 };
 
-const hoycalendar = () =>{
+const hoycalendar = () => {
     calendar.value.today();
     updateCurrentMonth();
 }
@@ -110,18 +110,15 @@ const getCalendar = () => {
             })
         });
         calendar.createEvents(eventos);
+
         updateCurrentMonth();
     }).catch((error) => {
         console.log(error);
     });
 
-    calendar.on('clickEvent', ({ event }) => {
-        const el = document.getElementById('clicked-event');
-        el.innerText = event.title;
-    });
-
     return calendar;
 }
+
 
 const updateCurrentMonth = () => {
     const currentDate = new Date(calendar.value.getDate());
