@@ -23,11 +23,12 @@
 import Calendar from '@toast-ui/calendar';
 import '@toast-ui/calendar/dist/toastui-calendar.min.css';
 import { onMounted } from 'vue';
-
+import axios from 'axios';
 
 onMounted(() => {
     // Inicializa el calendario una vez que el componente se ha montado
     getCalendar();
+
 });
 
 const getCalendar = () => {
@@ -62,23 +63,20 @@ const getCalendar = () => {
         },
     });
 
-    calendar.createEvents([
-        {
-            id: 'event1',
-            calendarId: 'cal1',
-            title: 'Weekly Meeting',
-            start: '2023-11-09T09:00:00',
-            end: '2023-11-09T10:00:00',
-        },
-        {
-            id: 'event2',
-            calendarId: 'cal2',
-            body: 'TOAST UI Calendar',
-            title: 'Como maquear en lol',
-            start: '2023-11-09T07:30:00',
-            end: '2023-11-17T10:00:00',
-        }
-    ])
+    axios.post('http://localhost:8000/getCalendar').then(({ data }) => {
+                console.log(data);
+
+                calendar.createEvents([
+                    {
+                        id: data.id,
+                        title: data.nombre,
+                    }
+                ])
+
+                // console.log(data);
+            }).catch((error) => {
+                console.log(error);
+            });
 
 
     return calendar
