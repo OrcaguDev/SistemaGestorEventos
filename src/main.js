@@ -28,6 +28,12 @@ import Evento from "@/views/admin/Evento.vue";
 
 import Login from "@/views/Login.vue";
 
+// views for pagos
+import regPagos from "@/views/admin/pagos/RegistroPagos.vue";
+import listPagos from "@/views/admin/pagos/ListaPagos.vue";
+
+
+
 // views for edit
 import editEvent from "@/views/admin/editar/EditEvento.vue";
 import editReglas from "@/views/admin/editar/EditRegla.vue";
@@ -73,6 +79,16 @@ const routes = [
         component: Reporte,
         meta: { requiresAuth: true }
 
+      },
+      {
+        path: "/admin/pagos/regPagos",
+        component: regPagos,
+        meta: { requiresAuth: true }
+      },
+      {
+        path: "/admin/pagos/listPagos",
+        component: listPagos,
+        meta: { requiresAuth: true }
       },
       {
         path: "/admin/evento",
