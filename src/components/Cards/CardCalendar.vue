@@ -13,7 +13,7 @@
             <div class="relative h-800-px">
 
                 <div class="flex p-4 space-x-4">
-                    <button class="rounded-sm button today">Today</button>
+                    <button class="rounded-sm button today" @click="hoycalendar">Hoy</button>
                     <button class="button is-rounded prev" @click="prevCalendar">
                         <span class="material-symbols-outlined">
                             arrow_back_ios
@@ -25,8 +25,14 @@
                         </span>
                     </button>
                 </div>
+                <div>
+                    <p class="mt-4 text-lg font-semibold text-center">{{ currentMonth }}</p>
+                </div>
+                
+                <div>
+                    <div id="calendar" style="height: 800px"></div>
+                </div>
 
-                <div id="calendar" style="height: 800px"></div>
 
             </div>
         </div>
@@ -40,19 +46,27 @@ import { onMounted, ref } from 'vue';
 import axios from 'axios';
 
 const calendar = ref(null);
+const currentMonth = ref(''); // Variable para almacenar el mes actual
 
 const nextCalendar = () => {
     calendar.value.next();
+    updateCurrentMonth();
 };
 
 const prevCalendar = () => {
     calendar.value.prev();
+    updateCurrentMonth();
 };
 
+const hoycalendar = () =>{
+    calendar.value.today();
+    updateCurrentMonth();
+}
 
 onMounted(() => {
     // Inicializa el calendario una vez que el componente se ha montado
     calendar.value = getCalendar();
+    updateCurrentMonth();
 });
 
 const getCalendar = () => {
@@ -76,26 +90,17 @@ const getCalendar = () => {
     calendar.setOptions({
         template: {
             monthDayName: function (model) {
-                // Aquí puedes personalizar los nombres de los días de la semana
-                // model.day contiene el número del día (0 para domingo, 1 para lunes, etc.)
-                // model.label contiene la etiqueta del día actual
-                // Puedes devolver el nombre personalizado aquí
                 const customDayNames = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
                 return customDayNames[model.day];
             },
-
         },
     });
 
     axios.post('http://localhost:8000/getCalendar').then(({ data }) => {
-
         const eventos = []
-
         data.forEach(element => {
-
             const fechaInicio = new Date(element.fechaInicio).toISOString();
             const fechafin = new Date(element.fechafin).toISOString();
-
             eventos.push({
                 id: element.id_evento,
                 calendarId: 'cal1',
@@ -104,10 +109,8 @@ const getCalendar = () => {
                 end: fechafin,
             })
         });
-        console.log(eventos);
-
-        calendar.createEvents(eventos)
-
+        calendar.createEvents(eventos);
+        updateCurrentMonth();
     }).catch((error) => {
         console.log(error);
     });
@@ -117,11 +120,16 @@ const getCalendar = () => {
         el.innerText = event.title;
     });
 
+    return calendar;
+}
 
-    return calendar
-
-
-
+const updateCurrentMonth = () => {
+    const currentDate = new Date(calendar.value.getDate());
+    const monthNames = [
+        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    ];
+    currentMonth.value = monthNames[currentDate.getMonth()] + ' ' + currentDate.getFullYear();
 }
 
 </script>
