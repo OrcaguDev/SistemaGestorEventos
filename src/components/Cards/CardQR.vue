@@ -247,7 +247,7 @@ export default {
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`http://localhost:8000/getInscripciones/${id}`, this.apii, auth).then(({ data }) => {
+            axios.post(`http://localhost:8000/getQR/${id}`, this.apii, auth).then(({ data }) => {
                 console.log(data[0]);
                 this.inscripcion= data[0];
                 // console.log(this.inscripcion);
