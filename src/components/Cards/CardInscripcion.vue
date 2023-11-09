@@ -349,7 +349,7 @@ export default {
               window.alert("Registo completado satisfactoriamente!");
               // window.close();
               // this.$router.push({ path: `/inscripciones/QR/${this.inscripcion.url_id}` });
-              this.$router.push({ path: `/inscripciones/QR/${data.data.inscripcion_id}` });
+              // this.$router.push({ path: `/inscripciones/QR/${data.data.inscripcion_id}` });
             });
           }
       })

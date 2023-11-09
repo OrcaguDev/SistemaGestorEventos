@@ -201,7 +201,7 @@ import axios from 'axios'
 export default {
     data() {
         return {      
-            hello: "dasd",
+            hello: "a",
             options: {
                 maskPattern: 7,
                 scale: 20,
@@ -248,14 +248,12 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post(`http://localhost:8000/getInscripciones/${id}`, this.apii, auth).then(({ data }) => {
-                // console.log(data[0]);
+                console.log(data[0]);
                 this.inscripcion= data[0];
                 // console.log(this.inscripcion);
                 this.detalle.dni= data[0].dni;
                 this.detalle.nombre= data[0].nombre;
                 this.detalle.apellido= data[0].apellido;
-                this.detalle.celular= data[0].celular;
-                this.detalle.certificacion= data[0].certificacion;
                 this.hello = this.detalle.dni;
             });
         },
