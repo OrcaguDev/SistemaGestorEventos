@@ -12,6 +12,20 @@
         <div class="flex-auto p-4">
             <div class="relative h-800-px">
 
+                <div class="flex p-4 space-x-4">
+                    <button class="rounded-sm button today">Today</button>
+                    <button class="button is-rounded prev" @click="prevCalendar">
+                        <span class="material-symbols-outlined">
+                            arrow_back_ios
+                        </span>
+                    </button>
+                    <button class="button is-rounded next" @click="nextCalendar">
+                        <span class="material-symbols-outlined">
+                            arrow_forward_ios
+                        </span>
+                    </button>
+                </div>
+
                 <div id="calendar" style="height: 800px"></div>
 
             </div>
@@ -22,13 +36,23 @@
 <script setup>
 import Calendar from '@toast-ui/calendar';
 import '@toast-ui/calendar/dist/toastui-calendar.min.css';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import axios from 'axios';
+
+const calendar = ref(null);
+
+const nextCalendar = () => {
+    calendar.value.next();
+};
+
+const prevCalendar = () => {
+    calendar.value.prev();
+};
+
 
 onMounted(() => {
     // Inicializa el calendario una vez que el componente se ha montado
-    getCalendar();
-
+    calendar.value = getCalendar();
 });
 
 const getCalendar = () => {
@@ -64,19 +88,34 @@ const getCalendar = () => {
     });
 
     axios.post('http://localhost:8000/getCalendar').then(({ data }) => {
-                console.log(data);
 
-                calendar.createEvents([
-                    {
-                        id: data.id,
-                        title: data.nombre,
-                    }
-                ])
+        const eventos = []
 
-                // console.log(data);
-            }).catch((error) => {
-                console.log(error);
-            });
+        data.forEach(element => {
+
+            const fechaInicio = new Date(element.fechaInicio).toISOString();
+            const fechafin = new Date(element.fechafin).toISOString();
+
+            eventos.push({
+                id: element.id_evento,
+                calendarId: 'cal1',
+                title: element.nombre,
+                start: fechaInicio,
+                end: fechafin,
+            })
+        });
+        console.log(eventos);
+
+        calendar.createEvents(eventos)
+
+    }).catch((error) => {
+        console.log(error);
+    });
+
+    calendar.on('clickEvent', ({ event }) => {
+        const el = document.getElementById('clicked-event');
+        el.innerText = event.title;
+    });
 
 
     return calendar

@@ -51,6 +51,8 @@ import QR from "@/views/inscripciones/QR.vue";
 import detalleEvento from "@/views/admin/DetalleEvento.vue";
 import timeLine from "@/views/admin/TimeLine.vue";
 
+import 'material-icons/iconfont/material-icons.css';
+import 'material-symbols';
 // routes
 
 const routes = [
