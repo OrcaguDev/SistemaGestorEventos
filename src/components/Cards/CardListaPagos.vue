@@ -66,38 +66,30 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(regla, index) in reglas" :key="index">
+                    <tr v-for="(pago, index) in pagos" :key="index">
                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                             {{ index + 1 }}
                         </td>
 
                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            {{ regla.nombre }}
+                            {{ pago.nombre }}
                         </td>
                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            {{ regla.descripcion }}
+                            {{ pago.descripcion }}
                         </td>
                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                            {{ regla.url }}
+                            {{ pago.url }}
                         </td>
                         <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                             Activo
                         </td>
                         <td
-                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 flex justify-center">
-                            <button @click="eliminarRegla()"
+                            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 flex justify-left">
+                            <button @click="eliminarPago()"
                                 class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 type="button">
                                 <i class="fas fa-trash"></i>
                             </button>
-
-                            <router-link :to="'/admin/editar/editReglas/' + regla.id_regla">
-                                <button
-                                    class="bg-yellow-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                    type="button">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                            </router-link>
                         </td>
                     </tr>
                 </tbody>
@@ -112,11 +104,11 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            reglas: [],
+            pagos: [],
             apii: {
                 api_token: ''
             },
-            regla: {
+            pago: {
                 api_token: '',
                 codigo: ''
             }
@@ -130,15 +122,15 @@ export default {
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/reglas', this.apii, auth).then(({ data }) => {
-                this.reglas = data;
+            axios.post('http://localhost:8000/getPagos', this.apii, auth).then(({ data }) => {
+                this.pagos = data;
                 // console.log(data);
             }).catch((error) => {
                 console.log(error);
             });
         },
-        eliminarRegla() {
-            console.log(this.regla.id_regla);
+        eliminarPago() {
+            console.log(this.pago.id_pagos);
         }
     },
     created() {
