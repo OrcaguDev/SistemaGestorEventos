@@ -3,6 +3,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import "../node_modules/timeline-vuejs/dist/timeline-vuejs.css";
 
 
+
 // styles
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -139,7 +140,6 @@ const routes = [
       }      
     ],
   },
-   
   {
     path: "/inscripciones/inscripcion/:id",
     component: Inscripcion,
@@ -166,7 +166,9 @@ const router = createRouter({
 });
 
 
-createApp(App).use(router).mount("#app");
+createApp(App)
+  .use(router)
+  .mount("#app");
 
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token');
