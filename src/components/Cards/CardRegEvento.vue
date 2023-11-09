@@ -72,7 +72,7 @@
           Acerca del Evento
         </h6>
         <div class="flex flex-wrap">
-          <div class="w-full lg:w-3/12 px-4">
+          <div class="w-full lg:w-4/12 px-4">
             <div class="relative w-full mb-3">
               <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
                 Fecha y hora de apertura de la Inscripción
@@ -83,7 +83,7 @@
             </div>
           </div>
 
-          <div class="w-full lg:w-9/12 px-4 ">
+          <div class="w-full lg:w-4/12 px-4 ">
             <div class="relative w-full mb-3">
               <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
                 Reglas para el evento
@@ -95,8 +95,21 @@
                   {{ regla.nombre }}
                 </option>                
               </select>
+            </div>
+          </div>
 
+          <div class="w-full lg:w-4/12 px-4 ">
+            <div class="relative w-full mb-3">
+              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                Link de pago
+              </label>
 
+              <select v-model="evento.id_pagos" @change="reglaChange()" class=" text-blueGray-600 text-sm uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150" required>
+                <option value="0" selected>Seleccione un link </option>
+                <option v-for="(pago, index) in pagos" :key="index" :value="pago.id_pagos">
+                  {{ pago.nombre }}
+                </option>                
+              </select>
             </div>
           </div>
 
@@ -176,19 +189,21 @@ export default {
   data() {
     return {
       evento: {
-        nombre: 'EVENTO 1',
-        expositor: 'EXPOSITOR 1',
-        lugar: 'LUGAR 1',
-        fechaInscripcion: '2022-01-01 00:00:00',
-        fechaInicio: '2022-01-01 00:00:00',
-        descripcion: 'DESCRIPCION 1',
-        aforo_total: 1,
-        butacas_reservadas: 1,
-        fechaFin: '2022-01-01 00:00:00',
+        nombre: '',
+        expositor: '',
+        lugar: '',
+        fechaInscripcion: '',
+        fechaInicio: '',
+        descripcion: '',
+        aforo_total: '',
+        butacas_reservadas: '',
+        fechaFin: '',
         api_token: '',
-        id_regla: 1
+        id_regla: 0,
+        id_pagos:0
       },
       reglas:[],
+      pagos:[],
       apii:{
         api_token:''
       },
@@ -208,7 +223,6 @@ export default {
       let objetoString = localStorage.getItem("token");
       let objeto = JSON.parse(objetoString);
       this.evento.api_token = objeto;
-      console.log(this.evento.api_token);
       const auth = {
         headers: { 'Content-Type': 'multipart/form-data' }
       }
@@ -225,15 +239,12 @@ export default {
       formData.append("butacas_reservadas", this.evento.butacas_reservadas);
       formData.append("fechaFin", this.evento.fechaFin);
       formData.append("id_regla", this.evento.id_regla);
+      formData.append("id_pagos", this.evento.id_pagos);
       formData.append("api_token", this.evento.api_token);
       
       axios.post('http://localhost:8000/storeEvento', formData, auth).then(() => {
         this.$router.push('/admin/listarEvento');
       });
-    },
-    reglaChange(){
-     
-      // console.log(this.evento.id_regla);
     },
     getReglas(){
       let objetoString = localStorage.getItem("token");
@@ -247,10 +258,25 @@ export default {
       }).catch((error) => {
           console.log(error);
       });
+    },
+    getPagos(){
+      let objetoString = localStorage.getItem("token");
+            let objeto = JSON.parse(objetoString);
+            this.apii.api_token = objeto;
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post('http://localhost:8000/getPagos', this.apii, auth).then(({ data }) => {
+                this.pagos = data;
+                // console.log(data);
+            }).catch((error) => {
+                console.log(error);
+            });
     }
   },
   created(){
     this.getReglas();
+    this.getPagos();
   }
 }
 </script>

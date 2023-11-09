@@ -6,7 +6,7 @@
             </div>
         </div>
         <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-            <form>
+            <form @submit.prevent="storePagos()">
                 <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                     Información del Link
                 </h6>
@@ -15,9 +15,10 @@
                         <div class="relative w-full mb-3">
                             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
                                 Nombre del Evento
-                            </label>
+                          </label>
                             <input type="text"
-                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
+                                v-model="pagos.nombre" required/>
                         </div>
                     </div>
                     <div class="w-full lg:w-6/12 px-4">
@@ -26,7 +27,8 @@
                                 URL de pago
                             </label>
                             <input type="text"
-                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
+                                v-model="pagos.url" required/>
                         </div>
                     </div>
 
@@ -37,8 +39,9 @@
                                 Descripción
                             </label>
                             <textarea type="text"
-                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-              </textarea>
+                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                v-model="pagos.descripcion" required>
+                            </textarea>
                         </div>
                     </div>
 
@@ -58,3 +61,33 @@
         </div>
     </div>
 </template>
+
+<script>
+import axios from 'axios'
+export default{
+    data(){
+        return {
+            pagos:{
+                url:'',
+                nombre:'',
+                api_token:'',
+                descripcion:''
+            },
+
+        }
+    },
+    methods:{
+        storePagos(){
+            let objetoString = localStorage.getItem("token");
+            let objeto = JSON.parse(objetoString);
+            this.pagos.api_token = objeto;
+            const auth = {
+                headers: {'Content-Type': 'application/json'}
+            }
+            axios.post('http://localhost:8000/storePagos', this.pagos,auth).then(()=> {
+                this.$router.push('/admin/pagos/listPagos');
+            });
+        }
+    }
+}
+</script>
