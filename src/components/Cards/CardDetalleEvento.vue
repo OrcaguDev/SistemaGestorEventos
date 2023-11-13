@@ -210,9 +210,8 @@
                                 No
                             </td>
 
-
                             <td>
-                                
+
                                 <template v-if="inscripcion.recibo.trim === null">
                                     <input type="text" class="border-0 px-3 py-3 w-full lg:w-9/12 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150"
                                         v-model="recibo" :disabled="reciboTxt" />
@@ -231,7 +230,7 @@
                                         {{ inscripcion.recibo }}
                                     </label>
                                 </template>
-                                
+
                             </td>
                             <!-- <td v-if="inscripcion.recibo == 1" class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                 Si
@@ -239,7 +238,7 @@
                             <td v-else class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                 No
                             </td> -->
-                            
+
                         </tr>
                     </tbody>
                 </table>
@@ -264,7 +263,7 @@ export default {
                 fechaFin: '',
                 fechaInscripcion: '',
                 id_regla: '',
-                recibo:null,
+                recibo: null,
                 api_token: ''
             },
             apii: {
@@ -272,7 +271,7 @@ export default {
             },
             url_id: '',
             inscripciones: [],
-            dni: '',
+            dni: ''
         }
     },
     methods: {
@@ -333,30 +332,30 @@ export default {
                 console.log(error)
             })
         },
-        updateRecibo(dni){
-            let objetoString = localStorage.getItem("token");
-            let objeto = JSON.parse(objetoString);
-            this.apii.api_token = objeto;
-            let recibo = this.recibo;
-            let id_evento = this.url_id;
-            console.log(recibo);
-            console.log(dni);
-            console.log(id_evento);
+        updateRecibo (dni) {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
+            const recibo = this.recibo
+            const id_evento = this.url_id
+            console.log(recibo)
+            console.log(dni)
+            console.log(id_evento)
 
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            let url_concatenado = `http://localhost:8000/updateRecibo/?recibo=${recibo}&id_evento=${id_evento}&dni=${dni}`;
-            console.log(url_concatenado);
+            const url_concatenado = `http://localhost:8000/updateRecibo/?recibo=${recibo}&id_evento=${id_evento}&dni=${dni}`
+            console.log(url_concatenado)
             axios.post(url_concatenado, this.apii, auth).then(() => {
-                this.getInscripcionesTotal(this.url_id);
+                this.getInscripcionesTotal(this.url_id)
                 // this.dni='';
-                this.reciboTxt = true;
-                this.mostrarBoton = false;
-                window.alert("Se registro el recibo correctamente!");
+                this.reciboTxt = true
+                this.mostrarBoton = false
+                window.alert('Se registro el recibo correctamente!')
             }).catch((error) => {
-                console.log(error);
-            });
+                console.log(error)
+            })
         },
 
         props: {

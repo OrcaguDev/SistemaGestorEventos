@@ -34,6 +34,45 @@ import QR from '@/views/inscripciones/QR.vue'
 import detalleEvento from '@/views/admin/DetalleEvento.vue'
 import timeLine from '@/views/admin/TimeLine.vue'
 
+import axios from 'axios'
+
+const objetoString = localStorage.getItem('token')
+const objeto = JSON.parse(objetoString)
+
+const apitoken = {
+    api_token: objeto
+}
+const auth = {
+    headers: { 'Content-Type': 'application/json' }
+}
+
+const userRoles = [
+
+    // { id: 1, name: 'Administrador' },
+    // { id: 2, name: 'Editor' }
+
+]
+
+axios.post('http://localhost:8000/getRoles', apitoken, auth)
+    .then(response => {
+        // Almacenar la respuesta en la variable roles
+        response.data.forEach(element => {
+            userRoles.push({
+                id: element.rol_id,
+                name: element.rol_nombre
+            })
+        })
+    })
+    .catch(error => {
+        console.error('Error al obtener roles:', error)
+    })
+
+const getuserrol = () => {
+    return parseInt(localStorage.getItem('rol'))
+}
+
+console.log(userRoles)
+
 const routes = [
     {
         path: '/',
@@ -59,7 +98,8 @@ const routes = [
                 component: Reporte,
                 meta: { requiresAuth: true },
                 beforeEnter: (to, from, next) => {
-                    if (localStorage.getItem('rol') === 'ADMINISTRADOR') {
+                    const userRol = getuserrol()
+                    if (userRoles[0].id === userRol) {
                         next()
                     } else {
                         next('/admin/dashboard')
@@ -124,7 +164,8 @@ const routes = [
                 component: Usuarios,
                 meta: { requiresAuth: true },
                 beforeEnter: (to, from, next) => {
-                    if (localStorage.getItem('rol') === 'ADMINISTRADOR') {
+                    const userRol = getuserrol()
+                    if (userRoles[0].id === userRol) {
                         next()
                     } else {
                         next('/admin/dashboard')

@@ -9,7 +9,7 @@
             <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
                 <div>
                     <img src="../../assets/img/EVENTOS.jpg" alt="" ><br>
-                
+
                 <a :href="`http://localhost:8000/informe/${evento.informe}`" target="_blank"
                                     class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-2 py-3 rounded shadow ml-4 hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150">
                                     DESCARGAR BROCHURE</a>
@@ -21,7 +21,7 @@
                             <div class="w-6/12 sm:w-6/12 px-4">
                                 <!-- <img :src="`http://localhost:8000/img/${evento.img}`" alt="..."
                                     class="shadow-lg rounded max-w-full h-auto align-middle border-none" /><br> -->
-                                
+
                             </div>
                         </div>
                     </div>
