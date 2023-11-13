@@ -12,7 +12,6 @@ import Evento from '@/views/admin/Evento.vue'
 // views for Auth layout
 
 import Login from '@/views/Login.vue'
-
 // views for pagos
 import regPagos from '@/views/admin/pagos/RegistroPagos.vue'
 import listPagos from '@/views/admin/pagos/ListaPagos.vue'
