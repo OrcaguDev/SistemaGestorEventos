@@ -212,9 +212,9 @@
 
                             <td>
 
-                                <template v-if="inscripcion.recibo.trim === null">
+                                <template v-if="inscripcion.recibo === null">
                                     <input type="text" class="border-0 px-3 py-3 w-full lg:w-9/12 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150"
-                                        v-model="recibo" :disabled="reciboTxt" />
+                                        v-model="recibo" />
                                         <button
                                         @click="updateRecibo(inscripcion.dni)" v-if="mostrarBoton"
                                             class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase rounded shadow hover:shadow-lg outline-none focus:outline-none w-full lg:w-3/12 ease-linear transition-all duration-150"
@@ -271,7 +271,8 @@ export default {
             },
             url_id: '',
             inscripciones: [],
-            dni: ''
+            dni: '',
+            mostrarBoton : true,
         }
     },
     methods: {
@@ -310,6 +311,7 @@ export default {
             }
             axios.post(`http://localhost:8000/getInscripcionesTotal/${id}`, this.apii, auth).then(({ data }) => {
                 this.inscripciones = data
+                console.this.inscripciones;
             }).catch((error) => {
                 console.log(error)
             })
@@ -350,7 +352,6 @@ export default {
             axios.post(url_concatenado, this.apii, auth).then(() => {
                 this.getInscripcionesTotal(this.url_id)
                 // this.dni='';
-                this.reciboTxt = true
                 this.mostrarBoton = false
                 window.alert('Se registro el recibo correctamente!')
             }).catch((error) => {
