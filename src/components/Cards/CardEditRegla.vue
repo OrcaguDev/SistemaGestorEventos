@@ -30,7 +30,6 @@
             </div>
           </div>
 
-
           <div class="w-full lg:w-12/12 px-4">
             <div class="relative w-full mb-3">
               <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
@@ -47,7 +46,7 @@
         <hr class="mt-6 border-b-1 border-blueGray-300" />
 
         <div class="flex">
-          <button 
+          <button
             class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
             type="button" @click="updateRegla()">
             Guardar
@@ -63,69 +62,69 @@
       </form>
     </div>
   </div>
-</template> 
+</template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 export default {
-  data() {
-    return {
-      regla: {
-        nombre: '',
-        url: '',
-        descripcion: '',
-        api_token: '',
-        codigo:''
-      },
-      apii: {
-        api_token: ''
-      },
-      url_id: '',
+    data () {
+        return {
+            regla: {
+                nombre: '',
+                url: '',
+                descripcion: '',
+                api_token: '',
+                codigo: ''
+            },
+            apii: {
+                api_token: ''
+            },
+            url_id: ''
+        }
+    },
+    methods: {
+        goBack () {
+            window.history.back()
+        },
+        getEditRegla (id) {
+            console.log(id)
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
+            const auth = {
+                Headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post(`http://localhost:8000/regla/${id}`, this.apii, auth).then(({ data }) => {
+                this.regla.nombre = data[0].nombre
+                this.regla.url = data[0].url
+                this.regla.descripcion = data[0].descripcion
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+        updateRegla () {
+            const objeroString = localStorage.getItem('token')
+            const objeto = JSON.parse(objeroString)
+            this.regla.api_token = objeto
+            this.regla.codigo = this.url_id
+            // console.log(this.regla.nombre);
+            // console.log(this.regla.url);
+            // console.log(this.regla.descripcion);
+
+            const auth = {
+                Headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post(`http://localhost:8000/actualizarRegla/?nombre=${this.regla.nombre}&descripcion=${this.regla.descripcion}&url=${this.regla.url}&id=${this.regla.codigo}`, this.regla, auth).then(() => {
+                window.alert('Ha sido editado correctamente!')
+                this.goBack()
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
+    },
+    mounted () {
+        this.url_id = this.$route.params.id
+        this.getEditRegla(this.url_id)
     }
-  },
-  methods: {
-    goBack() {
-      window.history.back();
-    },
-    getEditRegla(id) {
-      console.log(id);
-      let objetoString = localStorage.getItem("token");
-      let objeto = JSON.parse(objetoString);
-      this.apii.api_token = objeto;
-      const auth = {
-        Headers: { 'Content-Type': 'application/json' }
-      }
-      axios.post(`http://localhost:8000/regla/${id}`, this.apii, auth).then(({ data }) => {
-        this.regla.nombre = data[0].nombre;
-        this.regla.url = data[0].url;
-        this.regla.descripcion = data[0].descripcion;
-      }).catch((error) => {
-        console.log(error);
-      });
-    },
-    updateRegla(){
-      let objeroString = localStorage.getItem("token");
-      let objeto = JSON.parse(objeroString);
-      this.regla.api_token = objeto;
-      this.regla.codigo = this.url_id;
-      // console.log(this.regla.nombre);
-      // console.log(this.regla.url);
-      // console.log(this.regla.descripcion);
-      
-      const auth = {
-        Headers: { 'Content-Type': 'application/json' }
-      }
-      axios.post(`http://localhost:8000/actualizarRegla/?nombre=${this.regla.nombre}&descripcion=${this.regla.descripcion}&url=${this.regla.url}&id=${this.regla.codigo}`, this.regla, auth).then(() => {
-        window.alert("Ha sido editado correctamente!");
-        this.goBack();
-      }).catch((error) => {
-        console.log(error);
-      });
-    },
-  },
-  mounted(){
-    this.url_id = this.$route.params.id;
-    this.getEditRegla(this.url_id);
-  }
 }
 </script>

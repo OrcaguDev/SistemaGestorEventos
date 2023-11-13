@@ -23,8 +23,6 @@
                 </h6>
                 <div class="flex flex-wrap">
 
-
-
                     <div class="w-full lg:w-3/12 px-4">
                         <div class="relative w-full mb-3">
                             <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
@@ -38,7 +36,6 @@
                         </div>
                     </div>
 
-
                     <div class="w-full lg:w-3/12 px-4">
                         <div class="relative w-full mb-3">
                             <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
@@ -49,8 +46,6 @@
                             </label>
                         </div>
                     </div>
-
-
 
                     <div class="w-full lg:w-3/12 px-4">
                         <div class="relative w-full mb-3">
@@ -63,8 +58,6 @@
                         </div>
                     </div>
 
-
-
                     <div class="w-full lg:w-3/12 px-4">
                         <div class="relative w-full mb-3">
                             <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
@@ -75,8 +68,6 @@
                             </label>
                         </div>
                     </div>
-
-
 
                     <div class="w-full lg:w-6/12 px-4">
                         <div class="relative w-full mb-3">
@@ -97,8 +88,6 @@
                 </h6>
                 <div class="flex flex-wrap">
 
-
-
                     <div class="w-full lg:w-3/12 px-4">
                         <div class="relative w-full mb-3">
                             <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
@@ -112,7 +101,6 @@
                         </div>
                     </div>
 
-
                     <div class="w-full lg:w-3/12 px-4">
                         <div class="relative w-full mb-3">
                             <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
@@ -123,8 +111,6 @@
                             </label>
                         </div>
                     </div>
-
-
 
                     <div class="w-full lg:w-3/12 px-4">
                         <div class="relative w-full mb-3">
@@ -137,8 +123,6 @@
                         </div>
                     </div>
 
-
-
                     <div class="w-full lg:w-3/12 px-4">
                         <div class="relative w-full mb-3">
                             <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
@@ -149,7 +133,6 @@
                             </label>
                         </div>
                     </div>
-
 
                     <div class="w-full lg:w-6/12 px-4">
                         <div class="relative w-full mb-3">
@@ -174,19 +157,18 @@
                             </label>
                             <label v-if="detalle.certificacion == 1"
                             class="block uppercase text-blueGray-600 text-xs font-bold mb-2 mt-4" htmlFor="grid-password">
-                                <a href="https://www.google.com/"  class="mt-4 bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-2 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150" 
-                                alt="" 
+                                <a href="https://www.google.com/"  class="mt-4 bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-2 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
+                                alt=""
                                 target="_blank">Realice el pago aquí</a>
                             </label>
 
                             <label v-else
                             class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                                
+
                             </label>
                         </div>
                     </div>
                 </div>
-
 
             </div>
             <hr class="mt-6 mb-4 border-b-1 border-blueGray-300" />
@@ -199,69 +181,68 @@
 import VueQrcode from '@chenfengyuan/vue-qrcode'
 import axios from 'axios'
 export default {
-    data() {
-        return {      
-            hello: "a",
+    data () {
+        return {
+            hello: 'a',
             options: {
                 maskPattern: 7,
                 scale: 20,
                 color: {
                     dark: '#000000',
-                    light: '#ffffff',
+                    light: '#ffffff'
                 },
                 margin: 0
             },
-            detalle:{
+            detalle: {
                 dni: '',
                 nombre: '',
                 apellido: '',
                 celular: '',
                 email: '',
                 certificacion: '',
-                titulo:'',
-                descripcion:'',
-                lugar:'',
-                fechaInicio:'',
-                fechaFin:'',
-                expositor:'',
+                titulo: '',
+                descripcion: '',
+                lugar: '',
+                fechaInicio: '',
+                fechaFin: '',
+                expositor: ''
             },
-            apii:{
-                api_token:''
+            apii: {
+                api_token: ''
             },
-            url_id:'',
+            url_id: '',
             inscripcion: [],
-            evento: [],
-        };
+            evento: []
+        }
     },
     components: { VueQrcode },
-    
+
     props: ['InputData', 'hexCode', 'hexCode2', 'InputData2', 'InputData3', 'selectedImage'],
 
-
     methods: {
-        getInscripciones(id) {
+        getInscripciones (id) {
             // console.log(id);
-            let objetoString = localStorage.getItem("token");
-            let objeto = JSON.parse(objetoString);
-            this.apii.api_token = objeto;
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post(`http://localhost:8000/getQR/${id}`, this.apii, auth).then(({ data }) => {
-                console.log(data[0]);
-                this.inscripcion= data[0];
+                console.log(data[0])
+                this.inscripcion = data[0]
                 // console.log(this.inscripcion);
-                this.detalle.dni= data[0].dni;
-                this.detalle.nombre= data[0].nombre;
-                this.detalle.apellido= data[0].apellido;
-                this.hello = this.detalle.dni;
-            });
+                this.detalle.dni = data[0].dni
+                this.detalle.nombre = data[0].nombre
+                this.detalle.apellido = data[0].apellido
+                this.hello = this.detalle.dni
+            })
         },
-        getEvento(id){
+        getEvento (id) {
             // console.log(id);
-            let objetoString = localStorage.getItem("token");
-            let objeto = JSON.parse(objetoString);
-            this.apii.api_token = objeto;
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
@@ -270,29 +251,29 @@ export default {
                 // this.evento = data[0];
                 // this.evento= data[0];
                 // console.log(this.evento);
-                this.detalle.titulo = data[0].nombre;
-                this.detalle.expositor = data[0].expositor;
-                this.detalle.descripcion = data[0].descripcion;
-                this.detalle.lugar = data[0].lugar;
-                this.detalle.fechaInicio = data[0].fechaInicio;
-                this.detalle.fechaFin = data[0].fechaFin;
-            });
+                this.detalle.titulo = data[0].nombre
+                this.detalle.expositor = data[0].expositor
+                this.detalle.descripcion = data[0].descripcion
+                this.detalle.lugar = data[0].lugar
+                this.detalle.fechaInicio = data[0].fechaInicio
+                this.detalle.fechaFin = data[0].fechaFin
+            })
         },
-        getinput(InputData, hexCode, hexCode2, InputData2, InputData3, selectedImage, canvas) {
+        getinput (InputData, hexCode, hexCode2, InputData2, InputData3, selectedImage, canvas) {
             try {
-                if (!InputData) throw new Error("InputData is not defined")
-                const context = canvas.getContext('2d');
-                const image = new Image();
-                image.src = selectedImage;
-                image.crossorigin = 'anonymous';
+                if (!InputData) throw new Error('InputData is not defined')
+                const context = canvas.getContext('2d')
+                const image = new Image()
+                image.src = selectedImage
+                image.crossorigin = 'anonymous'
                 image.onload = () => {
-                    const coverage = 0.2;
-                    const width = Math.round(canvas.width * coverage);
-                    const x = (canvas.width - width) / 2;
+                    const coverage = 0.2
+                    const width = Math.round(canvas.width * coverage)
+                    const x = (canvas.width - width) / 2
                     console.log(canvas.width)
-                    this.drawImage(context, image, x, x, width, width);
-                };
-                this.hello=''
+                    this.drawImage(context, image, x, x, width, width)
+                }
+                this.hello = ''
                 this.hello = this.detalle.dni
                 this.options.maskPattern = InputData2
                 this.options.scale = InputData3
@@ -303,31 +284,31 @@ export default {
                 console.log(error)
             }
         },
-        drawImage(context, image, x, y, width, height, radius = 8) {
-            context.shadowOffsetX = 0;
-            context.shadowOffsetY = 2;
-            context.shadowBlur = 4;
-            context.shadowColor = '#00000040';
-            context.lineWidth = 8;
-            context.beginPath();
-            context.moveTo(x + radius, y);
-            context.arcTo(x + width, y, x + width, y + height, radius);
-            context.arcTo(x + width, y + height, x, y + height, radius);
-            context.arcTo(x, y + height, x, y, radius);
-            context.arcTo(x, y, x + width, y, radius);
-            context.closePath();
-            context.strokeStyle = '#fff';
-            context.stroke();
-            context.clip();
-            context.fillStyle = '#fff';
-            context.fillRect(x, x, width, height);
-            context.drawImage(image, x, x, width, height);
-        },
+        drawImage (context, image, x, y, width, height, radius = 8) {
+            context.shadowOffsetX = 0
+            context.shadowOffsetY = 2
+            context.shadowBlur = 4
+            context.shadowColor = '#00000040'
+            context.lineWidth = 8
+            context.beginPath()
+            context.moveTo(x + radius, y)
+            context.arcTo(x + width, y, x + width, y + height, radius)
+            context.arcTo(x + width, y + height, x, y + height, radius)
+            context.arcTo(x, y + height, x, y, radius)
+            context.arcTo(x, y, x + width, y, radius)
+            context.closePath()
+            context.strokeStyle = '#fff'
+            context.stroke()
+            context.clip()
+            context.fillStyle = '#fff'
+            context.fillRect(x, x, width, height)
+            context.drawImage(image, x, x, width, height)
+        }
     },
-    mounted(){
-        this.url_id = this.$route.params.id;
-        this.getInscripciones(this.url_id);
-        this.getEvento(this.url_id);
+    mounted () {
+        this.url_id = this.$route.params.id
+        this.getInscripciones(this.url_id)
+        this.getEvento(this.url_id)
     }
 }
 </script>

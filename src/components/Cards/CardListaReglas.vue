@@ -66,7 +66,7 @@
                 color === 'light'
                   ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
                   : 'bg-emerald-800 text-emerald-300 border-emerald-700',
-              ]"> 
+              ]">
               Acciones
             </th>
           </tr>
@@ -112,55 +112,53 @@
   </div>
 </template>
 
-
 <script>
-import axios from 'axios';
+import axios from 'axios'
 export default {
-  data() {
-    return {
-      reglas: [],
-      apii: {
-        api_token: ''
-      },
-      regla:{
-        api_token:'',
-        codigo:''
-      }
-    }
-  },
-  methods: {
-    getTotal() {
-      let objetoString = localStorage.getItem("token");
-      let objeto = JSON.parse(objetoString);
-      this.apii.api_token = objeto;
-      const auth = {
-        headers: { 'Content-Type': 'application/json' }
-      }
-      axios.post('http://localhost:8000/reglas', this.apii, auth).then(({ data }) => {
-        this.reglas = data;
-        // console.log(data);
-      }).catch((error) => {
-        console.log(error);
-      });
+    data () {
+        return {
+            reglas: [],
+            apii: {
+                api_token: ''
+            },
+            regla: {
+                api_token: '',
+                codigo: ''
+            }
+        }
     },
-    eliminarRegla(){
-      console.log(this.regla.id_regla);
-    }
-  },
-  created() {
-    this.getTotal();
-  },
-
-
-  props: {
-    color: {
-      default: "light",
-      validator: function (value) {
-        // The value must match one of these strings
-        return ["light", "dark"].indexOf(value) !== -1;
-      },
+    methods: {
+        getTotal () {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post('http://localhost:8000/reglas', this.apii, auth).then(({ data }) => {
+                this.reglas = data
+                // console.log(data);
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+        eliminarRegla () {
+            console.log(this.regla.id_regla)
+        }
     },
-  },
-};
+    created () {
+        this.getTotal()
+    },
+
+    props: {
+        color: {
+            default: 'light',
+            validator: function (value) {
+                // The value must match one of these strings
+                return ['light', 'dark'].indexOf(value) !== -1
+            }
+        }
+    }
+}
 
 </script>

@@ -233,7 +233,6 @@
                                         <i class="fas fa-edit"></i>
                                     </button>
 
-
                                     <button @click="eliminarUsuario(usuario.codigo)"
                                         class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         type="button">
@@ -251,9 +250,9 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 export default {
-    data() {
+    data () {
         return {
             usuarios: [],
             apii: {
@@ -273,101 +272,96 @@ export default {
         }
     },
     methods: {
-        getTotal() {
-            let objetoString = localStorage.getItem("token");
-            let objeto = JSON.parse(objetoString);
-            this.apii.api_token = objeto;
+        getTotal () {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post('http://localhost:8000/usuarios', this.apii, auth).then(({ data }) => {
-                this.usuarios = data;
+                this.usuarios = data
             }).catch(error => {
-                console.log(error);
-            });
+                console.log(error)
+            })
         },
-        actualizarMensaje(nuevoMensaje) {
+        actualizarMensaje (nuevoMensaje) {
             // Método para actualizar el mensaje desde ComponenteA
-            this.mensaje = nuevoMensaje;
+            this.mensaje = nuevoMensaje
         },
-        storeUsuario() {
+        storeUsuario () {
             // this.isVisible=1;
             if (this.usuario.name == '' && this.usuario.email == '' && this.usuario.password == '' && this.usuario.rol == 0) {
-                this.alert_password = "Faltan campos por rellenar, por favor ingresa los datos correctamente.";
+                this.alert_password = 'Faltan campos por rellenar, por favor ingresa los datos correctamente.'
             } else {
                 if (this.usuario.password == this.usuario.confirmPassword) {
-                    this.view_button = true;
-                    let objetoString = localStorage.getItem("token");
-                    let objeto = JSON.parse(objetoString);
-                    this.usuario.api_token = objeto;
+                    this.view_button = true
+                    const objetoString = localStorage.getItem('token')
+                    const objeto = JSON.parse(objetoString)
+                    this.usuario.api_token = objeto
 
                     const auth = {
                         headers: { 'Content-Type': 'application/json' }
                     }
                     axios.post('http://localhost:8000/validateEmail', this.usuario, auth).then((data) => {
-                        console.log(data);
-                        if(data.data[0].cuentaEmail>0){
-                
-                            this.alert_password = "Ya existe un usuario con este email.";
-                        }else{
+                        console.log(data)
+                        if (data.data[0].cuentaEmail > 0) {
+                            this.alert_password = 'Ya existe un usuario con este email.'
+                        } else {
                             axios.post('http://localhost:8000/storeUsuario', this.usuario, auth).then(() => {
-                                this.getTotal();
-                                this.alert_password=''
-                                this.limpiar();
-                            });
+                                this.getTotal()
+                                this.alert_password = ''
+                                this.limpiar()
+                            })
                         }
-                    });
-
-                    
-
+                    })
                 } else {
                     // this.view_button = false;
-                    this.alert_password = "Las contraseñas no coinciden";
+                    this.alert_password = 'Las contraseñas no coinciden'
                 }
             }
-
         },
-        limpiar() {
-            this.usuario.email = '';
-            this.usuario.name = '';
-            this.usuario.password = '';
-            this.usuario.confirmPassword = '';
-            this.usuario.rol = 0;
+        limpiar () {
+            this.usuario.email = ''
+            this.usuario.name = ''
+            this.usuario.password = ''
+            this.usuario.confirmPassword = ''
+            this.usuario.rol = 0
         },
-        eliminarUsuario(id) {
-            let objetoString = localStorage.getItem("token");
-            let objeto = JSON.parse(objetoString);
-            this.usuario.api_token = objeto;
-            this.usuario.codigo = id;
+        eliminarUsuario (id) {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.usuario.api_token = objeto
+            this.usuario.codigo = id
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post('http://localhost:8000/deleteUsuario', this.usuario, auth).then(() => {
-                this.getTotal();
-            });
+                this.getTotal()
+            })
         },
-        getUSuario(id) {
-            this.isVisible = 2;
-            let objetoString = localStorage.getItem("token");
-            let objeto = JSON.parse(objetoString);
-            this.apii.api_token = objeto;
+        getUSuario (id) {
+            this.isVisible = 2
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post(`http://localhost:8000/getUsuario/${id}`, this.apii, auth).then(({ data }) => {
-                this.usuario = data[0];
+                this.usuario = data[0]
             }).catch(error => {
-                console.log(error);
-            });
+                console.log(error)
+            })
         },
-        changeState() {
-            this.isVisible = 1;
-            this.limpiar();
+        changeState () {
+            this.isVisible = 1
+            this.limpiar()
         },
-        updateUsuario() {
-            let objetoString = localStorage.getItem("token");
-            let objeto = JSON.parse(objetoString);
-            this.usuario.api_token = objeto;
+        updateUsuario () {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.usuario.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
@@ -375,23 +369,22 @@ export default {
                 // console.log(data);
                 // this.$router.push('/admin/usuarios/usuario');
 
-                this.getTotal();
-                this.limpiar();
-            });
+                this.getTotal()
+                this.limpiar()
+            })
         }
     },
-    created() {
-        this.getTotal();
-
+    created () {
+        this.getTotal()
     },
     props: {
         color: {
-            default: "light",
+            default: 'light',
             validator: function (value) {
-                return ['light', 'dark'].indexOf(value) !== -1;
-            },
-        },
-    },
-};
+                return ['light', 'dark'].indexOf(value) !== -1
+            }
+        }
+    }
+}
 
 </script>

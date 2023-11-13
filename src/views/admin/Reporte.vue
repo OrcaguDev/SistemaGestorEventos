@@ -10,11 +10,11 @@
   </div>
 </template>
 <script>
-import CardReporte from "@/components/Cards/CardReporte.vue";
+import CardReporte from '@/components/Cards/CardReporte.vue'
 
 export default {
-  components: {
-    CardReporte,
-  },
-};
+    components: {
+        CardReporte
+    }
+}
 </script>

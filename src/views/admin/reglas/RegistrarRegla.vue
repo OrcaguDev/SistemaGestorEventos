@@ -5,13 +5,12 @@
       </div>
     </div>
   </template>
-  <script>
-  import CardReglas from "@/components/Cards/CardReglas.vue";
+<script>
+import CardReglas from '@/components/Cards/CardReglas.vue'
 
-  export default {
+export default {
     components: {
-    CardReglas,
-},
-  };
-  </script>
-  
+        CardReglas
+    }
+}
+</script>

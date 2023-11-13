@@ -11,7 +11,7 @@
         class="text-white text-sm uppercase hidden lg:inline-block font-semibold"
         href="#"
       >
-        
+
       </a>
       <!-- Form -->
       <!-- User -->
@@ -24,11 +24,11 @@
 </template>
 
 <script>
-import UserDropdown from "@/components/Dropdowns/UserDropdown.vue";
+import UserDropdown from '@/components/Dropdowns/UserDropdown.vue'
 
 export default {
-  components: {
-    UserDropdown,
-  },
-};
+    components: {
+        UserDropdown
+    }
+}
 </script>

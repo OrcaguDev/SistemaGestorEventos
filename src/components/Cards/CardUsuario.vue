@@ -92,9 +92,9 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 export default {
-    data() {
+    data () {
         return {
             usuario: {
                 email: 'pedrocastillo@gmail.com',
@@ -102,7 +102,7 @@ export default {
                 password: '12345678',
                 confirmPassword: '12345678',
                 rol: 1,
-                api_token: '',
+                api_token: ''
             },
             alert_password: ''
             // view_button: true,
@@ -127,38 +127,35 @@ export default {
         // validatePasswords() {
         //     return this.password === this.confirmPassword;
         // },
-        storeUsuario() {
-            if(this.usuario.password == this.usuario.confirmPassword){
-                this.view_button = true;
-                let objetoString = localStorage.getItem("token");
-                let objeto = JSON.parse(objetoString);
-                this.usuario.api_token = objeto;
+        storeUsuario () {
+            if (this.usuario.password == this.usuario.confirmPassword) {
+                this.view_button = true
+                const objetoString = localStorage.getItem('token')
+                const objeto = JSON.parse(objetoString)
+                this.usuario.api_token = objeto
                 const auth = {
                     headers: { 'Content-Type': 'application/json' }
                 }
                 axios.post('http://localhost:8000/storeUsuario', this.usuario, auth).then(() => {
                     // console.log(data);
-                    this.$router.push('/admin/usuarios/usuario');
-                    this.$refs.CardListaUsuario.actualizarMensaje("Mensaje actualizado desde ComponenteA");
-                });
-                this.limpiar();
-            }else{
+                    this.$router.push('/admin/usuarios/usuario')
+                    this.$refs.CardListaUsuario.actualizarMensaje('Mensaje actualizado desde ComponenteA')
+                })
+                this.limpiar()
+            } else {
                 // this.view_button = false;
-                this.alert_password = "Las contraseñas no coinciden";
+                this.alert_password = 'Las contraseñas no coinciden'
             }
-           
         },
-        limpiar(){
-            this.usuario.email = '';
-            this.usuario.name = '';
-            this.usuario.password = '';
-            this.usuario.confirmPassword = '';
-            this.usuario.rol = 0;
+        limpiar () {
+            this.usuario.email = ''
+            this.usuario.name = ''
+            this.usuario.password = ''
+            this.usuario.confirmPassword = ''
+            this.usuario.rol = 0
         }
-    },
+    }
 
 }
-
-
 
 </script>

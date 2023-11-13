@@ -33,41 +33,40 @@
                     <div id="calendar" style="height: 800px"></div>
                 </div>
 
-
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import Calendar from '@toast-ui/calendar';
-import '@toast-ui/calendar/dist/toastui-calendar.min.css';
-import { onMounted, ref } from 'vue';
-import axios from 'axios';
+import Calendar from '@toast-ui/calendar'
+import '@toast-ui/calendar/dist/toastui-calendar.min.css'
+import { onMounted, ref } from 'vue'
+import axios from 'axios'
 
-const calendar = ref(null);
-const currentMonth = ref(''); // Variable para almacenar el mes actual
+const calendar = ref(null)
+const currentMonth = ref('') // Variable para almacenar el mes actual
 
 const nextCalendar = () => {
-    calendar.value.next();
-    updateCurrentMonth();
-};
+    calendar.value.next()
+    updateCurrentMonth()
+}
 
 const prevCalendar = () => {
-    calendar.value.prev();
-    updateCurrentMonth();
-};
+    calendar.value.prev()
+    updateCurrentMonth()
+}
 
 const hoycalendar = () => {
-    calendar.value.today();
-    updateCurrentMonth();
+    calendar.value.today()
+    updateCurrentMonth()
 }
 
 onMounted(() => {
     // Inicializa el calendario una vez que el componente se ha montado
-    calendar.value = getCalendar();
-    updateCurrentMonth();
-});
+    calendar.value = getCalendar()
+    updateCurrentMonth()
+})
 
 const getCalendar = () => {
     const calendar = new Calendar('#calendar', {
@@ -77,56 +76,55 @@ const getCalendar = () => {
             {
                 id: 'cal1',
                 name: 'Personal',
-                backgroundColor: '#03bd9e',
+                backgroundColor: '#03bd9e'
             },
             {
                 id: 'cal2',
                 name: 'Work',
-                backgroundColor: '#00a9ff',
-            },
-        ],
-    });
+                backgroundColor: '#00a9ff'
+            }
+        ]
+    })
 
     calendar.setOptions({
         template: {
             monthDayName: function (model) {
-                const customDayNames = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
-                return customDayNames[model.day];
-            },
-        },
-    });
+                const customDayNames = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb']
+                return customDayNames[model.day]
+            }
+        }
+    })
 
     axios.post('http://localhost:8000/getCalendar').then(({ data }) => {
         const eventos = []
         data.forEach(element => {
-            const fechaInicio = new Date(element.fechaInicio).toISOString();
-            const fechafin = new Date(element.fechafin).toISOString();
+            const fechaInicio = new Date(element.fechaInicio).toISOString()
+            const fechafin = new Date(element.fechafin).toISOString()
             eventos.push({
                 id: element.id_evento,
                 calendarId: 'cal1',
                 title: element.nombre,
                 start: fechaInicio,
-                end: fechafin,
+                end: fechafin
             })
-        });
-        calendar.createEvents(eventos);
+        })
+        calendar.createEvents(eventos)
 
-        updateCurrentMonth();
+        updateCurrentMonth()
     }).catch((error) => {
-        console.log(error);
-    });
+        console.log(error)
+    })
 
-    return calendar;
+    return calendar
 }
 
-
 const updateCurrentMonth = () => {
-    const currentDate = new Date(calendar.value.getDate());
+    const currentDate = new Date(calendar.value.getDate())
     const monthNames = [
         'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
         'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-    ];
-    currentMonth.value = monthNames[currentDate.getMonth()] + ' ' + currentDate.getFullYear();
+    ]
+    currentMonth.value = monthNames[currentDate.getMonth()] + ' ' + currentDate.getFullYear()
 }
 
 </script>

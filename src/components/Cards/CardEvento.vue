@@ -42,7 +42,7 @@
             <p class="mb-4 text-lg leading-relaxed text-blueGray-700">
               Descripcion del evento
             </p>
-            
+
             <a href="javascript:void(0);" class="font-normal text-red-500">
               Inscripción
             </a>
@@ -53,13 +53,13 @@
   </div>
 </template>
 <script>
-import team2 from "@/assets/img/team-2-800x800.jpg";
+import team2 from '@/assets/img/team-2-800x800.jpg'
 
 export default {
-  data() {
-    return {
-      team2,
-    };
-  },
-};
+    data () {
+        return {
+            team2
+        }
+    }
+}
 </script>

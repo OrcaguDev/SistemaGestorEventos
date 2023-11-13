@@ -8,10 +8,10 @@
   </div>
 </template>
 <script>
-import CardCalendar from "@/components/Cards/CardCalendar.vue";
+import CardCalendar from '@/components/Cards/CardCalendar.vue'
 export default {
-  components: {
-    CardCalendar,
-  },
-};
+    components: {
+        CardCalendar
+    }
+}
 </script>

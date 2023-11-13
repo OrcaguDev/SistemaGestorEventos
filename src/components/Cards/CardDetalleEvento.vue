@@ -49,8 +49,6 @@
                     </div>
                 </form>
 
-
-
                 <div class="flex-auto px-4 lg:px-10 py-10 pt-0"></div>
 
                 <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
@@ -194,7 +192,7 @@
                                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                 No
                             </td>
-                            
+
                             <td v-if="inscripcion.asistencia == 1"  class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                 Si
                             </td>
@@ -210,11 +208,10 @@
     </div>
 </template>
 
-
 <script>
-import axios from 'axios';
+import axios from 'axios'
 export default {
-    data() {
+    data () {
         return {
             detalle: {
                 nombre: '',
@@ -234,84 +231,83 @@ export default {
             },
             url_id: '',
             inscripciones: [],
-            dni: '',
+            dni: ''
         }
     },
     methods: {
-        goBack() {
-            window.history.back();
+        goBack () {
+            window.history.back()
         },
 
-        getEditEvento(id) {
-            let objetoString = localStorage.getItem("token");
-            let objeto = JSON.parse(objetoString);
-            this.apii.api_token = objeto;
+        getEditEvento (id) {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post(`http://localhost:8000/evento/${id}`, this.apii, auth).then(({ data }) => {
-                this.detalle.nombre = data[0].nombre;
-                this.detalle.expositor = data[0].expositor;
-                this.detalle.lugar = data[0].lugar;
-                this.detalle.fechaInicio = data[0].fechaInicio;
-                this.detalle.descripcion = data[0].descripcion;
-                this.detalle.aforo_total = data[0].aforo_total;
-                this.detalle.butacas_reservadas = data[0].butacas_reservadas;
-                this.detalle.fechaFin = data[0].fechaFin;
-                this.detalle.id_regla = data[0].id_regla;
-                this.detalle.fechaInscripcion = data[0].fechaInscripcion;
-
+                this.detalle.nombre = data[0].nombre
+                this.detalle.expositor = data[0].expositor
+                this.detalle.lugar = data[0].lugar
+                this.detalle.fechaInicio = data[0].fechaInicio
+                this.detalle.descripcion = data[0].descripcion
+                this.detalle.aforo_total = data[0].aforo_total
+                this.detalle.butacas_reservadas = data[0].butacas_reservadas
+                this.detalle.fechaFin = data[0].fechaFin
+                this.detalle.id_regla = data[0].id_regla
+                this.detalle.fechaInscripcion = data[0].fechaInscripcion
             }).catch((error) => {
-                console.log(error);
-            });
+                console.log(error)
+            })
         },
-        getInscripcionesTotal(id) {
-            let objetoString = localStorage.getItem("token");
-            let objeto = JSON.parse(objetoString);
-            this.apii.api_token = objeto;
+        getInscripcionesTotal (id) {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post(`http://localhost:8000/getInscripcionesTotal/${id}`, this.apii, auth).then(({ data }) => {
-                this.inscripciones = data;
+                this.inscripciones = data
             }).catch((error) => {
-                console.log(error);
-            });
+                console.log(error)
+            })
         },
-        updateAsistencia() {
-            let objetoString = localStorage.getItem("token");
-            let objeto = JSON.parse(objetoString);
-            this.apii.api_token = objeto;
-            let dni = this.dni;
-            let id_evento = this.url_id;
+        updateAsistencia () {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
+            const dni = this.dni
+            const id_evento = this.url_id
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            let url_concatenado = `http://localhost:8000/updateAsistencia/?dni=${dni}&id_evento=${id_evento}`;
+            const url_concatenado = `http://localhost:8000/updateAsistencia/?dni=${dni}&id_evento=${id_evento}`
             // console.log(url_concatenado);
             axios.post(url_concatenado, this.apii, auth).then(() => {
-                this.getInscripcionesTotal(this.url_id);
-                this.dni='';
+                this.getInscripcionesTotal(this.url_id)
+                this.dni = ''
             }).catch((error) => {
-                console.log(error);
-            });
+                console.log(error)
+            })
         },
 
         props: {
             color: {
-                default: "light",
+                default: 'light',
                 validator: function (value) {
                     // The value must match one of these strings
-                    return ["light", "dark"].indexOf(value) !== -1;
-                },
-            },
-        },
+                    return ['light', 'dark'].indexOf(value) !== -1
+                }
+            }
+        }
     },
-    created() {
-        this.url_id = this.$route.params.id;
-        this.getEditEvento(this.url_id);
-        this.getInscripcionesTotal(this.url_id);
-    },
+    created () {
+        this.url_id = this.$route.params.id
+        this.getEditEvento(this.url_id)
+        this.getInscripcionesTotal(this.url_id)
+    }
 }
 
 </script>

@@ -93,7 +93,7 @@
                 <option value="0" selected>Seleccione una regla</option>
                 <option v-for="(regla, index) in reglas" :key="index" :value="regla.id_regla">
                   {{ regla.nombre }}
-                </option>                
+                </option>
               </select>
             </div>
           </div>
@@ -108,7 +108,7 @@
                 <option value="0" selected>Seleccione un link </option>
                 <option v-for="(pago, index) in pagos" :key="index" :value="pago.id_pagos">
                   {{ pago.nombre }}
-                </option>                
+                </option>
               </select>
             </div>
           </div>
@@ -184,99 +184,99 @@
   </div>
 </template>
 <script>
-import axios from 'axios';
+import axios from 'axios'
 export default {
-  data() {
-    return {
-      evento: {
-        nombre: '',
-        expositor: '',
-        lugar: '',
-        fechaInscripcion: '',
-        fechaInicio: '',
-        descripcion: '',
-        aforo_total: '',
-        butacas_reservadas: '',
-        fechaFin: '',
-        api_token: '',
-        id_regla: 0,
-        id_pagos:0
-      },
-      reglas:[],
-      pagos:[],
-      apii:{
-        api_token:''
-      },
-      selectedFile: null,
-      selectedFilePdf: null
-    }
-  },
-  methods: {
-    handleFileUpload(event) {
-      this.selectedFile = event.target.files[0];
+    data () {
+        return {
+            evento: {
+                nombre: '',
+                expositor: '',
+                lugar: '',
+                fechaInscripcion: '',
+                fechaInicio: '',
+                descripcion: '',
+                aforo_total: '',
+                butacas_reservadas: '',
+                fechaFin: '',
+                api_token: '',
+                id_regla: 0,
+                id_pagos: 0
+            },
+            reglas: [],
+            pagos: [],
+            apii: {
+                api_token: ''
+            },
+            selectedFile: null,
+            selectedFilePdf: null
+        }
     },
-    handleFileUploadPdf(event) {
-      this.selectedFilePdf = event.target.files[0];
-    },
-    storeEvento() {
-      // console.log(this.selectedFile,this.selectedFilePdf)
-      let objetoString = localStorage.getItem("token");
-      let objeto = JSON.parse(objetoString);
-      this.evento.api_token = objeto;
-      const auth = {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      }
-      const formData = new FormData();
-      formData.append("file", this.selectedFile);
-      formData.append("filepdf", this.selectedFilePdf);
-      formData.append("nombre", this.evento.nombre);
-      formData.append("expositor", this.evento.expositor);
-      formData.append("lugar", this.evento.lugar);
-      formData.append("fechaInscripcion", this.evento.fechaInscripcion);
-      formData.append("fechaInicio", this.evento.fechaInicio);
-      formData.append("descripcion", this.evento.descripcion);
-      formData.append("aforo_total", this.evento.aforo_total);
-      formData.append("butacas_reservadas", this.evento.butacas_reservadas);
-      formData.append("fechaFin", this.evento.fechaFin);
-      formData.append("id_regla", this.evento.id_regla);
-      formData.append("id_pagos", this.evento.id_pagos);
-      formData.append("api_token", this.evento.api_token);
-      
-      axios.post('http://localhost:8000/storeEvento', formData, auth).then(() => {
-        this.$router.push('/admin/listarEvento');
-      });
-    },
-    getReglas(){
-      let objetoString = localStorage.getItem("token");
-      let objeto = JSON.parse(objetoString);
-      this.apii.api_token=objeto;
-      const auth = {
-        headers: {'Content-Type': 'application/json'} 
-      }
-      axios.post('http://localhost:8000/reglas',this.apii,auth).then(({data}) => {
-          this.reglas = data;
-      }).catch((error) => {
-          console.log(error);
-      });
-    },
-    getPagos(){
-      let objetoString = localStorage.getItem("token");
-            let objeto = JSON.parse(objetoString);
-            this.apii.api_token = objeto;
+    methods: {
+        handleFileUpload (event) {
+            this.selectedFile = event.target.files[0]
+        },
+        handleFileUploadPdf (event) {
+            this.selectedFilePdf = event.target.files[0]
+        },
+        storeEvento () {
+            // console.log(this.selectedFile,this.selectedFilePdf)
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.evento.api_token = objeto
+            const auth = {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            }
+            const formData = new FormData()
+            formData.append('file', this.selectedFile)
+            formData.append('filepdf', this.selectedFilePdf)
+            formData.append('nombre', this.evento.nombre)
+            formData.append('expositor', this.evento.expositor)
+            formData.append('lugar', this.evento.lugar)
+            formData.append('fechaInscripcion', this.evento.fechaInscripcion)
+            formData.append('fechaInicio', this.evento.fechaInicio)
+            formData.append('descripcion', this.evento.descripcion)
+            formData.append('aforo_total', this.evento.aforo_total)
+            formData.append('butacas_reservadas', this.evento.butacas_reservadas)
+            formData.append('fechaFin', this.evento.fechaFin)
+            formData.append('id_regla', this.evento.id_regla)
+            formData.append('id_pagos', this.evento.id_pagos)
+            formData.append('api_token', this.evento.api_token)
+
+            axios.post('http://localhost:8000/storeEvento', formData, auth).then(() => {
+                this.$router.push('/admin/listarEvento')
+            })
+        },
+        getReglas () {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post('http://localhost:8000/reglas', this.apii, auth).then(({ data }) => {
+                this.reglas = data
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+        getPagos () {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post('http://localhost:8000/getPagos', this.apii, auth).then(({ data }) => {
-                this.pagos = data;
+                this.pagos = data
                 // console.log(data);
             }).catch((error) => {
-                console.log(error);
-            });
+                console.log(error)
+            })
+        }
+    },
+    created () {
+        this.getReglas()
+        this.getPagos()
     }
-  },
-  created(){
-    this.getReglas();
-    this.getPagos();
-  }
 }
 </script>

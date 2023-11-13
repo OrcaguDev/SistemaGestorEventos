@@ -6,14 +6,14 @@
 </template>
 <script>
 export default {
-  data() {
-    return {
-      navbarOpen: false,
-    };
-  },
-  methods: {
-  },
-  components: {
-  },
-};
+    data () {
+        return {
+            navbarOpen: false
+        }
+    },
+    methods: {
+    },
+    components: {
+    }
+}
 </script>

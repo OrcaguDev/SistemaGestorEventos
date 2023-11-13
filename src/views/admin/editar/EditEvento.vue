@@ -5,13 +5,12 @@
       </div>
     </div>
   </template>
-  <script>
-  import CardEditEvento from "@/components/Cards/CardEditEvento.vue";
-  
-  export default {
+<script>
+import CardEditEvento from '@/components/Cards/CardEditEvento.vue'
+
+export default {
     components: {
-    CardEditEvento,
-  },
-  };
-  </script>
-  
+        CardEditEvento
+    }
+}
+</script>
