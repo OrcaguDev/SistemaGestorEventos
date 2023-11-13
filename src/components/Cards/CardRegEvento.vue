@@ -44,11 +44,21 @@
           <div class="w-full lg:w-6/12 px-4">
             <div class="relative w-full mb-3">
               <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                Fecha y hora
+                Fecha y hora Inicial
               </label>
               <input type="datetime-local"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 v-model="evento.fechaInicio" required/>
+            </div>
+          </div>
+          <div class="w-full lg:w-6/12 px-4">
+            <div class="relative w-full mb-3">
+              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                Fecha y hora Final
+              </label>
+              <input type="datetime-local"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                v-model="evento.fechaFin" required/>
             </div>
           </div>
 
@@ -80,6 +90,17 @@
               <input type="datetime-local"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 v-model="evento.fechaInscripcion" required />
+            </div>
+          </div>
+
+          <div class="w-full lg:w-4/12 px-4">
+            <div class="relative w-full mb-3">
+              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                Fecha y hora del cierre de la Inscripción
+              </label>
+              <input type="datetime-local"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                v-model="evento.fechaInscripcionFin" required />
             </div>
           </div>
 
@@ -158,16 +179,6 @@
                 v-model="evento.butacas_reservadas" required/>
             </div>
           </div>
-          <div class="w-full lg:w-4/12 px-4">
-            <div class="relative w-full mb-3">
-              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password" >
-                Fecha y Hora de Fin
-              </label>
-              <input type="datetime-local"
-                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="evento.fechaFin" required/>
-            </div>
-          </div>
         </div>
 
         <hr class="mt-6 border-b-1 border-blueGray-300" />
@@ -186,6 +197,7 @@
 <script>
 import axios from 'axios'
 export default {
+<<<<<<< HEAD
     data () {
         return {
             evento: {
@@ -263,6 +275,87 @@ export default {
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
+=======
+  data() {
+    return {
+      evento: {
+        nombre: 'evento',
+        expositor: 'expos',
+        lugar: 'cip',
+        fechaInscripcion: '',
+        fechaInscripcionFin:'',
+        fechaInicio: '',
+        descripcion: 'asd',
+        aforo_total: '300',
+        butacas_reservadas: '30',
+        fechaFin: '',
+        api_token: '',
+        id_regla: 0,
+        id_pagos:0
+      },
+      reglas:[],
+      pagos:[],
+      apii:{
+        api_token:''
+      },
+      selectedFile: null,
+      selectedFilePdf: null
+    }
+  },
+  methods: {
+    handleFileUpload(event) {
+      this.selectedFile = event.target.files[0];
+    },
+    handleFileUploadPdf(event) {
+      this.selectedFilePdf = event.target.files[0];
+    },
+    storeEvento() {
+      // console.log(this.selectedFile,this.selectedFilePdf)
+      let objetoString = localStorage.getItem("token");
+      let objeto = JSON.parse(objetoString);
+      this.evento.api_token = objeto;
+      const auth = {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      }
+      const formData = new FormData();
+      formData.append("file", this.selectedFile);
+      formData.append("filepdf", this.selectedFilePdf);
+      formData.append("nombre", this.evento.nombre);
+      formData.append("expositor", this.evento.expositor);
+      formData.append("lugar", this.evento.lugar);
+      formData.append("fechaInscripcion", this.evento.fechaInscripcion);
+      formData.append("fechaInscripcionFin", this.evento.fechaInscripcionFin);
+      formData.append("fechaInicio", this.evento.fechaInicio);
+      formData.append("descripcion", this.evento.descripcion);
+      formData.append("aforo_total", this.evento.aforo_total);
+      formData.append("butacas_reservadas", this.evento.butacas_reservadas);
+      formData.append("fechaFin", this.evento.fechaFin);
+      formData.append("id_regla", this.evento.id_regla);
+      formData.append("id_pagos", this.evento.id_pagos);
+      formData.append("api_token", this.evento.api_token);
+      
+      axios.post('http://localhost:8000/storeEvento', formData, auth).then(() => {
+        this.$router.push('/admin/listarEvento');
+      });
+    },
+    getReglas(){
+      let objetoString = localStorage.getItem("token");
+      let objeto = JSON.parse(objetoString);
+      this.apii.api_token=objeto;
+      const auth = {
+        headers: {'Content-Type': 'application/json'} 
+      }
+      axios.post('http://localhost:8000/reglas',this.apii,auth).then(({data}) => {
+          this.reglas = data;
+      }).catch((error) => {
+          console.log(error);
+      });
+    },
+    getPagos(){
+      let objetoString = localStorage.getItem("token");
+            let objeto = JSON.parse(objetoString);
+            this.apii.api_token = objeto;
+>>>>>>> b3195f1268b6dff288fa3fd723e63823d4c09515
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
