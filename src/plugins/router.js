@@ -52,15 +52,7 @@ const routes = [
             {
                 path: '/admin/listarEvento',
                 component: ListarEvento,
-                meta: { requiresAuth: true },
-                beforeEnter: (to, from, next) => {
-                    if (localStorage.getItem('rol') === 'ADMINISTRADOR') {
-                        next()
-                    } else {
-                        next('/admin/dashboard')
-                    }
-                }
-
+                meta: { requiresAuth: true }
             },
             {
                 path: '/admin/reporte',
