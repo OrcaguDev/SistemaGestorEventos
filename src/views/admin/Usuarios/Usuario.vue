@@ -68,6 +68,23 @@
                                     <div class="relative w-full mb-3">
                                         <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                                             htmlFor="grid-password">
+                                            Área
+                                        </label>
+                                        <select name="area" id="" v-model="usuario.area"
+                                            class=" text-blueGray-600 text-sm uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150">
+                                            <option value="0" selected>Seleccione un área</option>
+                                            <option value="1">Infocip</option>
+                                            <option value="2">ISS</option>
+                                            <option value="3">IEPI</option>
+                                            <option value="4">Colegiatura</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="w-full  px-4">
+                                    <div class="relative w-full mb-3">
+                                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                            htmlFor="grid-password">
                                             Rol
                                         </label>
                                         <select name="rol" id="" v-model="usuario.rol"
@@ -78,6 +95,7 @@
                                         </select>
                                     </div>
                                 </div>
+
                             </div>
                             <span style="color: red;">{{ alert_password }}</span>
                             <hr class="mt-6 border-b-1 border-blueGray-300" />
@@ -193,6 +211,7 @@
                                     ]">
                                     USUARIO
                                 </th>
+
                                 <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
                                     :class="[
                                         color === 'light'
@@ -200,6 +219,15 @@
                                             : 'bg-emerald-800 text-emerald-300 border-emerald-700',
                                     ]">
                                     ESTADO
+                                </th>
+
+                                <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                    :class="[
+                                        color === 'light'
+                                            ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                                            : 'bg-emerald-800 text-emerald-300 border-emerald-700',
+                                    ]">
+                                    AREA
                                 </th>
 
                                 <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center"
@@ -223,6 +251,10 @@
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                                     {{ usuario.rol_nombre }}
+                                </td>
+                                <td
+                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    {{ usuario.nombre }}
                                 </td>
                                 <td
                                     class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
@@ -265,6 +297,7 @@ export default {
                 password: '',
                 confirmPassword: '',
                 rol: 0,
+                area:0,
                 api_token: '',
                 codigo: ''
             },
@@ -292,7 +325,7 @@ export default {
         },
         storeUsuario() {
             // this.isVisible=1;
-            if (this.usuario.name == '' && this.usuario.email == '' && this.usuario.password == '' && this.usuario.rol == 0) {
+            if (this.usuario.name == '' && this.usuario.email == '' && this.usuario.password == '' && this.usuario.area == 0 && this.usuario.rol == 0) {
                 this.alert_password = "Faltan campos por rellenar, por favor ingresa los datos correctamente.";
             } else {
                 if (this.usuario.password == this.usuario.confirmPassword) {

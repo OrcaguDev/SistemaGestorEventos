@@ -44,11 +44,21 @@
           <div class="w-full lg:w-6/12 px-4">
             <div class="relative w-full mb-3">
               <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                Fecha y hora
+                Fecha y hora Inicial
               </label>
               <input type="datetime-local"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 v-model="evento.fechaInicio" required/>
+            </div>
+          </div>
+          <div class="w-full lg:w-6/12 px-4">
+            <div class="relative w-full mb-3">
+              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                Fecha y hora Final
+              </label>
+              <input type="datetime-local"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                v-model="evento.fechaFin" required/>
             </div>
           </div>
 
@@ -80,6 +90,17 @@
               <input type="datetime-local"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 v-model="evento.fechaInscripcion" required />
+            </div>
+          </div>
+
+          <div class="w-full lg:w-4/12 px-4">
+            <div class="relative w-full mb-3">
+              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                Fecha y hora del cierre de la Inscripción
+              </label>
+              <input type="datetime-local"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                v-model="evento.fechaInscripcionFin" required />
             </div>
           </div>
 
@@ -158,16 +179,6 @@
                 v-model="evento.butacas_reservadas" required/>
             </div>
           </div>
-          <div class="w-full lg:w-4/12 px-4">
-            <div class="relative w-full mb-3">
-              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password" >
-                Fecha y Hora de Fin
-              </label>
-              <input type="datetime-local"
-                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="evento.fechaFin" required/>
-            </div>
-          </div>
         </div>
 
         <hr class="mt-6 border-b-1 border-blueGray-300" />
@@ -189,14 +200,15 @@ export default {
   data() {
     return {
       evento: {
-        nombre: '',
-        expositor: '',
-        lugar: '',
+        nombre: 'evento',
+        expositor: 'expos',
+        lugar: 'cip',
         fechaInscripcion: '',
+        fechaInscripcionFin:'',
         fechaInicio: '',
-        descripcion: '',
-        aforo_total: '',
-        butacas_reservadas: '',
+        descripcion: 'asd',
+        aforo_total: '300',
+        butacas_reservadas: '30',
         fechaFin: '',
         api_token: '',
         id_regla: 0,
@@ -233,6 +245,7 @@ export default {
       formData.append("expositor", this.evento.expositor);
       formData.append("lugar", this.evento.lugar);
       formData.append("fechaInscripcion", this.evento.fechaInscripcion);
+      formData.append("fechaInscripcionFin", this.evento.fechaInscripcionFin);
       formData.append("fechaInicio", this.evento.fechaInicio);
       formData.append("descripcion", this.evento.descripcion);
       formData.append("aforo_total", this.evento.aforo_total);
