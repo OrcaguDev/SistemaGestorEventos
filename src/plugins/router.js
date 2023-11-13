@@ -34,6 +34,13 @@ import QR from '@/views/inscripciones/QR.vue'
 import detalleEvento from '@/views/admin/DetalleEvento.vue'
 import timeLine from '@/views/admin/TimeLine.vue'
 
+const userRoles = {
+    ADMINISTRADOR: 1,
+    EDITOR: 2
+}
+
+const userRol = parseInt(localStorage.getItem('rol'))
+
 const routes = [
     {
         path: '/',
@@ -59,7 +66,7 @@ const routes = [
                 component: Reporte,
                 meta: { requiresAuth: true },
                 beforeEnter: (to, from, next) => {
-                    if (localStorage.getItem('rol') === 'ADMINISTRADOR') {
+                    if (userRol === userRoles.ADMINISTRADOR) {
                         next()
                     } else {
                         next('/admin/dashboard')
@@ -124,7 +131,7 @@ const routes = [
                 component: Usuarios,
                 meta: { requiresAuth: true },
                 beforeEnter: (to, from, next) => {
-                    if (localStorage.getItem('rol') === 'ADMINISTRADOR') {
+                    if (userRol === userRoles.ADMINISTRADOR) {
                         next()
                     } else {
                         next('/admin/dashboard')
