@@ -7,11 +7,11 @@
 </template>
 
 <script>
-import CardDetalleEvento from "@/components/Cards/CardDetalleEvento.vue";
+import CardDetalleEvento from '@/components/Cards/CardDetalleEvento.vue'
 
 export default {
-  components: {
-    CardDetalleEvento,
-  },
-};
+    components: {
+        CardDetalleEvento
+    }
+}
 </script>

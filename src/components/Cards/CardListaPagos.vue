@@ -98,11 +98,10 @@
     </div>
 </template>
 
-
 <script>
-import axios from 'axios';
+import axios from 'axios'
 export default {
-    data() {
+    data () {
         return {
             pagos: [],
             apii: {
@@ -115,35 +114,35 @@ export default {
         }
     },
     methods: {
-        getTotal() {
-            let objetoString = localStorage.getItem("token");
-            let objeto = JSON.parse(objetoString);
-            this.apii.api_token = objeto;
+        getTotal () {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post('http://localhost:8000/getPagos', this.apii, auth).then(({ data }) => {
-                this.pagos = data;
+                this.pagos = data
                 // console.log(data);
             }).catch((error) => {
-                console.log(error);
-            });
+                console.log(error)
+            })
         },
-        eliminarPago() {
-            console.log(this.pago.id_pagos);
+        eliminarPago () {
+            console.log(this.pago.id_pagos)
         }
     },
-    created() {
-        this.getTotal();
+    created () {
+        this.getTotal()
     },
     props: {
         color: {
-            default: "light",
+            default: 'light',
             validator: function (value) {
                 // The value must match one of these strings
-                return ["light", "dark"].indexOf(value) !== -1;
-            },
-        },
-    },
-};
+                return ['light', 'dark'].indexOf(value) !== -1
+            }
+        }
+    }
+}
 </script>

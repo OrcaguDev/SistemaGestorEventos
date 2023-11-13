@@ -6,10 +6,10 @@
     </div>
 </template>
 <script>
-import CardListaReglas from "@/components/Cards/CardListaReglas.vue";
+import CardListaReglas from '@/components/Cards/CardListaReglas.vue'
 export default {
     components: {
-        CardListaReglas,
-    },
-};
+        CardListaReglas
+    }
+}
 </script>

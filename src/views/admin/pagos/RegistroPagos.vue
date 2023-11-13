@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import CardPagos from "@/components/Cards/CardRegPagos.vue";
+import CardPagos from '@/components/Cards/CardRegPagos.vue'
 export default {
-  components: {
-    CardPagos,
-  },
-};
+    components: {
+        CardPagos
+    }
+}
 </script>

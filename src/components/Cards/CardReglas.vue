@@ -17,14 +17,14 @@
             <div class="relative w-full mb-3">
               <label
                 class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                htmlFor="grid-password" 
+                htmlFor="grid-password"
               >
                 Nombre de la regla
               </label>
               <input
                 type="text"
-                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
-                 v-model="regla.nombre "   required              
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                 v-model="regla.nombre "   required
               />
             </div>
           </div>
@@ -38,13 +38,12 @@
               </label>
               <input
                 type="text"
-                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"   
-                 v-model="regla.url" required       
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                 v-model="regla.url" required
               />
             </div>
           </div>
-          
-          
+
           <div class="w-full lg:w-12/12 px-4">
             <div class="relative w-full mb-3">
               <label
@@ -78,34 +77,34 @@
       </form>
     </div>
   </div>
-</template> 
+</template>
 
 <script>
-    import axios from 'axios'
-    export default {
-        data(){
-            return{
-                regla:{
-                    url:'',
-                    nombre:'',
-                    api_token:'',
-                    descripcion:''
-                },
-               
+import axios from 'axios'
+export default {
+    data () {
+        return {
+            regla: {
+                url: '',
+                nombre: '',
+                api_token: '',
+                descripcion: ''
             }
-        },
-        methods:{
-          storeEvento(){
-            let objetoString = localStorage.getItem("token");
-            let objeto = JSON.parse(objetoString);
-            this.regla.api_token=objeto;
+
+        }
+    },
+    methods: {
+        storeEvento () {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.regla.api_token = objeto
             const auth = {
-                  headers: {'Content-Type': 'application/json'} 
-                }
-                axios.post('http://localhost:8000/storeReglas',this.regla,auth).then(() => {
-                  this.$router.push('/admin/reglas/listaRegla');
-                });
-          }
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post('http://localhost:8000/storeReglas', this.regla, auth).then(() => {
+                this.$router.push('/admin/reglas/listaRegla')
+            })
         }
     }
+}
 </script>

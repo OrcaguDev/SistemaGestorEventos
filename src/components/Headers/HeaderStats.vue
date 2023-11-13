@@ -29,7 +29,7 @@
             <card-stats
               statSubtitle="Usuarios"
               :statTitle="totalusuarios"
-              
+
               statPercent="1.10"
               statPercentColor="text-emerald-500"
               statDescripiron="Desde ayer"
@@ -44,72 +44,71 @@
 </template>
 
 <script>
-import CardStats from "@/components/Cards/CardStats.vue";
-import axios from 'axios';
-
+import CardStats from '@/components/Cards/CardStats.vue'
+import axios from 'axios'
 
 export default {
-  components: {
-    CardStats,
-  },
-  data(){
-    return{
-      // constancias: 0,
-      totalEventos: 0,
-      totalusuarios: 0,
-      totalReglas: 0,
-      apii:{
-        api_token:''
-      }
-    };
-  },
-  created(){
-    this.getEventos();
-    this.getUsersTotal();
-    this.getReglas();
-  },
-  methods: {
-    getUsersTotal(){
-        let objetoString = localStorage.getItem("token");
-        let objeto = JSON.parse(objetoString);
-        this.apii.api_token=objeto;
-        const auth = {
-          headers: {'Content-Type': 'application/json'} 
-        }
-        axios.post('http://localhost:8000/getUsers',this.apii,auth).then(({data}) => {
-            this.totalusuarios = data[0].total;
-        }).catch((error) => {
-            console.log(error);
-        });
+    components: {
+        CardStats
     },
+    data () {
+        return {
+            // constancias: 0,
+            totalEventos: 0,
+            totalusuarios: 0,
+            totalReglas: 0,
+            apii: {
+                api_token: ''
+            }
+        }
+    },
+    created () {
+        this.getEventos()
+        this.getUsersTotal()
+        this.getReglas()
+    },
+    methods: {
+        getUsersTotal () {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post('http://localhost:8000/getUsers', this.apii, auth).then(({ data }) => {
+                this.totalusuarios = data[0].total
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
 
-    getReglas(){
-        let objetoString = localStorage.getItem("token");
-        let objeto = JSON.parse(objetoString);
-        this.apii.api_token=objeto;
-        const auth = {
-          headers: {'Content-Type': 'application/json'} 
-        }
-        axios.post('http://localhost:8000/getReglas',this.apii,auth).then(({data}) => {
-            this.totalReglas = data[0].total;
-        }).catch((error) => {
-            console.log(error);
-        });
-    },
+        getReglas () {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post('http://localhost:8000/getReglas', this.apii, auth).then(({ data }) => {
+                this.totalReglas = data[0].total
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
 
-    getEventos(){
-        let objetoString = localStorage.getItem("token");
-        let objeto = JSON.parse(objetoString);
-        this.apii.api_token=objeto;
-        const auth = {
-          headers: {'Content-Type': 'application/json'} 
+        getEventos () {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post('http://localhost:8000/getEventos', this.apii, auth).then(({ data }) => {
+                this.totalEventos = data[0].total
+            }).catch((error) => {
+                console.log(error)
+            })
         }
-        axios.post('http://localhost:8000/getEventos',this.apii,auth).then(({data}) => {
-            this.totalEventos = data[0].total;
-        }).catch((error) => {
-            console.log(error);
-        });
-    },
-  }
-};
+    }
+}
 </script>

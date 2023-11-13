@@ -17,7 +17,7 @@
                                 Nombre del Evento
                           </label>
                             <input type="text"
-                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
+                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                 v-model="pagos.nombre" required/>
                         </div>
                     </div>
@@ -27,11 +27,10 @@
                                 URL de pago
                             </label>
                             <input type="text"
-                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" 
+                                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                 v-model="pagos.url" required/>
                         </div>
                     </div>
-
 
                     <div class="w-full lg:w-12/12 px-4">
                         <div class="relative w-full mb-3">
@@ -64,29 +63,29 @@
 
 <script>
 import axios from 'axios'
-export default{
-    data(){
+export default {
+    data () {
         return {
-            pagos:{
-                url:'',
-                nombre:'',
-                api_token:'',
-                descripcion:''
-            },
+            pagos: {
+                url: '',
+                nombre: '',
+                api_token: '',
+                descripcion: ''
+            }
 
         }
     },
-    methods:{
-        storePagos(){
-            let objetoString = localStorage.getItem("token");
-            let objeto = JSON.parse(objetoString);
-            this.pagos.api_token = objeto;
+    methods: {
+        storePagos () {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.pagos.api_token = objeto
             const auth = {
-                headers: {'Content-Type': 'application/json'}
+                headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/storePagos', this.pagos,auth).then(()=> {
-                this.$router.push('/admin/pagos/listPagos');
-            });
+            axios.post('http://localhost:8000/storePagos', this.pagos, auth).then(() => {
+                this.$router.push('/admin/pagos/listPagos')
+            })
         }
     }
 }

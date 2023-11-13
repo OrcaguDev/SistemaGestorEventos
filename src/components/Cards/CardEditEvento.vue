@@ -192,91 +192,89 @@
 <script>
 import axios from 'axios'
 export default {
-  data() {
-    return {
-      evento: {
-        nombre: '',
-        expositor: '',
-        lugar: '',
-        fechaInicio: '',
-        descripcion: '',
-        aforo_total: '',
-        butacas_reservadas: '',
-        fechaFin: '',
-        fechaInscripcion: '',
-        id_regla: 0,
-        id_pagos: 0,
-        api_token: ''
-      },
-      reglas: [],
-      pagos: [],
-      apii: {
-        api_token: ''
-      },
-      url_id: ''
-      // evento:{}
+    data () {
+        return {
+            evento: {
+                nombre: '',
+                expositor: '',
+                lugar: '',
+                fechaInicio: '',
+                descripcion: '',
+                aforo_total: '',
+                butacas_reservadas: '',
+                fechaFin: '',
+                fechaInscripcion: '',
+                id_regla: 0,
+                id_pagos: 0,
+                api_token: ''
+            },
+            reglas: [],
+            pagos: [],
+            apii: {
+                api_token: ''
+            },
+            url_id: ''
+            // evento:{}
+        }
+    },
+    methods: {
+        goBack () {
+            window.history.back()
+        },
+        storeEvento () {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.evento.api_token = objeto
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post('http://localhost:8000/storeEvento', this.evento, auth).then(() => {
+                this.$router.push('/admin/tables')
+            })
+        },
+        getEditEvento (id) {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post(`http://localhost:8000/evento/${id}`, this.apii, auth).then(({ data }) => {
+                console.log(data)
+                this.evento.nombre = data[0].nombre
+                this.evento.expositor = data[0].expositor
+                this.evento.lugar = data[0].lugar
+                this.evento.fechaInicio = data[0].fechaInicio
+                this.evento.descripcion = data[0].descripcion
+                this.evento.aforo_total = data[0].aforo_total
+                this.evento.butacas_reservadas = data[0].butacas_reservadas
+                this.evento.fechaFin = data[0].fechaFin
+                this.evento.id_regla = data[0].id_regla
+                this.evento.id_pagos = data[0].id_pagos
+                this.evento.fechaInscripcion = data[0].fechaInscripcion
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+        getPagos () {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post('http://localhost:8000/getPagos', this.apii, auth).then(({ data }) => {
+                this.pagos = data
+                console.log(data)
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
+    },
+    mounted () {
+        this.url_id = this.$route.params.id
+        this.getEditEvento(this.url_id)
     }
-  },
-  methods: {
-    goBack() {
-      window.history.back();
-    },
-    storeEvento() {
-      let objetoString = localStorage.getItem("token");
-      let objeto = JSON.parse(objetoString);
-      this.evento.api_token = objeto;
-      const auth = {
-        headers: { 'Content-Type': 'application/json' }
-      }
-      axios.post('http://localhost:8000/storeEvento', this.evento, auth).then(() => {
-        this.$router.push('/admin/tables');
-      });
-    },
-    getEditEvento(id) {
-      let objetoString = localStorage.getItem("token");
-      let objeto = JSON.parse(objetoString);
-      this.apii.api_token = objeto;
-      const auth = {
-        headers: { 'Content-Type': 'application/json' }
-      }
-      axios.post(`http://localhost:8000/evento/${id}`, this.apii, auth).then(({ data }) => {
-        console.log(data);
-        this.evento.nombre = data[0].nombre;
-        this.evento.expositor = data[0].expositor;
-        this.evento.lugar = data[0].lugar;
-        this.evento.fechaInicio = data[0].fechaInicio;
-        this.evento.descripcion = data[0].descripcion;
-        this.evento.aforo_total = data[0].aforo_total;
-        this.evento.butacas_reservadas = data[0].butacas_reservadas;
-        this.evento.fechaFin = data[0].fechaFin;
-        this.evento.id_regla = data[0].id_regla;
-        this.evento.id_pagos = data[0].id_pagos;
-        this.evento.fechaInscripcion = data[0].fechaInscripcion;
-
-      }).catch((error) => {
-        console.log(error);
-      });
-    },
-    getPagos() {
-      let objetoString = localStorage.getItem("token");
-      let objeto = JSON.parse(objetoString);
-      this.apii.api_token = objeto;
-      const auth = {
-        headers: { 'Content-Type': 'application/json' }
-      }
-      axios.post('http://localhost:8000/getPagos', this.apii, auth).then(({ data }) => {
-        this.pagos = data;
-        console.log(data);
-      }).catch((error) => {
-        console.log(error);
-      });
-    }
-  },
-  mounted() {
-    this.url_id = this.$route.params.id;
-    this.getEditEvento(this.url_id);
-  },
 
 }
 </script>
-  

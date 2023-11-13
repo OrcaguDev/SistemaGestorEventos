@@ -85,9 +85,9 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from 'axios'
 export default {
-    data() {
+    data () {
         return {
             usuarios: [],
             apii: {
@@ -96,36 +96,35 @@ export default {
         }
     },
     methods: {
-        getTotal() {
-            let objetoString = localStorage.getItem("token");
-            let objeto = JSON.parse(objetoString);
-            this.apii.api_token = objeto;
+        getTotal () {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post('http://localhost:8000/usuarios', this.apii, auth).then(({ data }) => {
-                this.usuarios = data;
+                this.usuarios = data
             }).catch(error => {
-                console.log(error);
-            });
+                console.log(error)
+            })
         },
-        actualizarMensaje(nuevoMensaje) {
-        // Método para actualizar el mensaje desde ComponenteA
-        this.mensaje = nuevoMensaje;
+        actualizarMensaje (nuevoMensaje) {
+            // Método para actualizar el mensaje desde ComponenteA
+            this.mensaje = nuevoMensaje
         }
     },
-    created() {
-        this.getTotal();
-        
+    created () {
+        this.getTotal()
     },
-props: {
-color: {
-default: "light",
-    validator: function (value) {
-    return ['light', 'dark'].indexOf(value) !== -1;
-    },
-},
-},
-};
+    props: {
+        color: {
+            default: 'light',
+            validator: function (value) {
+                return ['light', 'dark'].indexOf(value) !== -1
+            }
+        }
+    }
+}
 
 </script>

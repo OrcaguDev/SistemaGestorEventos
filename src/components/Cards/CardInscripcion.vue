@@ -20,13 +20,10 @@
             </div>
           </div>
 
-
           <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
             Resumen del Evento
           </h6>
           <div v-if="isVisibleeee == 1" class="flex flex-wrap">
-
-
 
             <div class="w-full lg:w-3/12 px-4">
               <div class="relative w-full mb-3">
@@ -41,7 +38,6 @@
               </div>
             </div>
 
-
             <div class="w-full lg:w-3/12 px-4">
               <div class="relative w-full mb-3">
                 <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
@@ -52,8 +48,6 @@
                 </label>
               </div>
             </div>
-
-
 
             <div class="w-full lg:w-3/12 px-4">
               <div class="relative w-full mb-3">
@@ -66,8 +60,6 @@
               </div>
             </div>
 
-
-
             <div class="w-full lg:w-3/12 px-4">
               <div class="relative w-full mb-3">
                 <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
@@ -79,8 +71,6 @@
               </div>
             </div>
 
-
-
             <div class="w-full lg:w-6/12 px-4">
               <div class="relative w-full mb-3">
                 <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
@@ -91,8 +81,6 @@
                 </label>
               </div>
             </div>
-
-
 
           </div>
 
@@ -173,7 +161,6 @@
 
           <hr class="mt-6 mb-4 border-b-1 border-blueGray-300" />
 
-
           <!-- Habilitar despues de validar sus datos con el DNI -->
           <div v-if="isVisible === 1">
             <div class="flex flex-wrap">
@@ -230,137 +217,133 @@
   </div>
 </template>
 
-
 <script>
 import axios from 'axios'
 export default {
-  data() {
-    return {
-      evento: {
-        nombre: '',
-        expositor: '',
-        lugar: '',
-        fechaInicio: '',
-        descripcion: '',
-        img: '',
-        informe: '',
-      },
-      inscripcion: {
-        dni: '44867773',
-        nombre: '',
-        apellido: '',
-        celular: '',
-        email: '',
-        certificacion: false,
-        habilidad: '',
-        url_id: '',
-      },
-      isVisiblee: 0,
-      isVisible: 0,
-      apii: {
-        api_token: ''
-      },
-      url_id: '',
-      mensaje: '',
-      isVisibleeee: 1,
-      alert: '',
-    };
-  },
-  methods: {
-    async validarDni() {
-      const url = `https://app-cipcdll.com:81/obtener_persona_datos_xterceros/${this.inscripcion.dni}`; //RUTA DEL API
-      const response = await fetch(url);
-      const data = await response.json();
-      // console.log(data);
-      this.inscripcion.nombre = data.data.nombres;
-      this.inscripcion.apellido = data.data.paterno + ' ' + data.data.materno;
-      this.inscripcion.celular = data.data.celular;
-      this.inscripcion.email = data.data.email;
-      this.isVisible = 1;
+    data () {
+        return {
+            evento: {
+                nombre: '',
+                expositor: '',
+                lugar: '',
+                fechaInicio: '',
+                descripcion: '',
+                img: '',
+                informe: ''
+            },
+            inscripcion: {
+                dni: '44867773',
+                nombre: '',
+                apellido: '',
+                celular: '',
+                email: '',
+                certificacion: false,
+                habilidad: '',
+                url_id: ''
+            },
+            isVisiblee: 0,
+            isVisible: 0,
+            apii: {
+                api_token: ''
+            },
+            url_id: '',
+            mensaje: '',
+            isVisibleeee: 1,
+            alert: ''
+        }
     },
-    validarHabilidad() {
-      this.inscripcion.url_id = this.$route.params.id;
-      axios.post(`http://localhost:8000/obtenerReglaEvento/${this.inscripcion.url_id}`).then((data) => {
-        let url_first = data.data[0].url;
-        axios.get(`${url_first}/${this.inscripcion.habilidad}`).then((data) => {
-          if (data.data) {
-            this.isVisiblee = 1;
-            this.mensaje = ""
-          } else {
-            this.isVisiblee = 0;
-            this.mensaje = "No se encuentra habilitado."
-          }
-        });
-      });
+    methods: {
+        async validarDni () {
+            const url = `https://app-cipcdll.com:81/obtener_persona_datos_xterceros/${this.inscripcion.dni}` // RUTA DEL API
+            const response = await fetch(url)
+            const data = await response.json()
+            // console.log(data);
+            this.inscripcion.nombre = data.data.nombres
+            this.inscripcion.apellido = data.data.paterno + ' ' + data.data.materno
+            this.inscripcion.celular = data.data.celular
+            this.inscripcion.email = data.data.email
+            this.isVisible = 1
+        },
+        validarHabilidad () {
+            this.inscripcion.url_id = this.$route.params.id
+            axios.post(`http://localhost:8000/obtenerReglaEvento/${this.inscripcion.url_id}`).then((data) => {
+                const url_first = data.data[0].url
+                axios.get(`${url_first}/${this.inscripcion.habilidad}`).then((data) => {
+                    if (data.data) {
+                        this.isVisiblee = 1
+                        this.mensaje = ''
+                    } else {
+                        this.isVisiblee = 0
+                        this.mensaje = 'No se encuentra habilitado.'
+                    }
+                })
+            })
+        },
+
+        getEditEvento (id) {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post(`http://localhost:8000/evento/${id}`, this.apii, auth).then(({ data }) => {
+                this.evento.nombre = data[0].nombre
+                this.evento.expositor = data[0].expositor
+                this.evento.lugar = data[0].lugar
+                this.evento.fechaInicio = data[0].fechaInicio
+                this.evento.descripcion = data[0].descripcion
+                this.evento.aforo_total = data[0].aforo_total
+                this.evento.butacas_reservadas = data[0].butacas_reservadas
+                this.evento.fechaFin = data[0].fechaFin
+                this.evento.id_regla = data[0].id_regla
+                this.evento.fechaInscripcion = data[0].fechaInscripcion
+                this.evento.img = data[0].img
+                this.evento.informe = data[0].informe
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+        storeInscripcion () {
+            this.inscripcion.url_id = this.$route.params.id
+            // console.log(this.inscripcion.url_id);
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.inscripcion.api_token = objeto
+            const dni = this.inscripcion.dni
+            const id_evento = this.inscripcion.url_id
+            // console.log(dni);
+            // console.log(id_evento);
+            // console.log(this.inscripcion);
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            const url_combinado = `http://localhost:8000/validateInscripciones/?dni=${dni}&id_evento=${id_evento}`
+            // console.log(url_combinado);
+            axios.post(url_combinado, this.inscripcion, auth).then((data) => {
+                // console.log(data.data[0]);
+                if (data.data[0].cuentaInscripcion > 0) {
+                    this.alert = 'Ya se encuentra registrado en este evento.'
+                    window.alert(this.alert)
+                    window.location.reload()
+                } else {
+                    axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then((data) => {
+                        // console.log(data.data.inscripcion_id);
+                        this.isVisibleeee == 0
+                        window.alert('Registo completado satisfactoriamente!')
+                        // window.close();
+                        // this.$router.push({ path: `/inscripciones/QR/${this.inscripcion.url_id}` });
+                        // this.$router.push({ path: `/inscripciones/QR/${data.data.inscripcion_id}` });
+                    })
+                }
+            })
+        }
 
     },
-
-    getEditEvento(id) {
-      let objetoString = localStorage.getItem("token");
-      let objeto = JSON.parse(objetoString);
-      this.apii.api_token = objeto;
-      const auth = {
-        headers: { 'Content-Type': 'application/json' }
-      }
-      axios.post(`http://localhost:8000/evento/${id}`, this.apii, auth).then(({ data }) => {
-        this.evento.nombre = data[0].nombre;
-        this.evento.expositor = data[0].expositor;
-        this.evento.lugar = data[0].lugar;
-        this.evento.fechaInicio = data[0].fechaInicio;
-        this.evento.descripcion = data[0].descripcion;
-        this.evento.aforo_total = data[0].aforo_total;
-        this.evento.butacas_reservadas = data[0].butacas_reservadas;
-        this.evento.fechaFin = data[0].fechaFin;
-        this.evento.id_regla = data[0].id_regla;
-        this.evento.fechaInscripcion = data[0].fechaInscripcion;
-        this.evento.img = data[0].img;
-        this.evento.informe = data[0].informe;
-
-      }).catch((error) => {
-        console.log(error);
-      });
-    },
-    storeInscripcion() {
-      this.inscripcion.url_id = this.$route.params.id;
-      // console.log(this.inscripcion.url_id);
-      let objetoString = localStorage.getItem("token");
-      let objeto = JSON.parse(objetoString);
-      this.inscripcion.api_token = objeto;
-      let dni = this.inscripcion.dni;
-      let id_evento = this.inscripcion.url_id;
-      // console.log(dni);
-      // console.log(id_evento);
-      // console.log(this.inscripcion);
-      const auth = {
-        headers: { 'Content-Type': 'application/json' }
-      }
-      let url_combinado = `http://localhost:8000/validateInscripciones/?dni=${dni}&id_evento=${id_evento}`;
-      // console.log(url_combinado);
-      axios.post(url_combinado, this.inscripcion, auth).then((data) => {
-        // console.log(data.data[0]);
-        if(data.data[0].cuentaInscripcion>0){
-          this.alert ="Ya se encuentra registrado en este evento.";
-          window.alert(this.alert);
-          window.location.reload();
-        }else{
-          axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then((data) => {
-              // console.log(data.data.inscripcion_id);
-              this.isVisibleeee == 0;
-              window.alert("Registo completado satisfactoriamente!");
-              // window.close();
-              // this.$router.push({ path: `/inscripciones/QR/${this.inscripcion.url_id}` });
-              // this.$router.push({ path: `/inscripciones/QR/${data.data.inscripcion_id}` });
-            });
-          }
-      })
+    mounted () {
+        this.url_id = this.$route.params.id
+        this.getEditEvento(this.url_id)
     }
 
-
-  },
-  mounted() {
-    this.url_id = this.$route.params.id;
-    this.getEditEvento(this.url_id);
-  },
-
-};
+}
 </script>

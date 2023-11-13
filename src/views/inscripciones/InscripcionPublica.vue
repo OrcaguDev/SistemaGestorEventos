@@ -5,13 +5,12 @@
       </div>
     </div>
   </template>
-  <script>
-  import CardInscripcionPublico from "@/components/Cards/CardInscripcionPublico.vue";
+<script>
+import CardInscripcionPublico from '@/components/Cards/CardInscripcionPublico.vue'
 
-  export default {
+export default {
     components: {
-    CardInscripcionPublico,
-},
-  };
-  </script>
-  
+        CardInscripcionPublico
+    }
+}
+</script>

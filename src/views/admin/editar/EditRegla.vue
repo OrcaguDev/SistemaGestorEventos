@@ -5,13 +5,12 @@
       </div>
     </div>
   </template>
-  <script>
-  import CardEditRegla from "@/components/Cards/CardEditRegla.vue";
-  
-  export default {
+<script>
+import CardEditRegla from '@/components/Cards/CardEditRegla.vue'
+
+export default {
     components: {
-    CardEditRegla,
-  },
-  };
-  </script>
-  
+        CardEditRegla
+    }
+}
+</script>

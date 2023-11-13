@@ -5,13 +5,12 @@
       </div>
     </div>
   </template>
-  <script>
-  import CardTimeLine from "@/components/Cards/CardTimeLine.vue";
-  
-  export default {
+<script>
+import CardTimeLine from '@/components/Cards/CardTimeLine.vue'
+
+export default {
     components: {
-    CardTimeLine,
-  },
-  };
-  </script>
-  
+        CardTimeLine
+    }
+}
+</script>

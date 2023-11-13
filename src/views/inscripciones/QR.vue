@@ -5,12 +5,12 @@
       </div>
     </div>
   </template>
-  <script>
-  import CardQR from "@/components/Cards/CardQR.vue";
+<script>
+import CardQR from '@/components/Cards/CardQR.vue'
 
-  export default {
+export default {
     components: {
-    CardQR,
-},
-  };
-  </script>
+        CardQR
+    }
+}
+</script>

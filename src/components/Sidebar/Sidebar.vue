@@ -6,13 +6,12 @@
       class="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto"
     >
       <!-- Brand -->
-    
+
         <p  style="word-wrap: break-word;"
           class="text-center text-blueGray-600 mr-0 inline-block break-words text-sm uppercase font-bold p-4 px-0">
         SISTEMA GESTOR DE EVENTOS
         </p>
 
-      
       <!-- User -->
       <ul class="md:hidden items-center flex flex-wrap list-none">
         <li class="inline-block relative">
@@ -182,7 +181,7 @@
             </router-link>
           </li>
         </ul>
-        
+
         <hr class="my-4 md:min-w-full" />
         <!-- Heading -->
         <h6
@@ -321,7 +320,6 @@
           </li>
         </ul> -->
 
-
         <!-- Divider -->
         <hr class="my-4 md:min-w-full" />
         <!-- Heading -->
@@ -350,21 +348,21 @@
 ); }
 
 <script>
-import UserDropdown from "@/components/Dropdowns/UserDropdown.vue";
+import UserDropdown from '@/components/Dropdowns/UserDropdown.vue'
 
 export default {
-  data() {
-    return {
-      collapseShow: "hidden",
-    };
-  },
-  methods: {
-    toggleCollapseShow: function (classes) {
-      this.collapseShow = classes;
+    data () {
+        return {
+            collapseShow: 'hidden'
+        }
     },
-  },
-  components: {
-    UserDropdown,
-  },
-};
+    methods: {
+        toggleCollapseShow: function (classes) {
+            this.collapseShow = classes
+        }
+    },
+    components: {
+        UserDropdown
+    }
+}
 </script>

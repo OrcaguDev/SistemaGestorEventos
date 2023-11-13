@@ -6,11 +6,11 @@
   </div>
 </template>
 <script>
-import CardRegEvento from "@/components/Cards/CardRegEvento.vue";
+import CardRegEvento from '@/components/Cards/CardRegEvento.vue'
 
 export default {
-  components: {
-    CardRegEvento,
-  },
-};
+    components: {
+        CardRegEvento
+    }
+}
 </script>

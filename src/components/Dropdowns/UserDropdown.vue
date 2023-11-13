@@ -39,34 +39,34 @@
 </template>
 
 <script>
-import { createPopper } from "@popperjs/core";
+import { createPopper } from '@popperjs/core'
 
-import image from "@/assets/img/logo_1.jpg";
+import image from '@/assets/img/logo_1.jpg'
 
 export default {
-  data() {
-    return {
-      dropdownPopoverShow: false,
-      image: image,
-    };
-  },
-  methods: {
-    toggleDropdown: function (event) {
-      event.preventDefault();
-      if (this.dropdownPopoverShow) {
-        this.dropdownPopoverShow = false;
-      } else {
-        this.dropdownPopoverShow = true;
-        createPopper(this.$refs.btnDropdownRef, this.$refs.popoverDropdownRef, {
-          placement: "bottom-start",
-        });
-      }
+    data () {
+        return {
+            dropdownPopoverShow: false,
+            image
+        }
     },
-    logout(){
-      localStorage.clear();
-      this.$router.push('/auth/login');
+    methods: {
+        toggleDropdown: function (event) {
+            event.preventDefault()
+            if (this.dropdownPopoverShow) {
+                this.dropdownPopoverShow = false
+            } else {
+                this.dropdownPopoverShow = true
+                createPopper(this.$refs.btnDropdownRef, this.$refs.popoverDropdownRef, {
+                    placement: 'bottom-start'
+                })
+            }
+        },
+        logout () {
+            localStorage.clear()
+            this.$router.push('/auth/login')
+        }
     }
-  }
-  
-};
+
+}
 </script>

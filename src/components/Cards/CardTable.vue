@@ -144,7 +144,6 @@
                 </button>
               </router-link>
 
-
               <!-- Boton de inscripcion -->
               <router-link :to="'/inscripciones/inscripcion/' + item.id_evento" target="_blank">
                 <button
@@ -172,64 +171,62 @@
   </div>
 </template>
 <script>
-import axios from 'axios';
-
+import axios from 'axios'
 
 export default {
-  data() {
-    return {
-      eventos: [],
-      apii: {
-        api_token: ''
-      },
-      evento: {
-        api_token: '',
-        codigo: ''
-      },
-    };
-  },
-  props: {
-    color: {
-      default: "light",
-      validator: function (value) {
-        return ["light", "dark"].indexOf(value) !== -1;
-      },
+    data () {
+        return {
+            eventos: [],
+            apii: {
+                api_token: ''
+            },
+            evento: {
+                api_token: '',
+                codigo: ''
+            }
+        }
     },
-  },
-  methods: {
-
-    //Funcion de obtener Eventos
-    getTotal() {
-      let objetoString = localStorage.getItem("token");
-      let objeto = JSON.parse(objetoString);
-      this.apii.api_token = objeto;
-      const auth = {
-        headers: { 'Content-Type': 'application/json' }
-      }
-      axios.post('http://localhost:8000/eventos', this.apii, auth).then(({ data }) => {
-        this.eventos = data;
-      }).catch((error) => {
-        console.log(error);
-      });
+    props: {
+        color: {
+            default: 'light',
+            validator: function (value) {
+                return ['light', 'dark'].indexOf(value) !== -1
+            }
+        }
     },
+    methods: {
 
+        // Funcion de obtener Eventos
+        getTotal () {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post('http://localhost:8000/eventos', this.apii, auth).then(({ data }) => {
+                this.eventos = data
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
 
-    //Funcion de eliminar Evento
-    eliminarEvento(id) {
-      let objetoString = localStorage.getItem("token");
-      let objeto = JSON.parse(objetoString);
-      this.evento.api_token = objeto;
-      this.evento.codigo = id;
-      const auth = {
-        headers: { 'Content-Type': 'application/json' }
-      }
-      axios.post('http://localhost:8000/deleteEvento', this.evento, auth).then(() => {
-        this.getTotal();
-      });
+        // Funcion de eliminar Evento
+        eliminarEvento (id) {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.evento.api_token = objeto
+            this.evento.codigo = id
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post('http://localhost:8000/deleteEvento', this.evento, auth).then(() => {
+                this.getTotal()
+            })
+        }
+    },
+    created () {
+        this.getTotal()
     }
-  },
-  created() {
-    this.getTotal();
-  }
-};
+}
 </script>
