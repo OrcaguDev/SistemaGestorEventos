@@ -54,7 +54,7 @@ const routes = [
                 component: ListarEvento,
                 meta: { requiresAuth: true },
                 beforeEnter: (to, from, next) => {
-                    if (localStorage.getItem('rol') === 'admin') {
+                    if (localStorage.getItem('rol') === 'ADMINISTRADOR') {
                         next()
                     } else {
                         next('/admin/dashboard')
@@ -67,7 +67,7 @@ const routes = [
                 component: Reporte,
                 meta: { requiresAuth: true },
                 beforeEnter: (to, from, next) => {
-                    if (localStorage.getItem('rol') === 'admin') {
+                    if (localStorage.getItem('rol') === 'ADMINISTRADOR') {
                         next()
                     } else {
                         next('/admin/dashboard')
@@ -132,7 +132,7 @@ const routes = [
                 component: Usuarios,
                 meta: { requiresAuth: true },
                 beforeEnter: (to, from, next) => {
-                    if (localStorage.getItem('rol') === 'admin') {
+                    if (localStorage.getItem('rol') === 'ADMINISTRADOR') {
                         next()
                     } else {
                         next('/admin/dashboard')

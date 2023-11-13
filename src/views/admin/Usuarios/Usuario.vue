@@ -1,77 +1,77 @@
 <template>
     <div class="flex flex-wrap">
-        <div class="w-full lg:w-6/12 px-4">
+        <div class="w-full px-4 lg:w-6/12">
             <div class="flex flex-row ">
                 <!-- REGISTRAR USUARIO -->
                 <div v-if="isVisible == 1"
-                    class="relative flex flex-col min-w-0 break-words w-full lg:w-12/12 m-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
-                    <div class="rounded-t bg-white mb-0 px-6 py-6">
-                        <div class="text-center flex justify-between">
-                            <h6 class="text-blueGray-700 text-xl font-bold">Registro de Usuarios</h6>
+                    class="relative flex flex-col w-full min-w-0 m-6 break-words border-0 rounded-lg shadow-lg lg:w-12/12 bg-blueGray-100">
+                    <div class="px-6 py-6 mb-0 bg-white rounded-t">
+                        <div class="flex justify-between text-center">
+                            <h6 class="text-xl font-bold text-blueGray-700">Registro de Usuarios</h6>
                         </div>
                     </div>
-                    <div class="flex-row px-4 lg:px-10 py-10 pt-0">
+                    <div class="flex-row px-4 py-10 pt-0 lg:px-10">
                         <form @submit.prevent="storeUsuario()">
-                            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                            <h6 class="mt-3 mb-6 text-sm font-bold uppercase text-blueGray-400">
                                 Datos del usuario
                             </h6>
                             <div class="flex flex-col">
                                 <div class="w-full px-4">
                                     <div class="relative w-full mb-3">
-                                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600"
                                             htmlFor="grid-password">
                                             Correo Electronico
                                         </label>
                                         <input type="text"
-                                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                            class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                                             v-model="usuario.email" />
                                     </div>
                                 </div>
 
                                 <div class="w-full px-4">
                                     <div class="relative w-full mb-3">
-                                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600"
                                             htmlFor="grid-password">
                                             Usuario
                                         </label>
                                         <input type="text"
-                                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                            class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                                             v-model="usuario.name" />
                                     </div>
                                 </div>
 
                                 <div class="w-full px-4">
                                     <div class="relative w-full mb-3">
-                                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600"
                                             htmlFor="grid-password">
                                             Contraseña
                                         </label>
                                         <input type="password"
-                                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                            class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                                             v-model="usuario.password" />
                                     </div>
                                 </div>
 
-                                <div class="w-full  px-4">
+                                <div class="w-full px-4">
                                     <div class="relative w-full mb-3">
-                                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600"
                                             htmlFor="grid-password">
                                             Repita la contraseña
                                         </label>
                                         <input type="password"
-                                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                            class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                                             v-model="usuario.confirmPassword" />
                                     </div>
                                 </div>
 
-                                <div class="w-full  px-4">
+                                <div class="w-full px-4">
                                     <div class="relative w-full mb-3">
-                                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600"
                                             htmlFor="grid-password">
                                             Área
                                         </label>
                                         <select name="area" id="" v-model="usuario.area"
-                                            class=" text-blueGray-600 text-sm uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150">
+                                            class="w-full px-6 py-3 mb-1 mr-1 text-sm uppercase transition-all duration-150 ease-linear rounded shadow outline-none text-blueGray-600 hover:shadow-lg focus:outline-none">
                                             <option value="0" selected>Seleccione un área</option>
                                             <option value="1">Infocip</option>
                                             <option value="2">ISS</option>
@@ -81,14 +81,14 @@
                                     </div>
                                 </div>
 
-                                <div class="w-full  px-4">
+                                <div class="w-full px-4">
                                     <div class="relative w-full mb-3">
-                                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600"
                                             htmlFor="grid-password">
                                             Rol
                                         </label>
                                         <select name="rol" id="" v-model="usuario.rol"
-                                            class=" text-blueGray-600 text-sm uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150">
+                                            class="w-full px-6 py-3 mb-1 mr-1 text-sm uppercase transition-all duration-150 ease-linear rounded shadow outline-none text-blueGray-600 hover:shadow-lg focus:outline-none">
                                             <option value="0" selected>Seleccione un rol</option>
                                             <option value="1">Administrador</option>
                                             <option value="2">Editor</option>
@@ -100,7 +100,7 @@
                             <span style="color: red;">{{ alert_password }}</span>
                             <hr class="mt-6 border-b-1 border-blueGray-300" />
                             <button
-                                class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                                class="w-full px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
                                 type="submit">
                                 Registrar
                             </button>
@@ -109,50 +109,50 @@
                 </div>
                 <!-- EDITAR USUARIO -->
                 <div v-if="isVisible == 2"
-                    class="relative flex flex-col min-w-0 break-words w-full lg:w-12/12 m-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
-                    <div class="rounded-t bg-white mb-0 px-6 py-6">
-                        <div class="text-center flex justify-between">
-                            <h6 class="text-blueGray-700 text-xl font-bold">Editar de Usuarios</h6>
+                    class="relative flex flex-col w-full min-w-0 m-6 break-words border-0 rounded-lg shadow-lg lg:w-12/12 bg-blueGray-100">
+                    <div class="px-6 py-6 mb-0 bg-white rounded-t">
+                        <div class="flex justify-between text-center">
+                            <h6 class="text-xl font-bold text-blueGray-700">Editar de Usuarios</h6>
                         </div>
                     </div>
-                    <div class="flex-row px-4 lg:px-10 py-10 pt-0">
+                    <div class="flex-row px-4 py-10 pt-0 lg:px-10">
                         <form @submit.prevent="updateUsuario()">
-                            <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                            <h6 class="mt-3 mb-6 text-sm font-bold uppercase text-blueGray-400">
                                 Datos del usuario
                             </h6>
                             <div class="flex flex-col">
                                 <div class="w-full px-4">
                                     <div class="relative w-full mb-3">
-                                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600"
                                             htmlFor="grid-password">
                                             Correo Electronico
                                         </label>
                                         <input type="text"
-                                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                            class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                                             v-model="usuario.email" />
                                     </div>
                                 </div>
 
                                 <div class="w-full px-4">
                                     <div class="relative w-full mb-3">
-                                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600"
                                             htmlFor="grid-password">
                                             Usuario
                                         </label>
                                         <input type="text"
-                                            class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                            class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                                             v-model="usuario.name" />
                                     </div>
                                 </div>
 
-                                <div class="w-full  px-4">
+                                <div class="w-full px-4">
                                     <div class="relative w-full mb-3">
-                                        <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                        <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600"
                                             htmlFor="grid-password">
                                             Rol
                                         </label>
                                         <select name="rol" id="" v-model="usuario.rol"
-                                            class=" text-blueGray-600 text-sm uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150">
+                                            class="w-full px-6 py-3 mb-1 mr-1 text-sm uppercase transition-all duration-150 ease-linear rounded shadow outline-none text-blueGray-600 hover:shadow-lg focus:outline-none">
                                             <option value="0" selected>Seleccione un rol</option>
                                             <option value="1">Administrador</option>
                                             <option value="2">Editor</option>
@@ -163,12 +163,12 @@
                             <span style="color: red; font-size: 15px;">{{ alert_password }}</span>
                             <hr class="mt-6 border-b-1 border-blueGray-300" />
                             <button
-                                class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                                class="w-full px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
                                 type="submit">
                                 Guardar
                             </button>
                             <button @click="changeState()"
-                                class="bg-red-600 text-white active:bg-red-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                                class="w-full px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear bg-red-600 rounded shadow outline-none active:bg-red-600 hover:shadow-lg focus:outline-none"
                                 type="button">
                                 Cancelar
                             </button>
@@ -177,13 +177,13 @@
                 </div>
             </div>
         </div>
-        <div class="w-full lg:w-6/12 px-4">
-            <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded"
+        <div class="w-full px-4 lg:w-6/12">
+            <div class="relative flex flex-col w-full min-w-0 mb-6 break-words rounded shadow-lg"
                 :class="[color === 'light' ? 'bg-white' : 'bg-emerald-900 text-white']">
-                <div class="rounded-t mb-0 px-4 py-3 border-0">
+                <div class="px-4 py-3 mb-0 border-0 rounded-t">
                     <div class="flex flex-wrap items-center">
-                        <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-                            <h3 class="font-semibold text-lg"
+                        <div class="relative flex-1 flex-grow w-full max-w-full px-4">
+                            <h3 class="text-lg font-semibold"
                                 :class="[color === 'light' ? 'text-blueGray-700' : 'text-white']">
                                 Tabla de Usuarios
                             </h3>
@@ -195,7 +195,7 @@
                     <table class="items-center w-full bg-transparent ">
                         <thead>
                             <tr>
-                                <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                <th class="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap"
                                     :class="[
                                         color === 'light'
                                             ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
@@ -203,7 +203,7 @@
                                     ]">
                                     #
                                 </th>
-                                <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                <th class="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap"
                                     :class="[
                                         color === 'light'
                                             ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
@@ -212,7 +212,7 @@
                                     USUARIO
                                 </th>
 
-                                <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                <th class="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap"
                                     :class="[
                                         color === 'light'
                                             ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
@@ -221,7 +221,7 @@
                                     ESTADO
                                 </th>
 
-                                <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                                <th class="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap"
                                     :class="[
                                         color === 'light'
                                             ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
@@ -230,7 +230,7 @@
                                     AREA
                                 </th>
 
-                                <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-center"
+                                <th class="px-6 py-3 text-xs font-semibold text-center uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap"
                                     :class="[
                                         color === 'light'
                                             ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
@@ -241,32 +241,32 @@
                         <tbody>
                             <tr v-for="(usuario, index) in usuarios" :key="index">
                                 <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                     {{ index + 1 }}
                                 </td>
                                 <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                     {{ usuario.name }}
                                 </td>
                                 <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                     {{ usuario.rol_nombre }}
                                 </td>
                                 <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                     {{ usuario.nombre }}
                                 </td>
                                 <td
-                                    class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                    class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
 
                                     <button @click="getUSuario(usuario.codigo)"
-                                        class="bg-yellow-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                        class="px-4 py-2 mb-1 mr-1 text-xs font-bold text-white uppercase transition-all duration-150 ease-linear bg-yellow-500 rounded-full shadow outline-none active:bg-red-600 hover:shadow-md focus:outline-none"
                                         type="button">
                                         <i class="fas fa-edit"></i>
                                     </button>
 
                                     <button @click="eliminarUsuario(usuario.codigo)"
-                                        class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                        class="px-4 py-2 mb-1 mr-1 text-xs font-bold text-white uppercase transition-all duration-150 ease-linear bg-red-500 rounded-full shadow outline-none active:bg-red-600 hover:shadow-md focus:outline-none"
                                         type="button">
                                         <i class="fas fa-trash"></i>
                                     </button>
@@ -296,7 +296,7 @@ export default {
                 password: '',
                 confirmPassword: '',
                 rol: 0,
-                area:0,
+                area: 0,
                 api_token: '',
                 codigo: ''
             },
@@ -324,15 +324,10 @@ export default {
         },
         storeUsuario () {
             // this.isVisible=1;
-<<<<<<< HEAD
-            if (this.usuario.name == '' && this.usuario.email == '' && this.usuario.password == '' && this.usuario.rol == 0) {
+            if (this.usuario.name === '' && this.usuario.email === '' && this.usuario.password === '' && this.usuario.area === 0 && this.usuario.rol === 0) {
                 this.alert_password = 'Faltan campos por rellenar, por favor ingresa los datos correctamente.'
-=======
-            if (this.usuario.name == '' && this.usuario.email == '' && this.usuario.password == '' && this.usuario.area == 0 && this.usuario.rol == 0) {
-                this.alert_password = "Faltan campos por rellenar, por favor ingresa los datos correctamente.";
->>>>>>> b3195f1268b6dff288fa3fd723e63823d4c09515
             } else {
-                if (this.usuario.password == this.usuario.confirmPassword) {
+                if (this.usuario.password === this.usuario.confirmPassword) {
                     this.view_button = true
                     const objetoString = localStorage.getItem('token')
                     const objeto = JSON.parse(objetoString)
