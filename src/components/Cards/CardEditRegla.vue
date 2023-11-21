@@ -87,7 +87,6 @@ export default {
             window.history.back()
         },
         getEditRegla (id) {
-            console.log(id)
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
@@ -107,9 +106,6 @@ export default {
             const objeto = JSON.parse(objeroString)
             this.regla.api_token = objeto
             this.regla.codigo = this.url_id
-            // console.log(this.regla.nombre);
-            // console.log(this.regla.url);
-            // console.log(this.regla.descripcion);
 
             const auth = {
                 Headers: { 'Content-Type': 'application/json' }

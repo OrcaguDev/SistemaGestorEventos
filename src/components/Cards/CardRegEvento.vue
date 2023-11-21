@@ -235,7 +235,6 @@ export default {
             this.selectedFilePdf = event.target.files[0]
         },
         storeEvento () {
-            // console.log(this.selectedFile,this.selectedFilePdf)
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.evento.api_token = objeto
@@ -285,7 +284,6 @@ export default {
             }
             axios.post('http://localhost:8000/getPagos', this.apii, auth).then(({ data }) => {
                 this.pagos = data
-                // console.log(data);
             }).catch((error) => {
                 console.log(error)
             })

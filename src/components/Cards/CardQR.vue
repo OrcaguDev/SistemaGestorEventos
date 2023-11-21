@@ -221,7 +221,6 @@ export default {
 
     methods: {
         getInscripciones (id) {
-            // console.log(id);
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
@@ -229,9 +228,7 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post(`http://localhost:8000/getQR/${id}`, this.apii, auth).then(({ data }) => {
-                console.log(data[0])
                 this.inscripcion = data[0]
-                // console.log(this.inscripcion);
                 this.detalle.dni = data[0].dni
                 this.detalle.nombre = data[0].nombre
                 this.detalle.apellido = data[0].apellido
@@ -239,7 +236,6 @@ export default {
             })
         },
         getEvento (id) {
-            // console.log(id);
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
@@ -247,10 +243,6 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post(`http://localhost:8000/eventoDetalle/${id}`, this.apii, auth).then(({ data }) => {
-                // console.log(data[0]);
-                // this.evento = data[0];
-                // this.evento= data[0];
-                // console.log(this.evento);
                 this.detalle.titulo = data[0].nombre
                 this.detalle.expositor = data[0].expositor
                 this.detalle.descripcion = data[0].descripcion
@@ -279,7 +271,6 @@ export default {
                 this.options.scale = InputData3
                 this.options.color.dark = hexCode
                 this.options.color.light = hexCode2
-                console.log(this.hello)
             } catch (error) {
                 console.log(error)
             }

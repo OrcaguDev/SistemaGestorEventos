@@ -110,23 +110,6 @@ export default {
         }
     },
     methods: {
-
-        // getTotalUsuarios() {
-        //     let objetoString = localStorage.getItem("token");
-        //     let objeto = JSON.parse(objetoString);
-        //     this.api.api_token = objeto;
-        //     const auth = {
-        //         headers: { 'Content-Type': 'application/json' }
-        //     }
-        //     axios.post('http://localhost:8000/usuario', this.api, auth).then(({ data }) => {
-        //         this.reglas = data;
-        //     }).catch((error) => {
-        //         console.log(error);
-        //     });
-        // },
-        // validatePasswords() {
-        //     return this.password === this.confirmPassword;
-        // },
         storeUsuario () {
             if (this.usuario.password == this.usuario.confirmPassword) {
                 this.view_button = true
@@ -137,13 +120,11 @@ export default {
                     headers: { 'Content-Type': 'application/json' }
                 }
                 axios.post('http://localhost:8000/storeUsuario', this.usuario, auth).then(() => {
-                    // console.log(data);
                     this.$router.push('/admin/usuarios/usuario')
                     this.$refs.CardListaUsuario.actualizarMensaje('Mensaje actualizado desde ComponenteA')
                 })
                 this.limpiar()
             } else {
-                // this.view_button = false;
                 this.alert_password = 'Las contraseñas no coinciden'
             }
         },

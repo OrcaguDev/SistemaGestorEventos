@@ -123,13 +123,11 @@ export default {
             }
             axios.post('http://localhost:8000/getPagos', this.apii, auth).then(({ data }) => {
                 this.pagos = data
-                // console.log(data);
             }).catch((error) => {
                 console.log(error)
             })
         },
         eliminarPago () {
-            console.log(this.pago.id_pagos)
         }
     },
     created () {

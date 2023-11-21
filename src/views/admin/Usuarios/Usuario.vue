@@ -337,7 +337,6 @@ export default {
                         headers: { 'Content-Type': 'application/json' }
                     }
                     axios.post('http://localhost:8000/validateEmail', this.usuario, auth).then((data) => {
-                        console.log(data)
                         if (data.data[0].cuentaEmail > 0) {
                             this.alert_password = 'Ya existe un usuario con este email.'
                         } else {
@@ -399,9 +398,6 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post('http://localhost:8000/updateUsuario', this.usuario, auth).then(() => {
-                // console.log(data);
-                // this.$router.push('/admin/usuarios/usuario');
-
                 this.getTotal()
                 this.limpiar()
             })

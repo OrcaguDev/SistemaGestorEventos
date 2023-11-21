@@ -69,9 +69,6 @@ axios.post('http://localhost:8000/getRoles', apitoken, auth)
 const getuserrol = () => {
     return parseInt(localStorage.getItem('rol'))
 }
-
-console.log(userRoles)
-
 const routes = [
     {
         path: '/',

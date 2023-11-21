@@ -246,31 +246,23 @@ export default {
         },
         storeInscripcion () {
             this.inscripcion.url_id = this.$route.params.id
-            // console.log(this.inscripcion.url_id);
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.inscripcion.api_token = objeto
             const dni = this.inscripcion.dni
             const id_evento = this.inscripcion.url_id
-            // console.log(dni);
-            // console.log(id_evento);
-            // console.log(this.inscripcion);
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
             const url_combinado = `http://localhost:8000/validateInscripciones/?dni=${dni}&id_evento=${id_evento}`
-            // console.log(url_combinado);
             axios.post(url_combinado, this.inscripcion, auth).then((data) => {
-                // console.log(data.data[0]);
                 if (data.data[0].cuentaInscripcion > 0) {
                     this.alert = 'Ya se encuentra registrado en este evento.'
                     window.alert(this.alert)
                 } else {
                     axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then(() => {
-                        // console.log(data);
                         this.isVisibleeee == 0
                         window.alert('Registo completado satisfactoriamente!')
-                        // this.$router.push({ path: `/inscripciones/QR/${data.data.inscripcion_id}` });
                     })
                 }
             })

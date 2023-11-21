@@ -240,7 +240,6 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post(`http://localhost:8000/evento/${id}`, this.apii, auth).then(({ data }) => {
-                console.log(data)
                 this.evento.nombre = data[0].nombre
                 this.evento.expositor = data[0].expositor
                 this.evento.lugar = data[0].lugar
@@ -265,7 +264,6 @@ export default {
             }
             axios.post('http://localhost:8000/getPagos', this.apii, auth).then(({ data }) => {
                 this.pagos = data
-                console.log(data)
             }).catch((error) => {
                 console.log(error)
             })

@@ -326,7 +326,6 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             const url_concatenado = `http://localhost:8000/updateAsistencia/?dni=${dni}&id_evento=${id_evento}`
-            // console.log(url_concatenado);
             axios.post(url_concatenado, this.apii, auth).then(() => {
                 this.getInscripcionesTotal(this.url_id)
                 this.dni = ''
@@ -340,18 +339,13 @@ export default {
             this.apii.api_token = objeto
             const recibo = this.recibo
             const id_evento = this.url_id
-            console.log(recibo)
-            console.log(dni)
-            console.log(id_evento)
 
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
             const url_concatenado = `http://localhost:8000/updateRecibo/?recibo=${recibo}&id_evento=${id_evento}&dni=${dni}`
-            console.log(url_concatenado)
             axios.post(url_concatenado, this.apii, auth).then(() => {
                 this.getInscripcionesTotal(this.url_id)
-                // this.dni='';
                 this.mostrarBoton = false
                 window.alert('Se registro el recibo correctamente!')
             }).catch((error) => {
