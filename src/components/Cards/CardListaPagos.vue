@@ -127,7 +127,7 @@ export default {
                 console.log(error)
             })
         },
-        eliminarPago (id) { 
+        eliminarPago (id) {
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.pago.api_token = objeto

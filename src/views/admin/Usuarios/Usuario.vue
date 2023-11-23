@@ -70,7 +70,7 @@
                                             htmlFor="grid-password">
                                             Área
                                         </label>
-                                        <select name="area" id="" v-model="usuario.area"
+                                        <select name="area" id="area" v-model="usuario.area"
                                             class="w-full px-6 py-3 mb-1 mr-1 text-sm uppercase transition-all duration-150 ease-linear rounded shadow outline-none text-blueGray-600 hover:shadow-lg focus:outline-none">
                                             <option value="0" selected>Seleccione un área</option>
                                             <option value="1">Infocip</option>
@@ -87,7 +87,7 @@
                                             htmlFor="grid-password">
                                             Rol
                                         </label>
-                                        <select name="rol" id="" v-model="usuario.rol"
+                                        <select name="rol" id="rol" v-model="usuario.rol"
                                             class="w-full px-6 py-3 mb-1 mr-1 text-sm uppercase transition-all duration-150 ease-linear rounded shadow outline-none text-blueGray-600 hover:shadow-lg focus:outline-none">
                                             <option value="0" selected>Seleccione un rol</option>
                                             <option value="1">Administrador</option>
