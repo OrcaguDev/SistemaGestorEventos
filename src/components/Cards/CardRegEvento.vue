@@ -174,7 +174,6 @@
                 v-model="evento.aforo_total" required />
             </div>
           </div>
-          
           <div class="w-full px-4 lg:w-4/12">
             <div class="relative w-full mb-3">
               <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600" htmlFor="grid-password">
