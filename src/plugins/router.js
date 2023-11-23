@@ -35,40 +35,16 @@ import timeLine from '@/views/admin/TimeLine.vue'
 
 import axios from 'axios'
 
-const objetoString = localStorage.getItem('token')
-const objeto = JSON.parse(objetoString)
-
-const apitoken = {
-    api_token: objeto
-}
-const auth = {
-    headers: { 'Content-Type': 'application/json' }
-}
-
 const userRoles = [
 
     // { id: 1, name: 'Administrador' },
     // { id: 2, name: 'Editor' }
 
 ]
-
-axios.post('http://localhost:8000/getRoles', apitoken, auth)
-    .then(response => {
-        // Almacenar la respuesta en la variable roles
-        response.data.forEach(element => {
-            userRoles.push({
-                id: element.rol_id,
-                name: element.rol_nombre
-            })
-        })
-    })
-    .catch(error => {
-        console.error('Error al obtener roles:', error)
-    })
-
 const getuserrol = () => {
     return parseInt(localStorage.getItem('rol'))
 }
+
 const routes = [
     {
         path: '/',
@@ -194,13 +170,35 @@ const router = createRouter({
     routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     const token = localStorage.getItem('token')
+    const objeto = JSON.parse(token)
+
+    const apitoken = {
+        api_token: objeto
+    }
+    const auth = {
+        headers: { 'Content-Type': 'application/json' }
+    }
 
     if (to.meta.requiresAuth && !token) {
         // Redirige a la página de inicio de sesión si la ruta requiere autenticación y no hay token
         next('/')
     } else {
+        await axios.post('http://localhost:8000/getRoles', apitoken, auth)
+            .then(response => {
+                // Almacenar la respuesta en la variable roles
+                response.data.forEach(element => {
+                    userRoles.push({
+                        id: element.rol_id,
+                        name: element.rol_nombre
+                    })
+                })
+            })
+            .catch(error => {
+                console.log('Error al obtener roles:', error)
+            })
+
         // Continúa la navegación
         next()
     }
