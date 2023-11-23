@@ -114,7 +114,7 @@
               {{ item.butacas_reservadas }}
             </td>
             <td class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-              {{ item.aforo_total - item.butacas_reservadas }}
+              {{ (item.aforo_total - item.butacas_reservadas) - item.inscripciones }}
             </td>
             <td
               class="flex justify-center p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
@@ -224,7 +224,7 @@ export default {
                 this.getTotal()
             })
         }
-        ,
+        
         // getInscripcionCount(id){
         //     const objetoString = localStorage.getItem('token')
         //     const objeto = JSON.parse(objetoString)
@@ -238,9 +238,9 @@ export default {
         //     })
         // }
     },
-    mounted () {
-        this.getInscripcionCount()
-    },
+    //mounted () {
+    //    this.getInscripcionCount()
+    //},
     created () {
         this.getTotal()
     }

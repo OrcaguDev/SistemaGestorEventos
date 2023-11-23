@@ -110,7 +110,7 @@
                 Reglas para el evento
               </label>
 
-              <select v-model="evento.id_regla" @change="reglaChange()"
+              <select v-model="evento.id_regla"
                 class="w-full px-6 py-3 mb-1 mr-1 text-sm uppercase transition-all duration-150 ease-linear rounded shadow outline-none text-blueGray-600 hover:shadow-lg focus:outline-none"
                 required>
                 <option value="0" selected>Seleccione una regla</option>
@@ -127,7 +127,7 @@
                 Link de pago
               </label>
 
-              <select v-model="evento.id_pagos" @change="reglaChange()"
+              <select v-model="evento.id_pagos"
                 class="w-full px-6 py-3 mb-1 mr-1 text-sm uppercase transition-all duration-150 ease-linear rounded shadow outline-none text-blueGray-600 hover:shadow-lg focus:outline-none"
                 required>
                 <option value="0" selected>Seleccione un link </option>
