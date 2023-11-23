@@ -229,7 +229,9 @@ export default {
                 fechaInicio: '',
                 descripcion: '',
                 img: '',
-                informe: ''
+                informe: '',
+                fechaInscripcion: '',
+                fechaInscripcionFin: ''
             },
             inscripcion: {
                 dni: '44867773',
@@ -297,6 +299,7 @@ export default {
                 this.evento.fechaFin = data[0].fechaFin
                 this.evento.id_regla = data[0].id_regla
                 this.evento.fechaInscripcion = data[0].fechaInscripcion
+                this.evento.fechaInscripcionFin = data[0].fechaInscripcionFin
                 this.evento.img = data[0].img
                 this.evento.informe = data[0].informe
             }).catch((error) => {
@@ -308,8 +311,17 @@ export default {
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.inscripcion.api_token = objeto
+            const fechaInscripcion = this.evento.fechaInscripcion
+            const fechaInscripcionFin = this.evento.fechaInscripcionFin
             const dni = this.inscripcion.dni
             const id_evento = this.inscripcion.url_id
+            const fechaActual = new Date();
+            const año = fechaActual.getFullYear();
+            const mes = fechaActual.getMonth() + 1; // Ten en cuenta que los meses comienzan desde 0
+            const día = fechaActual.getDate();
+            const fechaFormateada = `${año}-${mes < 10 ? '0' : ''}${mes}-${día < 10 ? '0' : ''}${día}`;
+            
+            if(fechaFormateada >= fechaInscripcion && fechaFormateada <= fechaInscripcionFin){
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
@@ -326,13 +338,16 @@ export default {
                     })
                 }
             })
-        }
-
+            }else{
+                window.alert('El evento ya no se encuentra disponible.')
+                
+            }
     },
     mounted () {
         this.url_id = this.$route.params.id
         this.getEditEvento(this.url_id)
     }
 
+  }
 }
 </script>

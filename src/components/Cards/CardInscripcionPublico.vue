@@ -199,7 +199,9 @@ export default {
                 fechaInicio: '',
                 descripcion: '',
                 img: '',
-                informe: ''
+                informe: '',
+                fechaInscripcion: '',
+                fechaInscripcionFin: ''
             },
             inscripcion: {
                 dni: '',
@@ -228,6 +230,7 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post(`http://localhost:8000/evento/${id}`, this.apii, auth).then(({ data }) => {
+                console.log(data[0]);
                 this.evento.nombre = data[0].nombre
                 this.evento.expositor = data[0].expositor
                 this.evento.lugar = data[0].lugar
@@ -238,6 +241,7 @@ export default {
                 this.evento.fechaFin = data[0].fechaFin
                 this.evento.id_regla = data[0].id_regla
                 this.evento.fechaInscripcion = data[0].fechaInscripcion
+                this.evento.fechaInscripcionFin = data[0].fechaInscripcionFin
                 this.evento.img = data[0].img
                 this.evento.informe = data[0].informe
             }).catch((error) => {
@@ -249,23 +253,36 @@ export default {
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.inscripcion.api_token = objeto
+            const fechaInscripcion = this.evento.fechaInscripcion
+            const fechaInscripcionFin = this.evento.fechaInscripcionFin
             const dni = this.inscripcion.dni
-            const id_evento = this.inscripcion.url_id
-            const auth = {
+            const id_evento = this.inscripcion.url_combinado
+            const fechaActual = new Date();
+            const año = fechaActual.getFullYear();
+            const mes = fechaActual.getMonth() + 1; // Ten en cuenta que los meses comienzan desde 0
+            const día = fechaActual.getDate();
+            const fechaFormateada = `${año}-${mes < 10 ? '0' : ''}${mes}-${día < 10 ? '0' : ''}${día}`;
+
+            if(fechaFormateada >= fechaInscripcion && fechaFormateada <= fechaInscripcionFin){
+                const auth = {
                 headers: { 'Content-Type': 'application/json' }
-            }
-            const url_combinado = `http://localhost:8000/validateInscripciones/?dni=${dni}&id_evento=${id_evento}`
-            axios.post(url_combinado, this.inscripcion, auth).then((data) => {
-                if (data.data[0].cuentaInscripcion > 0) {
-                    this.alert = 'Ya se encuentra registrado en este evento.'
-                    window.alert(this.alert)
-                } else {
-                    axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then(() => {
-                        this.isVisibleeee == 0
-                        window.alert('Registo completado satisfactoriamente!')
-                    })
                 }
-            })
+                const url_combinado = `http://localhost:8000/validateInscripciones/?dni=${dni}&id_evento=${id_evento}`
+                axios.post(url_combinado, this.inscripcion, auth).then((data) => {
+                    if (data.data[0].cuentaInscripcion > 0) {
+                        this.alert = 'Ya se encuentra registrado en este evento.'
+                        window.alert(this.alert)
+                    } else {
+                        axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then(() => {
+                            this.isVisibleeee == 0
+                            window.alert('Registo completado satisfactoriamente!')
+                        })
+                    }
+                })
+            }else{
+                window.alert('El evento ya no se encuentra disponible.')
+                
+            }
         }
     },
     mounted () {

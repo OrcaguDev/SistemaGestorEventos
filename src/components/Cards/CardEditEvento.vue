@@ -41,14 +41,25 @@
                 v-model="evento.lugar" />
             </div>
           </div>
-          <div class="w-full lg:w-6/12 px-4">
+          <div class="w-full px-4 lg:w-6/12">
             <div class="relative w-full mb-3">
-              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                Fecha y hora
+              <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600" htmlFor="grid-password">
+                Fecha y hora Inicial
               </label>
               <input type="datetime-local"
-                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                 v-model="evento.fechaInicio" />
+            </div>
+          </div>
+
+          <div class="w-full px-4 lg:w-6/12">
+            <div class="relative w-full mb-3">
+              <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600" htmlFor="grid-password">
+                Fecha y hora Final
+              </label>
+              <input type="datetime-local"
+                class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
+                v-model="evento.fechaFin" required />
             </div>
           </div>
 
@@ -68,29 +79,41 @@
 
         <hr class="mt-6 border-b-1 border-blueGray-300" />
 
-        <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+        <h6 class="mt-3 mb-6 text-sm font-bold uppercase text-blueGray-400">
           Acerca del Evento
         </h6>
         <div class="flex flex-wrap">
-          <div class="w-full lg:w-4/12 px-4">
+          <div class="w-full px-4 lg:w-4/12">
             <div class="relative w-full mb-3">
-              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+              <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                 Fecha y hora de apertura de la Inscripción
               </label>
               <input type="datetime-local"
-                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="evento.fechaInscripcion" />
+                class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
+                v-model="evento.fechaInscripcion" required />
             </div>
           </div>
 
-          <div class="w-full lg:w-4/12 px-4 ">
+          <div class="w-full px-4 lg:w-4/12">
             <div class="relative w-full mb-3">
-              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+              <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600" htmlFor="grid-password">
+                Fecha y hora del cierre de la Inscripción
+              </label>
+              <input type="datetime-local"
+                class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
+                v-model="evento.fechaInscripcionFin" required />
+            </div>
+          </div>
+
+          <div class="w-full px-4 lg:w-4/12 ">
+            <div class="relative w-full mb-3">
+              <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                 Reglas para el evento
               </label>
 
               <select v-model="evento.id_regla" @change="reglaChange()"
-                class=" text-blueGray-600 text-sm uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150">
+                class="w-full px-6 py-3 mb-1 mr-1 text-sm uppercase transition-all duration-150 ease-linear rounded shadow outline-none text-blueGray-600 hover:shadow-lg focus:outline-none"
+                required>
                 <option value="0" selected>Seleccione una regla</option>
                 <option v-for="(regla, index) in reglas" :key="index" :value="regla.id_regla">
                   {{ regla.nombre }}
@@ -99,17 +122,18 @@
             </div>
           </div>
 
-          <div class="w-full lg:w-4/12 px-4 ">
+          <div class="w-full px-4 lg:w-4/12 ">
             <div class="relative w-full mb-3">
-              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+              <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                 Link de pago
               </label>
 
               <select v-model="evento.id_pagos" @change="reglaChange()"
-                class=" text-blueGray-600 text-sm uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150">
-                <option value="0" selected>Seleccione un link</option>
-                <option v-for="(regla, index) in reglas" :key="index" :value="regla.id_regla">
-                  {{ regla.nombre }}
+                class="w-full px-6 py-3 mb-1 mr-1 text-sm uppercase transition-all duration-150 ease-linear rounded shadow outline-none text-blueGray-600 hover:shadow-lg focus:outline-none"
+                required>
+                <option value="0" selected>Seleccione un link </option>
+                <option v-for="(pago, index) in pagos" :key="index" :value="pago.id_pagos">
+                  {{ pago.nombre }}
                 </option>
               </select>
             </div>
@@ -159,16 +183,6 @@
                 v-model="evento.butacas_reservadas" />
             </div>
           </div>
-          <div class="w-full lg:w-4/12 px-4">
-            <div class="relative w-full mb-3">
-              <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="grid-password">
-                Fecha y Hora de Fin
-              </label>
-              <input type="datetime-local"
-                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                v-model="evento.fechaFin" />
-            </div>
-          </div>
         </div>
 
         <hr class="mt-6 border-b-1 border-blueGray-300" />
@@ -216,7 +230,7 @@ export default {
             url_id: ''
             // evento:{}
         }
-    },
+    }, 
     methods: {
         goBack () {
             window.history.back()
