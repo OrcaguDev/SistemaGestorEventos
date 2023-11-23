@@ -216,7 +216,8 @@ export default {
                 fechaFin: '',
                 api_token: '',
                 id_regla: 0,
-                id_pagos: 0
+                id_pagos: 0,
+                id_area: 0
             },
             reglas: [],
             pagos: [],
@@ -226,6 +227,10 @@ export default {
             selectedFile: null,
             selectedFilePdf: null
         }
+    },
+    mounted () {
+        this.evento.id_area = localStorage.getItem('area')
+        console.log(this.evento.id_area)
     },
     methods: {
         handleFileUpload (event) {
@@ -257,6 +262,7 @@ export default {
             formData.append('id_regla', this.evento.id_regla)
             formData.append('id_pagos', this.evento.id_pagos)
             formData.append('api_token', this.evento.api_token)
+            formData.append('id_area', this.evento.id_area)
 
             axios.post('http://localhost:8000/storeEvento', formData, auth).then(() => {
                 this.$router.push('/admin/listarEvento')
