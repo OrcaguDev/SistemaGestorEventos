@@ -223,7 +223,22 @@ export default {
             axios.post('http://localhost:8000/deleteEvento', this.evento, auth).then(() => {
                 this.getTotal()
             })
+        },
+        getInscripcionCount(id){
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.evento.api_token = objeto
+            this.evento.id_evento = id
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post('http://localhost:8000/getInscritos', this.evento, auth).then((data) => {
+                console.log(data)
+            })
         }
+    },
+    mounted () {
+        this.getInscripcionCount()
     },
     created () {
         this.getTotal()
