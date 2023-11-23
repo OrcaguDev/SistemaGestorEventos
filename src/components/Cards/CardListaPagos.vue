@@ -85,7 +85,7 @@
                         </td>
                         <td
                             class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 flex justify-left">
-                            <button @click="eliminarPago()"
+                            <button @click="eliminarPago(pago.id_pagos)"
                                 class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 type="button">
                                 <i class="fas fa-trash"></i>
@@ -109,7 +109,7 @@ export default {
             },
             pago: {
                 api_token: '',
-                codigo: ''
+                id_pagos: ''
             }
         }
     },
@@ -127,7 +127,17 @@ export default {
                 console.log(error)
             })
         },
-        eliminarPago () {
+        eliminarPago (id) { 
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.pago.api_token = objeto
+            this.pago.id_pagos = id
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post('http://localhost:8000/deletePago', this.pago, auth).then(() => {
+                this.getTotal()
+            })
         }
     },
     created () {
