@@ -275,6 +275,17 @@ export default {
             mostrarBoton: true
         }
     },
+
+    props: {
+            color: {
+                default: 'light',
+                validator: function (value) {
+                    // The value must match one of these strings
+                    return ['light', 'dark'].indexOf(value) !== -1
+                }
+            }
+        },
+
     methods: {
         goBack () {
             window.history.back()
@@ -357,16 +368,6 @@ export default {
                 console.log(error)
             })
         },
-
-        props: {
-            color: {
-                default: 'light',
-                validator: function (value) {
-                    // The value must match one of these strings
-                    return ['light', 'dark'].indexOf(value) !== -1
-                }
-            }
-        }
     },
     created () {
         this.url_id = this.$route.params.id

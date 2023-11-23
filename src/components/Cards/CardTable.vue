@@ -190,6 +190,7 @@ export default {
         color: {
             default: 'light',
             validator: function (value) {
+                // The value must match one of these strings
                 return ['light', 'dark'].indexOf(value) !== -1
             }
         }
@@ -224,23 +225,7 @@ export default {
                 this.getTotal()
             })
         }
-        
-        // getInscripcionCount(id){
-        //     const objetoString = localStorage.getItem('token')
-        //     const objeto = JSON.parse(objetoString)
-        //     this.evento.api_token = objeto
-        //     this.evento.id_evento = id
-        //     const auth = {
-        //         headers: { 'Content-Type': 'application/json' }
-        //     }
-        //     axios.post('http://localhost:8000/getInscritos', this.evento, auth).then((data) => {
-        //         console.log(data)
-        //     })
-        // }
     },
-    //mounted () {
-    //    this.getInscripcionCount()
-    //},
     created () {
         this.getTotal()
     }
