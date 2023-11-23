@@ -129,7 +129,7 @@
               </router-link>
 
               <!-- Boton de eliminar -->
-              <button @click="eliminarEvento(evento.codigo)"
+              <button @click="eliminarEvento(item.id_evento)"
                 class="px-4 py-2 mb-1 mr-1 text-xs font-bold text-white uppercase transition-all duration-150 ease-linear bg-red-500 rounded-full shadow outline-none active:bg-red-600 hover:shadow-md focus:outline-none"
                 type="button">
                 <i class="fas fa-trash"></i>
@@ -182,7 +182,7 @@ export default {
             },
             evento: {
                 api_token: '',
-                codigo: ''
+                id_evento: ''
             }
         }
     },
@@ -216,7 +216,7 @@ export default {
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.evento.api_token = objeto
-            this.evento.codigo = id
+            this.evento.id_evento = id
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
