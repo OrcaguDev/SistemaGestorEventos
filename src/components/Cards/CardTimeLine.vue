@@ -1,11 +1,11 @@
 <template>
   <div class="flex flex-wrap" style="flex-direction: column-reverse;">
-    <button class="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-full shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 mt-4"
-      style="width: 80px;" @click="goBack"
-    >
-    Atras
-  </button>
-    <div class="w-full lg:w-10/12 px-4">
+    <button
+      class="px-4 py-2 mt-4 mb-1 mr-1 text-xs font-bold text-white uppercase transition-all duration-150 ease-linear bg-red-500 rounded-full shadow outline-none active:bg-red-600 hover:shadow-md focus:outline-none"
+      style="width: 80px;" @click="goBack">
+      Atras
+    </button>
+    <div class="w-full px-4 lg:w-10/12">
       <vue-horizontal-timeline :items="items" />
     </div>
   </div>
@@ -13,39 +13,79 @@
 
 <script>
 import { VueHorizontalTimeline } from 'vue-horizontal-timeline'
+import axios from 'axios'
+
 export default {
     components: {
         VueHorizontalTimeline
     },
     data () {
         const etapa1 = {
-            title: '(DD/MMM/YYYY)',
+            title: 'No existe Fecha de Registro',
             content: 'Fecha del Registro'
         }
         const etapa2 = {
-            title: '(DD/MMM/YYYY)',
+            title: 'No existe Cantidad Registrados',
             content: 'Cantidad Registrados'
         }
         const etapa3 = {
-            title: '(DD/MMM/YYYY)',
+            title: 'No existe Cantidad de Asistentes',
             content: 'Cantidad de Asistentes'
         }
         const etapa4 = {
-            title: '(DD/MMM/YYYY)',
+            title: 'No existe Cantidad de Certificados',
             content: 'Cantidad de Certidicados'
         }
         const etapa5 = {
-            title: '(DD/MMM/YYYY)',
+            title: 'No existe Fecha de Finalizacion',
             content: 'Final del Evento'
         }
         const items = [etapa1, etapa2, etapa3, etapa4, etapa5]
-        return { items }
+        return {
+            items,
+            timeline: [],
+            apii: {
+                id_timeline: '',
+                api_token: ''
+            },
+            url_data: ''
+        }
     },
 
     methods: {
         goBack () {
             window.history.back()
+        },
+        formatDate (dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' }
+            const formattedDate = new Date(dateString).toLocaleDateString(undefined, options)
+            return formattedDate
+        },
+        gettimeline () {
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post('http://localhost:8000/getTimeline', this.apii, auth).then(({ data }) => {
+                this.timeline = data
+                console.log(this.timeline[0])
+
+                this.items[0].title = this.formatDate(this.timeline[0].Fecharegistro)
+                this.items[1].title = this.timeline[0].cantidadregistrados_total
+                this.items[2].title = this.timeline[0].cantidadregistrados_asistencia_1
+                this.items[3].title = this.timeline[0].cantidadregistrados_certificado_1
+                this.items[4].title = this.formatDate(this.timeline[0].Fechafin)
+            }).catch((error) => {
+                console.log(error)
+            })
         }
+    },
+    mounted () {
+        this.apii.id_timeline = this.$route.params.id
+        this.gettimeline()
+        console.log(this.timeline)
     }
 }
 </script>

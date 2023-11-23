@@ -126,7 +126,8 @@ const routes = [
 
             },
             {
-                path: '/admin/timeLine',
+                path: '/admin/timeLine/:id',
+                name: 'timeLine',
                 component: timeLine,
                 meta: { requiresAuth: true }
 
