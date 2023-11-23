@@ -148,9 +148,9 @@
               <input type="file" ref="fileInput" @change="handleFileUpload"
                 class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                 accept="image/png, image/jpeg" required />
-
             </div>
           </div>
+
           <div class="w-full px-4 lg:w-12/12">
             <div class="relative w-full mb-3">
               <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600" htmlFor="grid-password">
@@ -163,6 +163,7 @@
                 accept="application/pdf, application/docx" required />
             </div>
           </div>
+
           <div class="w-full px-4 lg:w-4/12">
             <div class="relative w-full mb-3">
               <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600" htmlFor="grid-password">
@@ -173,6 +174,7 @@
                 v-model="evento.aforo_total" required />
             </div>
           </div>
+          
           <div class="w-full px-4 lg:w-4/12">
             <div class="relative w-full mb-3">
               <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600" htmlFor="grid-password">
