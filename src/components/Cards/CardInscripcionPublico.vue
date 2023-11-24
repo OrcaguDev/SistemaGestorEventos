@@ -1,43 +1,43 @@
 <template>
     <div class="container px-4 mx-auto mt-6">
-        <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
-            <div class="rounded-t bg-white mb-0 px-6 py-6">
-                <div class="text-center flex justify-between">
-                    <h6 class="text-blueGray-700 text-xl font-bold">Inscripción</h6>
+        <div class="relative flex flex-col w-full min-w-0 mb-6 break-words border-0 rounded-lg shadow-lg bg-blueGray-100">
+            <div class="px-6 py-6 mb-0 bg-white rounded-t">
+                <div class="flex justify-between text-center">
+                    <h6 class="text-xl font-bold text-blueGray-700">Inscripción</h6>
                 </div>
             </div>
-            <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+            <div class="flex-auto px-4 py-10 pt-0 lg:px-10">
                 <div>
-                    <img src="../../assets/img/EVENTOS.jpg" alt="" ><br>
+                    <img src="../../assets/img/EVENTOS.jpg" alt=""><br>
 
-                <a :href="`http://localhost:8000/informe/${evento.informe}`" target="_blank"
-                                    class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-2 py-3 rounded shadow ml-4 hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150">
-                                    DESCARGAR BROCHURE</a>
+                    <a :href="`http://localhost:8000/informe/${evento.informe}`" target="_blank"
+                        class="px-2 py-3 ml-4 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none">
+                        DESCARGAR BROCHURE</a>
                 </div>
                 <br>
                 <form @submit.prevent="storeInscripcion()">
                     <div class="flex flex-col items-center">
                         <div class="flex flex-wrap justify-center">
-                            <div class="w-6/12 sm:w-6/12 px-4">
+                            <div class="w-6/12 px-4 sm:w-6/12">
                                 <!-- <img :src="`http://localhost:8000/img/${evento.img}`" alt="..."
-                                    class="shadow-lg rounded max-w-full h-auto align-middle border-none" /><br> -->
+                                    class="h-auto max-w-full align-middle border-none rounded shadow-lg" /><br> -->
 
                             </div>
                         </div>
                     </div>
 
-                    <h6 class="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                    <h6 class="mt-3 mb-6 text-sm font-bold uppercase text-blueGray-400">
                         Resumen del Evento
                     </h6>
                     <div v-if="isVisibleeee == 1" class="flex flex-wrap">
 
-                        <div class="w-full lg:w-3/12 px-4">
+                        <div class="w-full px-4 lg:w-3/12">
                             <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
+                                <label class="block mb-2 font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                                     Nombre del Evento
                                 </label>
 
-                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600"
                                     htmlFor="grid-password">
                                     {{ evento.nombre }}
                                 </label>
@@ -45,48 +45,48 @@
                             </div>
                         </div>
 
-                        <div class="w-full lg:w-3/12 px-4">
+                        <div class="w-full px-4 lg:w-3/12">
                             <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
+                                <label class="block mb-2 font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                                     Lugar
                                 </label>
-                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600"
                                     htmlFor="grid-password">
                                     {{ evento.lugar }}
                                 </label>
                             </div>
                         </div>
 
-                        <div class="w-full lg:w-3/12 px-4">
+                        <div class="w-full px-4 lg:w-3/12">
                             <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
+                                <label class="block mb-2 font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                                     Fecha y hora
                                 </label>
-                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600"
                                     htmlFor="grid-password">
                                     {{ evento.fechaInicio }}
                                 </label>
                             </div>
                         </div>
 
-                        <div class="w-full lg:w-3/12 px-4">
+                        <div class="w-full px-4 lg:w-3/12">
                             <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
+                                <label class="block mb-2 font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                                     Expositor
                                 </label>
-                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600"
                                     htmlFor="grid-password">
                                     {{ evento.expositor }}
                                 </label>
                             </div>
                         </div>
 
-                        <div class="w-full lg:w-6/12 px-4">
+                        <div class="w-full px-4 lg:w-6/12">
                             <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
+                                <label class="block mb-2 font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                                     Descripción
                                 </label>
-                                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                                <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600"
                                     htmlFor="grid-password">
                                     {{ evento.descripcion }}
                                 </label>
@@ -98,63 +98,68 @@
 
                     <div class="flex flex-wrap">
 
-                        <div class="w-full lg:w-3/12 px-4">
+                        <div class="w-full px-4 lg:w-3/12">
                             <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
+                                <label class="block mb-2 font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                                     DNI
                                 </label>
                                 <input type="text" v-model="inscripcion.dni"
-                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" required />
+                                    class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
+                                    required />
                             </div>
                         </div>
 
-                        <div class="w-full lg:w-3/12 px-4">
+                        <div class="w-full px-4 lg:w-3/12">
                             <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
+                                <label class="block mb-2 font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                                     Telefono
                                 </label>
                                 <input type="text" v-model="inscripcion.celular"
-                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" required />
+                                    class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
+                                    required />
                             </div>
                         </div>
 
-                        <div class="w-full lg:w-6/12 px-4">
+                        <div class="w-full px-4 lg:w-6/12">
                             <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
+                                <label class="block mb-2 font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                                     Email
                                 </label>
                                 <input type="text" v-model="inscripcion.email"
-                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" required />
+                                    class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
+                                    required />
                             </div>
                         </div>
 
-                        <div class="w-full lg:w-6/12 px-4">
+                        <div class="w-full px-4 lg:w-6/12">
                             <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
+                                <label class="block mb-2 font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                                     Nombre
                                 </label>
                                 <input type="text" v-model="inscripcion.nombre"
-                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" required />
+                                    class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
+                                    required />
                             </div>
                         </div>
 
-                        <div class="w-full lg:w-6/12 px-4">
+                        <div class="w-full px-4 lg:w-6/12">
                             <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
+                                <label class="block mb-2 font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                                     Apellidos
                                 </label>
                                 <input type="text" v-model="inscripcion.apellido"
-                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"  required/>
+                                    class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
+                                    required />
                             </div>
                         </div>
 
-                        <div class="w-full lg:w-3/12 px-4">
+                        <div class="w-full px-4 lg:w-3/12">
                             <div class="relative w-full mb-3">
-                                <label class="block uppercase text-blueGray-600 font-bold mb-2" htmlFor="grid-password">
+                                <label class="block mb-2 font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                                     Certificacion
                                 </label>
                                 <input type="checkbox" v-model="inscripcion.certificacion"
-                                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                                    class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring" />
                             </div>
                         </div>
 
@@ -172,12 +177,12 @@
                     <span>{{ mensaje }}</span>
                     <!-- Despues de validar los datos de los inputs de arriba, mostrar este div para concluir con la inscripcion -->
 
-                    <div class="w-full lg:w-3/12 px-4">
+                    <div class="w-full px-4 lg:w-3/12">
 
                     </div>
 
                     <button
-                        class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                        class="w-full px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
                         type="submit">
                         Inscribirse
                     </button>
@@ -230,7 +235,7 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post(`http://localhost:8000/evento/${id}`, this.apii, auth).then(({ data }) => {
-                console.log(data[0]);
+                console.log(data[0])
                 this.evento.nombre = data[0].nombre
                 this.evento.expositor = data[0].expositor
                 this.evento.lugar = data[0].lugar
@@ -256,32 +261,34 @@ export default {
             const fechaInscripcion = this.evento.fechaInscripcion
             const fechaInscripcionFin = this.evento.fechaInscripcionFin
             const dni = this.inscripcion.dni
+            // eslint-disable-next-line camelcase
             const id_evento = this.inscripcion.url_combinado
-            const fechaActual = new Date();
-            const año = fechaActual.getFullYear();
-            const mes = fechaActual.getMonth() + 1; // Ten en cuenta que los meses comienzan desde 0
-            const día = fechaActual.getDate();
-            const fechaFormateada = `${año}-${mes < 10 ? '0' : ''}${mes}-${día < 10 ? '0' : ''}${día}`;
+            const fechaActual = new Date()
+            const año = fechaActual.getFullYear()
+            const mes = fechaActual.getMonth() + 1 // Ten en cuenta que los meses comienzan desde 0
+            const día = fechaActual.getDate()
+            const fechaFormateada = `${año}-${mes < 10 ? '0' : ''}${mes}-${día < 10 ? '0' : ''}${día}`
 
-            if(fechaFormateada >= fechaInscripcion && fechaFormateada <= fechaInscripcionFin){
+            if (fechaFormateada >= fechaInscripcion && fechaFormateada <= fechaInscripcionFin) {
                 const auth = {
-                headers: { 'Content-Type': 'application/json' }
+                    headers: { 'Content-Type': 'application/json' }
                 }
+                // eslint-disable-next-line camelcase
                 const url_combinado = `http://localhost:8000/validateInscripciones/?dni=${dni}&id_evento=${id_evento}`
                 axios.post(url_combinado, this.inscripcion, auth).then((data) => {
                     if (data.data[0].cuentaInscripcion > 0) {
                         this.alert = 'Ya se encuentra registrado en este evento.'
                         window.alert(this.alert)
                     } else {
-                        axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then(() => {
-                            this.isVisibleeee == 0
+                        axios.post('http://localhost:8000/storeInscripcion', this.inscripcion).then(() => {
+                            // eslint-disable-next-line no-unused-expressions
+                            this.isVisibleeee === 0
                             window.alert('Registo completado satisfactoriamente!')
                         })
                     }
                 })
-            }else{
+            } else {
                 window.alert('El evento ya no se encuentra disponible.')
-                
             }
         }
     },
