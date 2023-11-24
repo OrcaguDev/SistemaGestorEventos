@@ -114,7 +114,7 @@
               {{ item.butacas_reservadas }}
             </td>
             <td class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-              {{ (item.aforo_total - item.butacas_reservadas) - item.inscripciones }}
+              {{ (item.aforo_total - item.butacas_reservadas) - item.cantidad_inscripciones }}
             </td>
             <td
               class="flex justify-center p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
@@ -177,12 +177,10 @@ export default {
     data () {
         return {
             eventos: [],
-            apii: {
-                api_token: ''
-            },
             evento: {
                 api_token: '',
-                id_evento: ''
+                id_evento: '',
+                id_area: ''
             }
         }
     },
@@ -201,11 +199,12 @@ export default {
         getTotal () {
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
-            this.apii.api_token = objeto
+            this.evento.api_token = objeto
+            this.evento.id_area = localStorage.getItem('area')
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/eventos', this.apii, auth).then(({ data }) => {
+            axios.post('http://localhost:8000/eventos', this.evento, auth).then(({ data }) => {
                 this.eventos = data
             }).catch((error) => {
                 console.log(error)

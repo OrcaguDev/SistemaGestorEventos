@@ -37,8 +37,7 @@
                         <div class="relative w-5/12 pl-8 mt-6 mb-3">
                             <div class="flex px-4 lg:w-12/12">
                                 <label class="block mt-6 mb-2 text-xs font-bold uppercase text-blueGray-600 "></label>
-                                <button
-                                    @click="updateAsistencia()"
+                                <button @click="updateAsistencia()"
                                     class="w-full px-3 py-3 mt-6 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
                                     type="button">
                                     Asistencia
@@ -202,27 +201,29 @@
                                 No
                             </td>
 
-                            <td v-if="inscripcion.asistencia == 1"  class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                            <td v-if="inscripcion.asistencia == 1"
+                                class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                 Si
                             </td>
 
-                            <td v-else class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                            <td v-else
+                                class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                 No
                             </td>
 
                             <td>
 
                                 <template v-if="inscripcion.recibo === null">
-                                    <input type="text" class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow lg:w-9/12 placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
+                                    <input type="text"
+                                        class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow lg:w-9/12 placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                                         v-model="recibo" />
-                                        <button
-                                        @click="updateRecibo(inscripcion.dni)" v-if="mostrarBoton"
-                                            class="w-full text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none lg:w-3/12"
-                                            type="button">
-                                            <span class="material-symbols-outlined">
-                                                save
-                                            </span>
-                                        </button>
+                                    <button @click="updateRecibo(inscripcion.dni)" v-if="mostrarBoton"
+                                        class="w-full text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none lg:w-3/12"
+                                        type="button">
+                                        <span class="material-symbols-outlined">
+                                            save
+                                        </span>
+                                    </button>
                                 </template>
 
                                 <template v-else>
@@ -277,14 +278,14 @@ export default {
     },
 
     props: {
-            color: {
-                default: 'light',
-                validator: function (value) {
-                    // The value must match one of these strings
-                    return ['light', 'dark'].indexOf(value) !== -1
-                }
+        color: {
+            default: 'light',
+            validator: function (value) {
+                // The value must match one of these strings
+                return ['light', 'dark'].indexOf(value) !== -1
             }
-        },
+        }
+    },
 
     methods: {
         goBack () {
@@ -367,7 +368,7 @@ export default {
             }).catch((error) => {
                 console.log(error)
             })
-        },
+        }
     },
     created () {
         this.url_id = this.$route.params.id
