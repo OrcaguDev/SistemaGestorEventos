@@ -283,6 +283,7 @@
 
 <script>
 import axios from 'axios'
+import Swal from 'sweetalert2'
 export default {
     data () {
         return {
@@ -338,18 +339,28 @@ export default {
                     }
                     axios.post('http://localhost:8000/validateEmail', this.usuario, auth).then((data) => {
                         if (data.data[0].cuentaEmail > 0) {
-                            this.alert_password = 'Ya existe un usuario con este email.'
+                            this.AlertSwall(
+                                'Error!!',
+                                'Ya existe un usuario con este email.',
+                                'error')
                         } else {
                             axios.post('http://localhost:8000/storeUsuario', this.usuario, auth).then(() => {
                                 this.getTotal()
                                 this.alert_password = ''
+                                this.AlertSwall(
+                                    'Registrado!!',
+                                    'El usuario ha sido registrado correctamente.',
+                                    'success')
                                 this.limpiar()
                             })
                         }
                     })
                 } else {
                     // this.view_button = false;
-                    this.alert_password = 'Las contraseñas no coinciden'
+                    this.AlertSwall(
+                        'Error!!',
+                        'Las contraseñas no coinciden.',
+                        'error')
                 }
             }
         },
@@ -369,6 +380,10 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post('http://localhost:8000/deleteUsuario', this.usuario, auth).then(() => {
+                this.AlertSwall(
+                    'Eliminado!!',
+                    'El usuario ha sido eliminado correctamente.',
+                    'success')
                 this.getTotal()
             })
         },
@@ -400,6 +415,13 @@ export default {
             axios.post('http://localhost:8000/updateUsuario', this.usuario, auth).then(() => {
                 this.getTotal()
                 this.limpiar()
+            })
+        },
+        AlertSwall ($title, $text, $icon) {
+            Swal.fire({
+                title: $title,
+                text: $text,
+                icon: $icon
             })
         }
     },

@@ -27,6 +27,7 @@
     "material-symbols": "^0.13.2",
     "node": "^21.1.0",
     "pdfmake": "^0.2.8",
+    "sweetalert2": "^11.10.1",
     "tailwindcss": "^2.2.19",
     "timeline-vuejs": "^1.1.7",
     "vue": "3.0.7",
@@ -48,5 +49,8 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ]
+  ],
+  "overrides": {
+    "autoprefixer": "10.4.5"
+}
 }

@@ -315,39 +315,38 @@ export default {
             const fechaInscripcionFin = this.evento.fechaInscripcionFin
             const dni = this.inscripcion.dni
             const id_evento = this.inscripcion.url_id
-            const fechaActual = new Date();
-            const año = fechaActual.getFullYear();
-            const mes = fechaActual.getMonth() + 1; // Ten en cuenta que los meses comienzan desde 0
-            const día = fechaActual.getDate();
-            const fechaFormateada = `${año}-${mes < 10 ? '0' : ''}${mes}-${día < 10 ? '0' : ''}${día}`;
-            
-            if(fechaFormateada >= fechaInscripcion && fechaFormateada <= fechaInscripcionFin){
-            const auth = {
-                headers: { 'Content-Type': 'application/json' }
-            }
-            const url_combinado = `http://localhost:8000/validateInscripciones/?dni=${dni}&id_evento=${id_evento}`
-            axios.post(url_combinado, this.inscripcion, auth).then((data) => {
-                if (data.data[0].cuentaInscripcion > 0) {
-                    this.alert = 'Ya se encuentra registrado en este evento.'
-                    window.alert(this.alert)
-                    window.location.reload()
-                } else {
-                    axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then((data) => {
-                        this.isVisibleeee == 0
-                        window.alert('Registo completado satisfactoriamente!')
-                    })
-                }
-            })
-            }else{
-                window.alert('El evento ya no se encuentra disponible.')
-                
-            }
-    },
-    mounted () {
-        this.url_id = this.$route.params.id
-        this.getEditEvento(this.url_id)
-    }
+            const fechaActual = new Date()
+            const año = fechaActual.getFullYear()
+            const mes = fechaActual.getMonth() + 1 // Ten en cuenta que los meses comienzan desde 0
+            const día = fechaActual.getDate()
+            const fechaFormateada = `${año}-${mes < 10 ? '0' : ''}${mes}-${día < 10 ? '0' : ''}${día}`
 
-  }
+            if (fechaFormateada >= fechaInscripcion && fechaFormateada <= fechaInscripcionFin) {
+                const auth = {
+                    headers: { 'Content-Type': 'application/json' }
+                }
+                const url_combinado = `http://localhost:8000/validateInscripciones/?dni=${dni}&id_evento=${id_evento}`
+                axios.post(url_combinado, this.inscripcion, auth).then((data) => {
+                    if (data.data[0].cuentaInscripcion > 0) {
+                        this.alert = 'Ya se encuentra registrado en este evento.'
+                        window.alert(this.alert)
+                        window.location.reload()
+                    } else {
+                        axios.post('http://localhost:8000/storeInscripcion', this.inscripcion, auth).then((data) => {
+                            this.isVisibleeee == 0
+                            window.alert('Registo completado satisfactoriamente!')
+                        })
+                    }
+                })
+            } else {
+                window.alert('El evento ya no se encuentra disponible.')
+            }
+        },
+        mounted () {
+            this.url_id = this.$route.params.id
+            this.getEditEvento(this.url_id)
+        }
+
+    }
 }
 </script>

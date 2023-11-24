@@ -13,6 +13,7 @@ import App from '@/App.vue'
 
 import 'material-icons/iconfont/material-icons.css'
 import 'material-symbols'
+
 // routes
 
 createApp(App)

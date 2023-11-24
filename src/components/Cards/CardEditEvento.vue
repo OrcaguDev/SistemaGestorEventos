@@ -230,7 +230,7 @@ export default {
             url_id: ''
             // evento:{}
         }
-    }, 
+    },
     methods: {
         goBack () {
             window.history.back()
