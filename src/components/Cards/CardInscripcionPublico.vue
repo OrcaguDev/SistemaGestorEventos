@@ -194,6 +194,7 @@
 
 <script>
 import axios from 'axios'
+import Swal from 'sweetalert2'
 export default {
     data () {
         return {
@@ -277,19 +278,25 @@ export default {
                 const url_combinado = `http://localhost:8000/validateInscripciones/?dni=${dni}&id_evento=${id_evento}`
                 axios.post(url_combinado, this.inscripcion, auth).then((data) => {
                     if (data.data[0].cuentaInscripcion > 0) {
-                        this.alert = 'Ya se encuentra registrado en este evento.'
-                        window.alert(this.alert)
+                        this.AlertSwall('Error!!', 'Ya se encuentra registrado en este evento.', 'error')
                     } else {
                         axios.post('http://localhost:8000/storeInscripcion', this.inscripcion).then(() => {
                             // eslint-disable-next-line no-unused-expressions
                             this.isVisibleeee === 0
-                            window.alert('Registo completado satisfactoriamente!')
+                            this.AlertSwall('Registrado Correctamente!!', 'Registo completado satisfactoriamente!', 'success')
                         })
                     }
                 })
             } else {
-                window.alert('El evento ya no se encuentra disponible.')
+                this.AlertSwall('Error!!', 'El evento ya no se encuentra disponible.', 'error')
             }
+        },
+        AlertSwall ($title, $text, $icon) {
+            Swal.fire({
+                title: $title,
+                text: $text,
+                icon: $icon
+            })
         }
     },
     mounted () {

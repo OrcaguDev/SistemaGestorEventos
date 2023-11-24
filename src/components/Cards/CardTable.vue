@@ -172,7 +172,7 @@
 </template>
 <script>
 import axios from 'axios'
-
+import Swal from 'sweetalert2'
 export default {
     data () {
         return {
@@ -221,7 +221,18 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post('http://localhost:8000/deleteEvento', this.evento, auth).then(() => {
+                this.AlertSwall(
+                    'Evento Eliminado',
+                    'Evento Eliminado Correctamente',
+                    'success')
                 this.getTotal()
+            })
+        },
+        AlertSwall ($title, $text, $icon) {
+            Swal.fire({
+                title: $title,
+                text: $text,
+                icon: $icon
             })
         }
     },

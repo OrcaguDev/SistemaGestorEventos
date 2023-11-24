@@ -201,6 +201,7 @@
 </template>
 <script>
 import axios from 'axios'
+import Swal from 'sweetalert2'
 export default {
     data () {
         return {
@@ -266,6 +267,11 @@ export default {
             formData.append('id_area', this.evento.id_area)
 
             axios.post('http://localhost:8000/storeEvento', formData, auth).then(() => {
+                this.AlertSwall(
+                    'Evento Creado',
+                    'El evento se ha creado correctamente',
+                    'success'
+                )
                 this.$router.push('/admin/listarEvento')
             })
         },
@@ -293,6 +299,13 @@ export default {
                 this.pagos = data
             }).catch((error) => {
                 console.log(error)
+            })
+        },
+        AlertSwall ($title, $text, $icon) {
+            Swal.fire({
+                title: $title,
+                text: $text,
+                icon: $icon
             })
         }
     },

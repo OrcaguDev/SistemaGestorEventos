@@ -69,7 +69,7 @@
                                     Rol
                                 </label>
                                 <select name="rol" id="" v-model="usuario.rol"
-                                    class="w-full px-6 py-3 mb-1 mr-1 text-sm uppercase transition-all duration-150 ease-linear rounded shadow outline-none  text-blueGray-600 hover:shadow-lg focus:outline-none">
+                                    class="w-full px-6 py-3 mb-1 mr-1 text-sm uppercase transition-all duration-150 ease-linear rounded shadow outline-none text-blueGray-600 hover:shadow-lg focus:outline-none">
                                     <option value="0" selected>Seleccione un rol</option>
                                     <option value="1">Administrador</option>
                                     <option value="2">Editor</option>
@@ -93,6 +93,7 @@
 
 <script>
 import axios from 'axios'
+import Swal from 'sweetalert2'
 export default {
     data () {
         return {
@@ -120,6 +121,7 @@ export default {
                     headers: { 'Content-Type': 'application/json' }
                 }
                 axios.post('http://localhost:8000/storeUsuario', this.usuario, auth).then(() => {
+                    this.AlertSwall('Creado!!', 'El usuario fue creado, success')
                     this.$router.push('/admin/usuarios/usuario')
                     this.$refs.CardListaUsuario.actualizarMensaje('Mensaje actualizado desde ComponenteA')
                 })
@@ -127,6 +129,13 @@ export default {
             } else {
                 this.alert_password = 'Las contraseñas no coinciden'
             }
+        },
+        AlertSwall ($title, $text, $icon) {
+            Swal.fire({
+                title: $title,
+                text: $text,
+                icon: $icon
+            })
         },
         limpiar () {
             this.usuario.email = ''

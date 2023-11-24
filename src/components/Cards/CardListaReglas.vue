@@ -114,6 +114,7 @@
 
 <script>
 import axios from 'axios'
+import Swal from 'sweetalert2'
 export default {
     data () {
         return {
@@ -149,7 +150,15 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post('http://localhost:8000/eliminarRegla', this.regla, auth).then(() => {
+                this.AlertSwall('Eliminado', 'Se ha eliminado la regla', 'success')
                 this.getTotal()
+            })
+        },
+        AlertSwall ($title, $text, $icon) {
+            Swal.fire({
+                title: $title,
+                text: $text,
+                icon: $icon
             })
         }
     },

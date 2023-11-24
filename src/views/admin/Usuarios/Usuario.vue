@@ -413,6 +413,10 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post('http://localhost:8000/updateUsuario', this.usuario, auth).then(() => {
+                this.AlertSwall(
+                    'Actualizado!!',
+                    'El usuario ha sido actualizado correctamente.',
+                    'success')
                 this.getTotal()
                 this.limpiar()
             })

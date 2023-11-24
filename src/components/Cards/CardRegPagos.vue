@@ -63,6 +63,7 @@
 
 <script>
 import axios from 'axios'
+import Swal from 'sweetalert2'
 export default {
     data () {
         return {
@@ -89,7 +90,18 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post('http://localhost:8000/storePagos', this.pagos, auth).then(() => {
+                this.AlertSwall(
+                    'Link de Pago Registrado',
+                    'Link de Pago Registrado Correctamente',
+                    'success')
                 this.$router.push('/admin/pagos/listPagos')
+            })
+        },
+        AlertSwall ($title, $text, $icon) {
+            Swal.fire({
+                title: $title,
+                text: $text,
+                icon: $icon
             })
         }
     }
