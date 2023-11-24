@@ -236,8 +236,7 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post(`http://localhost:8000/evento/${id}`, this.apii, auth).then(({ data }) => {
-                console.log(data[0])
-                this.evento.nombre = data[0].nombre
+                this.evento.nombre = data[0].nombrea
                 this.evento.expositor = data[0].expositor
                 this.evento.lugar = data[0].lugar
                 this.evento.fechaInicio = data[0].fechaInicio
@@ -275,7 +274,7 @@ export default {
                     headers: { 'Content-Type': 'application/json' }
                 }
                 // eslint-disable-next-line camelcase
-                const url_combinado = `http://localhost:8000/validateInscripciones/?dni=${dni}&id_evento=${id_evento}`
+                const url_combinado = `http://localhost:8000/validateInscripciones/?dni=${dni}&id_evento=${this.inscripcion.url_id}`
                 axios.post(url_combinado, this.inscripcion, auth).then((data) => {
                     if (data.data[0].cuentaInscripcion > 0) {
                         this.AlertSwall('Error!!', 'Ya se encuentra registrado en este evento.', 'error')

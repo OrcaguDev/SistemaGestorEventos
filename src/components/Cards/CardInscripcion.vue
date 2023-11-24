@@ -330,7 +330,7 @@ export default {
                     headers: { 'Content-Type': 'application/json' }
                 }
                 // eslint-disable-next-line camelcase
-                const url_combinado = `http://localhost:8000/validateInscripciones/?dni=${dni}&id_evento=${id_evento}`
+                const url_combinado = `http://localhost:8000/validateInscripciones/?dni=${dni}&id_evento=${this.inscripcion.url_id}`
                 axios.post(url_combinado, this.inscripcion, auth).then((data) => {
                     if (data.data[0].cuentaInscripcion > 0) {
                         this.AlertSwall('Error!!', 'Ya se encuentra registrado a este evento', 'error')

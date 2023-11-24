@@ -206,15 +206,15 @@ export default {
     data () {
         return {
             evento: {
-                nombre: 'evento',
-                expositor: 'expos',
-                lugar: 'cip',
+                nombre: '',
+                expositor: '',
+                lugar: '',
                 fechaInscripcion: '',
                 fechaInscripcionFin: '',
                 fechaInicio: '',
-                descripcion: 'asd',
-                aforo_total: '300',
-                butacas_reservadas: '30',
+                descripcion: '',
+                aforo_total: '',
+                butacas_reservadas: '',
                 fechaFin: '',
                 api_token: '',
                 id_regla: 0,

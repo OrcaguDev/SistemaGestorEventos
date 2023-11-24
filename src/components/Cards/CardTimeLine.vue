@@ -34,7 +34,7 @@ export default {
         }
         const etapa4 = {
             title: 'No existe Cantidad de Certificados',
-            content: 'Cantidad de Certidicados'
+            content: 'Cantidad de Certificados'
         }
         const etapa5 = {
             title: 'No existe Fecha de Finalizacion',
