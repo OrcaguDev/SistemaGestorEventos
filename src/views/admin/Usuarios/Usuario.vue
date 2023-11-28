@@ -284,6 +284,7 @@
 <script>
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import Main from '../../../main.js'
 export default {
     data () {
         return {
@@ -307,13 +308,14 @@ export default {
     },
     methods: {
         getTotal () {
+            let valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/usuarios', this.apii, auth).then(({ data }) => {
+            axios.post(`${valor}/usuarios`, this.apii, auth).then(({ data }) => {
                 this.usuarios = data
             }).catch(error => {
                 console.log(error)
@@ -324,7 +326,7 @@ export default {
             this.mensaje = nuevoMensaje
         },
         storeUsuario () {
-            // this.isVisible=1;
+            let valor = Main.url
             if (this.usuario.name === '' && this.usuario.email === '' && this.usuario.password === '' && this.usuario.area === 0 && this.usuario.rol === 0) {
                 this.alert_password = 'Faltan campos por rellenar, por favor ingresa los datos correctamente.'
             } else {
@@ -337,14 +339,14 @@ export default {
                     const auth = {
                         headers: { 'Content-Type': 'application/json' }
                     }
-                    axios.post('http://localhost:8000/validateEmail', this.usuario, auth).then((data) => {
+                    axios.post(`${valor}/validateEmail`, this.usuario, auth).then((data) => {
                         if (data.data[0].cuentaEmail > 0) {
                             this.AlertSwall(
                                 'Error!!',
                                 'Ya existe un usuario con este email.',
                                 'error')
                         } else {
-                            axios.post('http://localhost:8000/storeUsuario', this.usuario, auth).then(() => {
+                            axios.post(`${valor}/storeUsuario`, this.usuario, auth).then(() => {
                                 this.getTotal()
                                 this.alert_password = ''
                                 this.AlertSwall(
@@ -372,6 +374,7 @@ export default {
             this.usuario.rol = 0
         },
         eliminarUsuario (id) {
+            let valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.usuario.api_token = objeto
@@ -379,7 +382,7 @@ export default {
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/deleteUsuario', this.usuario, auth).then(() => {
+            axios.post(`${valor}/deleteUsuario`, this.usuario, auth).then(() => {
                 this.AlertSwall(
                     'Eliminado!!',
                     'El usuario ha sido eliminado correctamente.',
@@ -388,6 +391,7 @@ export default {
             })
         },
         getUSuario (id) {
+            let valor = Main.url
             this.isVisible = 2
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
@@ -395,7 +399,7 @@ export default {
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`http://localhost:8000/getUsuario/${id}`, this.apii, auth).then(({ data }) => {
+            axios.post(`${valor}/getUsuario/${id}`, this.apii, auth).then(({ data }) => {
                 this.usuario = data[0]
             }).catch(error => {
                 console.log(error)
@@ -406,13 +410,14 @@ export default {
             this.limpiar()
         },
         updateUsuario () {
+            let valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.usuario.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/updateUsuario', this.usuario, auth).then(() => {
+            axios.post(`${valor}/updateUsuario`, this.usuario, auth).then(() => {
                 this.AlertSwall(
                     'Actualizado!!',
                     'El usuario ha sido actualizado correctamente.',

@@ -43,6 +43,7 @@ import Calendar from '@toast-ui/calendar'
 import '@toast-ui/calendar/dist/toastui-calendar.min.css'
 import { onMounted, ref } from 'vue'
 import axios from 'axios'
+import Main from '../../main.js'
 
 const calendar = ref(null)
 const currentMonth = ref('') // Variable para almacenar el mes actual
@@ -69,6 +70,7 @@ onMounted(() => {
 })
 
 const getCalendar = () => {
+    let valor = Main.url
     const calendar = new Calendar('#calendar', {
         defaultView: 'month',
         isReadOnly: true,
@@ -95,7 +97,7 @@ const getCalendar = () => {
         }
     })
 
-    axios.post('http://localhost:8000/getCalendar').then(({ data }) => {
+    axios.post(`${valor}/getCalendar`).then(({ data }) => {
         const eventos = []
         data.forEach(element => {
             const fechaInicio = new Date(element.fechaInicio).toISOString()

@@ -20,6 +20,7 @@
 </template>
 <script>
 import Chart from 'chart.js'
+import Main from '../../main.js'
 export default {
     mounted: function () {
         this.$nextTick(function () {

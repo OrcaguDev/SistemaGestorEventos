@@ -101,6 +101,8 @@
 <script>
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import Main from '../../main.js'
+
 export default {
     data () {
         return {
@@ -114,6 +116,7 @@ export default {
     },
     methods: {
         getTotal () {
+            let valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.pago.api_token = objeto
@@ -121,13 +124,14 @@ export default {
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/getPagos', this.pago, auth).then(({ data }) => {
+            axios.post(`${valor}/getPagos`, this.pago, auth).then(({ data }) => {
                 this.pagos = data
             }).catch((error) => {
                 console.log(error)
             })
         },
         eliminarPago (id) {
+            let valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.pago.api_token = objeto
@@ -135,7 +139,7 @@ export default {
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/deletePago', this.pago, auth).then(() => {
+            axios.post(`${valor}/deletePago`, this.pago, auth).then(() => {
                 this.AlertSwall('Eliminado', 'Se ha eliminado el pago', 'success')
                 this.getTotal()
             })

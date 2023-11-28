@@ -64,6 +64,7 @@
 <script>
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import Main from '../../main.js'
 export default {
     data () {
         return {
@@ -86,10 +87,11 @@ export default {
     },
     methods: {
         storePagos () {
+            let valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/storePagos', this.pagos, auth).then(() => {
+            axios.post(`${valor}/storePagos`, this.pagos, auth).then(() => {
                 this.AlertSwall(
                     'Link de Pago Registrado',
                     'Link de Pago Registrado Correctamente',

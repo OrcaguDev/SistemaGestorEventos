@@ -206,6 +206,8 @@
 <script>
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import Main from '../../main.js'
+
 export default {
     data () {
         return {
@@ -237,13 +239,14 @@ export default {
             window.history.back()
         },
         storeEvento () {
+            let valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.evento.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/storeEvento', this.evento, auth).then(() => {
+            axios.post(`${valor}/storeEvento`, this.evento, auth).then(() => {
                 this.AlertSwall('Registrado!!', 'El evento se Registro Correctamente', 'success')
                 this.$router.push('/admin/tables')
             })
@@ -255,7 +258,7 @@ export default {
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`http://localhost:8000/evento/${id}`, this.apii, auth).then(({ data }) => {
+            axios.post(`${valor}/evento/${id}`, this.apii, auth).then(({ data }) => {
                 this.evento.nombre = data[0].nombre
                 this.evento.expositor = data[0].expositor
                 this.evento.lugar = data[0].lugar
@@ -278,7 +281,7 @@ export default {
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/getPagos', this.apii, auth).then(({ data }) => {
+            axios.post(`${valor}/getPagos`, this.apii, auth).then(({ data }) => {
                 this.pagos = data
             }).catch((error) => {
                 console.log(error)

@@ -67,6 +67,8 @@
 <script>
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import Main from '../../main.js'
+
 export default {
     data () {
         return {
@@ -88,13 +90,14 @@ export default {
             window.history.back()
         },
         getEditRegla (id) {
+          let valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
             const auth = {
                 Headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`http://localhost:8000/regla/${id}`, this.apii, auth).then(({ data }) => {
+            axios.post(`${valor}/regla/${id}`, this.apii, auth).then(({ data }) => {
                 this.regla.nombre = data[0].nombre
                 this.regla.url = data[0].url
                 this.regla.descripcion = data[0].descripcion
@@ -103,6 +106,7 @@ export default {
             })
         },
         updateRegla () {
+          let valor = Main.url
             const objeroString = localStorage.getItem('token')
             const objeto = JSON.parse(objeroString)
             this.regla.api_token = objeto
@@ -111,7 +115,7 @@ export default {
             const auth = {
                 Headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`http://localhost:8000/actualizarRegla/?nombre=${this.regla.nombre}&descripcion=${this.regla.descripcion}&url=${this.regla.url}&id=${this.regla.codigo}`, this.regla, auth).then(() => {
+            axios.post(`${valor}/actualizarRegla/?nombre=${this.regla.nombre}&descripcion=${this.regla.descripcion}&url=${this.regla.url}&id=${this.regla.codigo}`, this.regla, auth).then(() => {
                 this.AlertSwall('Editado!!', 'Ha sido editado correctamente!', 'success')
                 this.goBack()
             }).catch((error) => {

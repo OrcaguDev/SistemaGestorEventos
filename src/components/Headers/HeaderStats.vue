@@ -46,6 +46,7 @@
 <script>
 import CardStats from '@/components/Cards/CardStats.vue'
 import axios from 'axios'
+import Main from '../../main.js'
 
 export default {
     components: {
@@ -69,13 +70,15 @@ export default {
     },
     methods: {
         getUsersTotal () {
+            let valor = Main.url;
+            console.log(valor)
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/getUsers', this.apii, auth).then(({ data }) => {
+            axios.post(`${valor}/getUsers`, this.apii, auth).then(({ data }) => {
                 this.totalusuarios = data[0].total
             }).catch((error) => {
                 console.log(error)
@@ -83,13 +86,14 @@ export default {
         },
 
         getReglas () {
+            let valor = Main.url;
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/getReglas', this.apii, auth).then(({ data }) => {
+            axios.post(`${valor}/getReglas`, this.apii, auth).then(({ data }) => {
                 this.totalReglas = data[0].total
             }).catch((error) => {
                 console.log(error)
@@ -97,13 +101,14 @@ export default {
         },
 
         getEventos () {
+            let valor = Main.url;
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/getEventos', this.apii, auth).then(({ data }) => {
+            axios.post(`${valor}/getEventos`, this.apii, auth).then(({ data }) => {
                 this.totalEventos = data[0].total
             }).catch((error) => {
                 console.log(error)

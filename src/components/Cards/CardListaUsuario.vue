@@ -86,6 +86,7 @@
 
 <script>
 import axios from 'axios'
+import Main from '../../main.js'
 
 export default {
     data () {
@@ -98,13 +99,14 @@ export default {
     },
     methods: {
         getTotal () {
+            let valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/usuarios', this.apii, auth).then(({ data }) => {
+            axios.post(`${valor}/usuarios`, this.apii, auth).then(({ data }) => {
                 this.usuarios = data
             }).catch(error => {
                 console.log(error)

@@ -195,6 +195,8 @@
 <script>
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import Main from '../../main.js'
+
 export default {
     data () {
         return {
@@ -229,13 +231,14 @@ export default {
     methods: {
 
         getEditEvento (id) {
+            let valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`http://localhost:8000/evento/${id}`, this.apii, auth).then(({ data }) => {
+            axios.post(`${valor}/evento/${id}`, this.apii, auth).then(({ data }) => {
                 this.evento.nombre = data[0].nombrea
                 this.evento.expositor = data[0].expositor
                 this.evento.lugar = data[0].lugar
@@ -254,6 +257,7 @@ export default {
             })
         },
         storeInscripcion () {
+            let valor = Main.url
             this.inscripcion.url_id = this.$route.params.id
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
@@ -274,12 +278,12 @@ export default {
                     headers: { 'Content-Type': 'application/json' }
                 }
                 // eslint-disable-next-line camelcase
-                const url_combinado = `http://localhost:8000/validateInscripciones/?dni=${dni}&id_evento=${this.inscripcion.url_id}`
+                const url_combinado = `${valor}/validateInscripciones/?dni=${dni}&id_evento=${this.inscripcion.url_id}`
                 axios.post(url_combinado, this.inscripcion, auth).then((data) => {
                     if (data.data[0].cuentaInscripcion > 0) {
                         this.AlertSwall('Error!!', 'Ya se encuentra registrado en este evento.', 'error')
                     } else {
-                        axios.post('http://localhost:8000/storeInscripcion', this.inscripcion).then(() => {
+                        axios.post(`${valor}/storeInscripcion`, this.inscripcion).then(() => {
                             // eslint-disable-next-line no-unused-expressions
                             this.isVisibleeee === 0
                             this.AlertSwall('Registrado Correctamente!!', 'Registo completado satisfactoriamente!', 'success')

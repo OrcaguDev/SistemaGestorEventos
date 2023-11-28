@@ -202,6 +202,7 @@
 <script>
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import Main from '../../main.js'
 export default {
     data () {
         return {
@@ -232,7 +233,6 @@ export default {
     },
     mounted () {
         this.evento.id_area = localStorage.getItem('area')
-        console.log(this.evento.id_area)
     },
     methods: {
         handleFileUpload (event) {
@@ -242,6 +242,7 @@ export default {
             this.selectedFilePdf = event.target.files[0]
         },
         storeEvento () {
+          let valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.evento.api_token = objeto
@@ -266,7 +267,7 @@ export default {
             formData.append('api_token', this.evento.api_token)
             formData.append('id_area', this.evento.id_area)
 
-            axios.post('http://localhost:8000/storeEvento', formData, auth).then(() => {
+            axios.post(`${valor}/storeEvento`, formData, auth).then(() => {
                 this.AlertSwall(
                     'Evento Creado',
                     'El evento se ha creado correctamente',
@@ -276,26 +277,28 @@ export default {
             })
         },
         getReglas () {
+          let valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/reglas', this.apii, auth).then(({ data }) => {
+            axios.post(`${valor}/reglas`, this.apii, auth).then(({ data }) => {
                 this.reglas = data
             }).catch((error) => {
                 console.log(error)
             })
         },
         getPagos () {
+          let valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/getPagos', this.apii, auth).then(({ data }) => {
+            axios.post(`${valor}/getPagos`, this.apii, auth).then(({ data }) => {
                 this.pagos = data
             }).catch((error) => {
                 console.log(error)

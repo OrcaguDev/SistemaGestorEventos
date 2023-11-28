@@ -250,6 +250,8 @@
 
 <script>
 import axios from 'axios'
+import Main from '../../main.js'
+
 export default {
     data () {
         return {
@@ -293,13 +295,14 @@ export default {
         },
 
         getEditEvento (id) {
+            let valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`http://localhost:8000/evento/${id}`, this.apii, auth).then(({ data }) => {
+            axios.post(`${valor}/evento/${id}`, this.apii, auth).then(({ data }) => {
                 this.detalle.nombre = data[0].nombre
                 this.detalle.expositor = data[0].expositor
                 this.detalle.lugar = data[0].lugar
@@ -315,13 +318,14 @@ export default {
             })
         },
         getInscripcionesTotal (id) {
+            let valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`http://localhost:8000/getInscripcionesTotal/${id}`, this.apii, auth).then(({ data }) => {
+            axios.post(`${valor}/getInscripcionesTotal/${id}`, this.apii, auth).then(({ data }) => {
                 this.inscripciones = data
                 // eslint-disable-next-line no-unused-expressions
                 console.this.inscripciones
@@ -330,6 +334,7 @@ export default {
             })
         },
         updateAsistencia () {
+            let valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
@@ -340,7 +345,7 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             // eslint-disable-next-line camelcase
-            const url_concatenado = `http://localhost:8000/updateAsistencia/?dni=${dni}&id_evento=${id_evento}`
+            const url_concatenado = `${valor}/updateAsistencia/?dni=${dni}&id_evento=${id_evento}`
             axios.post(url_concatenado, this.apii, auth).then(() => {
                 this.getInscripcionesTotal(this.url_id)
                 this.dni = ''
@@ -349,6 +354,7 @@ export default {
             })
         },
         updateRecibo (dni) {
+            let valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
@@ -360,7 +366,7 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             // eslint-disable-next-line camelcase
-            const url_concatenado = `http://localhost:8000/updateRecibo/?recibo=${recibo}&id_evento=${id_evento}&dni=${dni}`
+            const url_concatenado = `${valor}/updateRecibo/?recibo=${recibo}&id_evento=${id_evento}&dni=${dni}`
             axios.post(url_concatenado, this.apii, auth).then(() => {
                 this.getInscripcionesTotal(this.url_id)
                 this.mostrarBoton = false

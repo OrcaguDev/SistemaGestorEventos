@@ -14,6 +14,7 @@
 <script>
 import { VueHorizontalTimeline } from 'vue-horizontal-timeline'
 import axios from 'axios'
+import Main from '../../main.js'
 
 export default {
     components: {
@@ -62,13 +63,14 @@ export default {
             return formattedDate
         },
         gettimeline () {
+            let valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/getTimeline', this.apii, auth).then(({ data }) => {
+            axios.post(`${valor}/getTimeline`, this.apii, auth).then(({ data }) => {
                 this.timeline = data
                 console.log(this.timeline[0])
 

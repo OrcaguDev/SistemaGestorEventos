@@ -19,3 +19,8 @@ import 'material-symbols'
 createApp(App)
     .use(router)
     .mount('#app')
+
+
+export default {
+    url: 'http://localhost:8000',
+    };

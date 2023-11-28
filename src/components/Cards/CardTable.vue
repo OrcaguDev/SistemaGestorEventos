@@ -173,6 +173,7 @@
 <script>
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import Main from '../../main.js'
 export default {
     data () {
         return {
@@ -197,6 +198,7 @@ export default {
 
         // Funcion de obtener Eventos
         getTotal () {
+          let valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.evento.api_token = objeto
@@ -204,7 +206,7 @@ export default {
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/eventos', this.evento, auth).then(({ data }) => {
+            axios.post(`${valor}/eventos`, this.evento, auth).then(({ data }) => {
                 this.eventos = data
             }).catch((error) => {
                 console.log(error)
@@ -213,6 +215,7 @@ export default {
 
         // Funcion de eliminar Evento
         eliminarEvento (id) {
+          let valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.evento.api_token = objeto
@@ -220,7 +223,7 @@ export default {
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/deleteEvento', this.evento, auth).then(() => {
+            axios.post(`${valor}/deleteEvento`, this.evento, auth).then(() => {
                 this.AlertSwall(
                     'Evento Eliminado',
                     'Evento Eliminado Correctamente',

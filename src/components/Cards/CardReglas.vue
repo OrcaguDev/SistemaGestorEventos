@@ -82,6 +82,7 @@
 <script>
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import Main from '../../main.js'
 export default {
     data () {
         return {
@@ -104,10 +105,11 @@ export default {
     },
     methods: {
         storeEvento () {
+          let valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/storeReglas', this.regla, auth).then(() => {
+            axios.post(`${valor}/storeReglas`, this.regla, auth).then(() => {
                 this.AlertSwall(
                     'Registro Exitoso',
                     'Se ha registrado la regla correctamente',

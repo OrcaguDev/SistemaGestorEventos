@@ -54,14 +54,16 @@
 <script>
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import Main from '../main.js'
+
 export default {
     // name: 'Login'
     data () {
         return {
             info: [],
             usuario: {
-                email: 'orlandocastillogutierrez@gmail.com',
-                password: '123456789'
+                email: '',
+                password: ''
             },
             error: ''
         }
@@ -69,10 +71,11 @@ export default {
     methods: {
 
         login () {
+            let valor = Main.url;
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post('http://localhost:8000/login', this.usuario, auth).then(result => {
+            axios.post(`${valor}/login`, this.usuario, auth).then(result => {
                 if (result.data.res === true) {
                     this.Alertlogin(
                         'Bienvenido',
