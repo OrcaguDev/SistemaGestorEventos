@@ -10,7 +10,7 @@
                 <div>
                     <img src="../../assets/img/EVENTOS.jpg" alt=""><br>
 
-                    <a :href="`http://localhost:8000/informe/${evento.informe}`" target="_blank"
+                    <a :href="`${valor}/informe/${evento.informe}`" target="_blank"
                         class="px-2 py-3 ml-4 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none">
                         DESCARGAR BROCHURE</a>
                 </div>
@@ -19,8 +19,6 @@
                     <div class="flex flex-col items-center">
                         <div class="flex flex-wrap justify-center">
                             <div class="w-6/12 px-4 sm:w-6/12">
-                                <!-- <img :src="`http://localhost:8000/img/${evento.img}`" alt="..."
-                                    class="h-auto max-w-full align-middle border-none rounded shadow-lg" /><br> -->
 
                             </div>
                         </div>
