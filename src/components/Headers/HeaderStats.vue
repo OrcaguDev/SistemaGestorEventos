@@ -71,7 +71,6 @@ export default {
     methods: {
         getUsersTotal () {
             let valor = Main.url;
-            console.log(valor)
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
