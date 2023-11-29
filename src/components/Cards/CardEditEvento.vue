@@ -105,40 +105,6 @@
             </div>
           </div>
 
-          <div class="w-full px-4 lg:w-4/12 ">
-            <div class="relative w-full mb-3">
-              <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600" htmlFor="grid-password">
-                Reglas para el evento
-              </label>
-
-              <select v-model="evento.id_regla" @change="reglaChange()"
-                class="w-full px-6 py-3 mb-1 mr-1 text-sm uppercase transition-all duration-150 ease-linear rounded shadow outline-none text-blueGray-600 hover:shadow-lg focus:outline-none"
-                required>
-                <option value="0" selected>Seleccione una regla</option>
-                <option v-for="(regla, index) in reglas" :key="index" :value="regla.id_regla">
-                  {{ regla.nombre }}
-                </option>
-              </select>
-            </div>
-          </div>
-
-          <div class="w-full px-4 lg:w-4/12 ">
-            <div class="relative w-full mb-3">
-              <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600" htmlFor="grid-password">
-                Link de pago
-              </label>
-
-              <select v-model="evento.id_pagos" @change="reglaChange()"
-                class="w-full px-6 py-3 mb-1 mr-1 text-sm uppercase transition-all duration-150 ease-linear rounded shadow outline-none text-blueGray-600 hover:shadow-lg focus:outline-none"
-                required>
-                <option value="0" selected>Seleccione un link </option>
-                <option v-for="(pago, index) in pagos" :key="index" :value="pago.id_pagos">
-                  {{ pago.nombre }}
-                </option>
-              </select>
-            </div>
-          </div>
-
           <div class="w-full px-4 lg:w-12/12">
             <div class="relative w-full mb-3">
               <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600" htmlFor="grid-password">
@@ -190,7 +156,7 @@
         <div class="flex">
           <button
             class="w-full px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
-            type="button">
+            type="button" @click="updateEvento()">
             Guardar
           </button>
           <button
@@ -221,12 +187,9 @@ export default {
                 butacas_reservadas: '',
                 fechaFin: '',
                 fechaInscripcion: '',
-                id_regla: 0,
-                id_pagos: 0,
-                api_token: ''
+                fechaInscripcionFin: '',
+                codigo: ''
             },
-            reglas: [],
-            pagos: [],
             apii: {
                 api_token: ''
             },
@@ -252,6 +215,7 @@ export default {
             })
         },
         getEditEvento (id) {
+          let valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
@@ -267,14 +231,31 @@ export default {
                 this.evento.aforo_total = data[0].aforo_total
                 this.evento.butacas_reservadas = data[0].butacas_reservadas
                 this.evento.fechaFin = data[0].fechaFin
-                this.evento.id_regla = data[0].id_regla
-                this.evento.id_pagos = data[0].id_pagos
                 this.evento.fechaInscripcion = data[0].fechaInscripcion
+                this.evento.fechaInscripcionFin = data[0].fechaInscripcionFin
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+        updateEvento () {
+          let valor = Main.url
+            const objeroString = localStorage.getItem('token')
+            const objeto = JSON.parse(objeroString)
+            this.evento.api_token = objeto
+            this.evento.codigo = this.url_id
+
+            const auth = {
+                Headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post(`${valor}/actualizarEvento/?nombre=${this.evento.nombre}&descripcion=${this.evento.descripcion}&lugar=${this.evento.lugar}&id=${this.evento.codigo}&expositor=${this.evento.expositor}&fechaInicio=${this.evento.fechaInicio}&fechaFin=${this.evento.fechaFin}&aforo_total=${this.evento.aforo_total}&butacas_reservadas=${this.evento.butacas_reservadas}&fechaInscripcion=${this.evento.fechaInscripcion}&fechaInscripcionFin=${this.evento.fechaInscripcionFin}`, this.evento, auth).then(() => {
+                this.AlertSwall('Editado!!', 'Ha sido editado correctamente!', 'success')
+                this.goBack()
             }).catch((error) => {
                 console.log(error)
             })
         },
         getPagos () {
+          let valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto

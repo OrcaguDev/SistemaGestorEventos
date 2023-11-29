@@ -239,7 +239,7 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             axios.post(`${valor}/evento/${id}`, this.apii, auth).then(({ data }) => {
-                this.evento.nombre = data[0].nombrea
+                this.evento.nombre = data[0].nombre
                 this.evento.expositor = data[0].expositor
                 this.evento.lugar = data[0].lugar
                 this.evento.fechaInicio = data[0].fechaInicio
