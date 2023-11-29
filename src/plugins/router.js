@@ -34,6 +34,7 @@ import detalleEvento from '@/views/admin/DetalleEvento.vue'
 import timeLine from '@/views/admin/TimeLine.vue'
 
 import axios from 'axios'
+import Main from '../main.js'
 
 const userRoles = [
 
@@ -174,7 +175,7 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     const token = localStorage.getItem('token')
     const objeto = JSON.parse(token)
-
+    let valor = Main.url
     const apitoken = {
         api_token: objeto
     }
@@ -186,7 +187,7 @@ router.beforeEach(async (to, from, next) => {
         // Redirige a la página de inicio de sesión si la ruta requiere autenticación y no hay token
         next('/')
     } else {
-        await axios.post('http://localhost:8000/getRoles', apitoken, auth)
+        await axios.post(`${valor}/getRoles`, apitoken, auth)
             .then(response => {
                 // Almacenar la respuesta en la variable roles
                 response.data.forEach(element => {
