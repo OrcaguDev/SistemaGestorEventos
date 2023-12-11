@@ -54,7 +54,6 @@ export default {
     },
     data () {
         return {
-            // constancias: 0,
             totalEventos: 0,
             totalusuarios: 0,
             totalReglas: 0,

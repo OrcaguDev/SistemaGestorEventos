@@ -6,7 +6,7 @@
       <div class="flex flex-wrap items-center">
         <div class="relative w-full max-w-full flex-grow flex-1">
           <h2 class="text-blueGray-700 text-xl font-semibold">
-            Reportes de Eventos
+            Reportes de Eventos por Areas
           </h2>
         </div>
       </div>
@@ -18,7 +18,7 @@
     </div>
   </div>
 </template>
-<script>
+<script> 
 import Chart from 'chart.js'
 import Main from '../../main.js'
 export default {
@@ -28,25 +28,17 @@ export default {
                 type: 'bar',
                 data: {
                     labels: [
-                        'Enero',
-                        'Febrero',
-                        'Marzo',
-                        'Abril',
-                        'Mayo',
-                        'Junio',
-                        'Julio',
-                        'Agosto',
-                        'Setiembre',
-                        'Octubre',
-                        'Noviembre',
-                        'Diciembre'
+                        'INFOCIP',
+                        'ISS',
+                        'IEPI',
+                        'COLEGIATURA'
                     ],
                     datasets: [
                         {
                             label: 'Eventos',
                             backgroundColor: '#E54C2B',
                             borderColor: '#E54C2B',
-                            data: [30, 78, 56, 34, 100, 45, 13, 34, 24, 12, 43, 12],
+                            data: [30, 78, 56, 34],
                             fill: false,
                             barThickness: 8
                         },
@@ -55,7 +47,7 @@ export default {
                             fill: false,
                             backgroundColor: '#202020',
                             borderColor: '#202020',
-                            data: [27, 68, 86, 74, 10, 4, 87, 3, 12, 34, 53, 24],
+                            data: [27, 68, 86, 74],
                             barThickness: 8
                         }
                     ]
