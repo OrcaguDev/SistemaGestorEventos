@@ -1,27 +1,86 @@
 <template>
-  <div
-    class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded"
-  >
-    <div class="rounded-t mb-0 px-4 py-3 bg-transparent">
-      <div class="flex flex-wrap items-center">
-        <div class="relative w-full max-w-full flex-grow flex-1">
-          <h2 class="text-blueGray-700 text-xl font-semibold">
-            Reportes de Eventos por Areas
-          </h2>
+    <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+        <div class="rounded-t mb-0 px-4 py-3 bg-transparent">
+            <div class="flex flex-wrap items-center">
+                <div class="relative w-full max-w-full flex-grow flex-1">
+                    <h2 class="text-blueGray-700 text-xl font-semibold">
+                        Reportes de Eventos por Areas
+                    </h2>
+                </div>
+            </div>
         </div>
-      </div>
+        <div class="p-4 flex-auto">
+            <div class="relative h-350-px">
+                <canvas id="bar-chart"></canvas>
+            </div>
+        </div>
     </div>
-    <div class="p-4 flex-auto">
-      <div class="relative h-350-px">
-        <canvas id="bar-chart"></canvas>
-      </div>
-    </div>
-  </div>
 </template>
-<script> 
+<script>
 import Chart from 'chart.js'
 import Main from '../../main.js'
+import axios from 'axios'
 export default {
+    data() {
+        return {
+            totalISS: 0,
+            totalIEPI: 0,
+            totalCOLEGIATURA: 0,
+            totalINFOCIP: 0,
+        }
+    },
+    mounted() {
+        this.getContadorISS()
+        this.getContadorIEPI()
+        this.getContadorCOLEGIATURA()
+        this.getContadorINFOCIP()
+    },
+    methods: {
+        getContadorISS() {
+            let valor = Main.url;
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post(`${valor}/getInscripcionesISS`, auth).then(({ data }) => {
+                this.totalISS = data[0].ISS
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+        getContadorIEPI() {
+            let valor = Main.url;
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post(`${valor}/getInscripcionesIEPI`, auth).then(({ data }) => {
+                this.totalIEPI = data[0].getContadorIEPI
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+        getContadorCOLEGIATURA() {
+            let valor = Main.url;
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post(`${valor}/getInscripcionesCOLEGIATURA`, auth).then(({ data }) => {
+                this.totalCOLEGIATURA = data[0].COLEGIATURA
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+        getContadorINFOCIP() {
+            let valor = Main.url;
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            axios.post(`${valor}/getInscripcionesINFOCIP`, auth).then(({ data }) => {
+                this.totalINFOCIP = data[0].INFOCIP
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+    },
     mounted: function () {
         this.$nextTick(function () {
             const config = {
@@ -38,7 +97,7 @@ export default {
                             label: 'Eventos',
                             backgroundColor: '#E54C2B',
                             borderColor: '#E54C2B',
-                            data: [30, 78, 56, 34],
+                            data: [this.totalINFOCIP, this.totalISS, this.totalIEPI, this.totalCOLEGIATURA],
                             fill: false,
                             barThickness: 8
                         },
@@ -117,5 +176,7 @@ export default {
             window.myBar = new Chart(ctx, config)
         })
     }
+    
 }
+
 </script>
