@@ -347,6 +347,12 @@ export default {
                             this.AlertSwall('Registrado', 'Registo completado satisfactoriamente!', 'success')
                             // eslint-disable-next-line no-unused-expressions
                             this.isVisibleeee === 0
+                            this.inscripcion.dni = ''
+                            this.inscripcion.nombre = ''
+                            this.inscripcion.apellido = ''
+                            this.inscripcion.celular = ''
+                            this.inscripcion.email = ''
+                            this.inscripcion.certificacion = false
                         })
                     }
                 })

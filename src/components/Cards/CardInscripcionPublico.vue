@@ -270,7 +270,7 @@ export default {
             const mes = fechaActual.getMonth() + 1 // Ten en cuenta que los meses comienzan desde 0
             const día = fechaActual.getDate()
             const fechaFormateada = `${año}-${mes < 10 ? '0' : ''}${mes}-${día < 10 ? '0' : ''}${día}`
-
+        
             if (fechaFormateada >= fechaInscripcion && fechaFormateada <= fechaInscripcionFin) {
                 const auth = {
                     headers: { 'Content-Type': 'application/json' }
@@ -285,6 +285,12 @@ export default {
                             // eslint-disable-next-line no-unused-expressions
                             this.isVisibleeee === 0
                             this.AlertSwall('Registrado Correctamente!!', 'Registo completado satisfactoriamente!', 'success')
+                            this.inscripcion.dni = ''
+                            this.inscripcion.nombre = ''
+                            this.inscripcion.apellido = ''
+                            this.inscripcion.celular = ''
+                            this.inscripcion.email = ''
+                            this.inscripcion.certificacion = false
                         })
                     }
                 })
