@@ -3,19 +3,24 @@
     <div class="relative flex flex-col w-full min-w-0 mb-6 break-words border-0 rounded-lg shadow-lg bg-blueGray-100">
       <div class="px-6 py-6 mb-0 bg-white rounded-t">
         <div class="flex justify-between text-center">
-          <h6 class="text-xl font-bold text-blueGray-700">Inscripción</h6>
+          <h6 class="text-xl font-bold text-blueGray-700">Inscripción de colegiados</h6>
         </div>
       </div>
+      
       <div class="flex-auto px-4 py-10 pt-0 lg:px-10">
+        <div>
+          <img src="../../assets/img/EVENTOS.jpg" alt=""><br>
+
+          <a :href="`${valor}/informe/${evento.informe}`" target="_blank"
+              class="px-2 py-3 ml-4 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none">
+              DESCARGAR BROCHURE</a>
+        </div>
+        <br>
         <form @submit.prevent="storeInscripcion()">
           <div class="flex flex-col items-center">
             <div class="flex flex-wrap justify-center">
               <div class="w-6/12 px-4 sm:w-6/12">
-                <img :src="`${valor}/img/${evento.img}`" alt="..."
-                  class="h-auto max-w-full align-middle border-none rounded shadow-lg" /><br>
-                <a :href="`${valor}/informe/${evento.informe}`" target="_blank"
-                  class="px-2 py-3 ml-4 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none">
-                  DESCARGAR BROCHURE</a>
+
               </div>
             </div>
           </div>
@@ -237,7 +242,7 @@ export default {
                 fechaInscripcionFin: ''
             },
             inscripcion: {
-                dni: '44867773',
+                dni: '',
                 nombre: '',
                 apellido: '',
                 celular: '',
@@ -248,14 +253,15 @@ export default {
             },
             isVisiblee: 0,
             isVisible: 0,
-            apii: {
-                api_token: ''
-            },
             url_id: '',
             mensaje: '',
             isVisibleeee: 1,
             alert: ''
         }
+    },
+    mounted () {
+            this.url_id = this.$route.params.id
+            this.getEvento(this.url_id)
     },
     methods: {
         async validarDni () {
@@ -287,16 +293,12 @@ export default {
             })
         },
 
-        getEditEvento (id) {
+        getEvento  (id) {
           let valor = Main.url
-
-            const objetoString = localStorage.getItem('token')
-            const objeto = JSON.parse(objetoString)
-            this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`${valor}/evento/${id}`, this.apii, auth).then(({ data }) => {
+            axios.post(`${valor}/evento/${id}`, auth).then(({ data }) => {
                 this.evento.nombre = data[0].nombre
                 this.evento.expositor = data[0].expositor
                 this.evento.lugar = data[0].lugar
@@ -314,13 +316,10 @@ export default {
                 console.log(error)
             })
         },
-        storeInscripcion () {
-        let valor = Main.url
 
+        storeInscripcion () {
+            let valor = Main.url
             this.inscripcion.url_id = this.$route.params.id
-            const objetoString = localStorage.getItem('token')
-            const objeto = JSON.parse(objetoString)
-            this.inscripcion.api_token = objeto
             const fechaInscripcion = this.evento.fechaInscripcion
             const fechaInscripcionFin = this.evento.fechaInscripcionFin
             const dni = this.inscripcion.dni
@@ -337,7 +336,7 @@ export default {
                     headers: { 'Content-Type': 'application/json' }
                 }
                 // eslint-disable-next-line camelcase
-                const url_combinado = `${valor}/validateInscripciones/?dni=${dni}&id_evento=${this.inscripcion.url_id}`
+                const url_combinado = `${valor}/validateInscripciones?dni=${dni}&id_evento=${this.inscripcion.url_id}`
                 axios.post(url_combinado, this.inscripcion, auth).then((data) => {
                     if (data.data[0].cuentaInscripcion > 0) {
                         this.AlertSwall('Error!!', 'Ya se encuentra registrado a este evento', 'error')
@@ -366,12 +365,8 @@ export default {
                 text: $text,
                 icon: $icon
             })
-        },
-        mounted () {
-            this.url_id = this.$route.params.id
-            this.getEditEvento(this.url_id)
         }
-
+        
     }
 }
 </script>

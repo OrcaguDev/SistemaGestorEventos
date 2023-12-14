@@ -6,6 +6,7 @@
                     <h6 class="text-xl font-bold text-blueGray-700">Inscripción</h6>
                 </div>
             </div>
+            
             <div class="flex-auto px-4 py-10 pt-0 lg:px-10">
                 <div>
                     <img src="../../assets/img/EVENTOS.jpg" alt=""><br>
@@ -218,9 +219,6 @@ export default {
                 certificacion: false,
                 url_id: ''
             },
-            apii: {
-                api_token: ''
-            },
             url_id: '',
             mensaje: '',
             isVisibleeee: 1
@@ -230,13 +228,10 @@ export default {
 
         getEditEvento (id) {
             let valor = Main.url
-            const objetoString = localStorage.getItem('token')
-            const objeto = JSON.parse(objetoString)
-            this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`${valor}/evento/${id}`, this.apii, auth).then(({ data }) => {
+            axios.post(`${valor}/evento/${id}`, auth).then(({ data }) => {
                 this.evento.nombre = data[0].nombre
                 this.evento.expositor = data[0].expositor
                 this.evento.lugar = data[0].lugar
@@ -257,26 +252,22 @@ export default {
         storeInscripcion () {
             let valor = Main.url
             this.inscripcion.url_id = this.$route.params.id
-            const objetoString = localStorage.getItem('token')
-            const objeto = JSON.parse(objetoString)
-            this.inscripcion.api_token = objeto
             const fechaInscripcion = this.evento.fechaInscripcion
             const fechaInscripcionFin = this.evento.fechaInscripcionFin
             const dni = this.inscripcion.dni
-            // eslint-disable-next-line camelcase
-            const id_evento = this.inscripcion.url_combinado
+            // const id_evento = this.inscripcion.url_combinado
             const fechaActual = new Date()
             const año = fechaActual.getFullYear()
             const mes = fechaActual.getMonth() + 1 // Ten en cuenta que los meses comienzan desde 0
             const día = fechaActual.getDate()
             const fechaFormateada = `${año}-${mes < 10 ? '0' : ''}${mes}-${día < 10 ? '0' : ''}${día}`
-        
-            if (fechaFormateada >= fechaInscripcion && fechaFormateada <= fechaInscripcionFin) {
-                const auth = {
+            const auth = {
                     headers: { 'Content-Type': 'application/json' }
                 }
+
+            if (fechaFormateada >= fechaInscripcion && fechaFormateada <= fechaInscripcionFin) {
                 // eslint-disable-next-line camelcase
-                const url_combinado = `${valor}/validateInscripciones/?dni=${dni}&id_evento=${this.inscripcion.url_id}`
+                const url_combinado = `${valor}/validateInscripciones?dni=${dni}&id_evento=${this.inscripcion.url_id}`
                 axios.post(url_combinado, this.inscripcion, auth).then((data) => {
                     if (data.data[0].cuentaInscripcion > 0) {
                         this.AlertSwall('Error!!', 'Ya se encuentra registrado en este evento.', 'error')

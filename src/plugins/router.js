@@ -193,7 +193,7 @@ router.beforeEach(async (to, from, next) => {
                 })
             })
             .catch(error => {
-                console.log('Error al obtener roles:', error)
+                console.log('No logueado - Roles')
             })
 
         // Continúa la navegación
