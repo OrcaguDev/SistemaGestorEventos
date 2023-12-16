@@ -26,7 +26,12 @@ export default {
             totalISS: 0,
             totalIEPI: 0,
             totalCOLEGIATURA: 0,
-            totalINFOCIP: 0
+            totalINFOCIP: 0,
+            // constancias
+            totalconstanciasISS: 0,
+            totalconstanciasIEPI: 0,
+            totalconstanciasCOLEGIATURA: 0,
+            totalconstanciasINFOCIP: 0
         }
     },
     async mounted () {
@@ -35,7 +40,12 @@ export default {
                 this.getContadorISS(),
                 this.getContadorIEPI(),
                 this.getContadorCOLEGIATURA(),
-                this.getContadorINFOCIP()
+                this.getContadorINFOCIP(),
+
+                this.getconstanciasINFOCIP(),
+                this.getconstanciasISS(),
+                this.getconstanciasIEPI(),
+                this.getconstanciasCOLEGIATURA()
             ])
             this.BarrasReporte()
         } catch (error) {
@@ -50,7 +60,6 @@ export default {
             }
             await axios.post(`${valor}/getInscripcionesISS`, auth).then(({ data }) => {
                 this.totalISS = data[0].ISS
-                console.log(data[0].ISS)
             }).catch((error) => {
                 console.log(error)
             })
@@ -62,7 +71,6 @@ export default {
             }
             await axios.post(`${valor}/getInscripcionesIEPI`, auth).then(({ data }) => {
                 this.totalIEPI = data[0].IEPI
-                console.log(data[0].IEPI)
             }).catch((error) => {
                 console.log(error)
             })
@@ -74,7 +82,6 @@ export default {
             }
             await axios.post(`${valor}/getInscripcionesCOLEGIATURA`, auth).then(({ data }) => {
                 this.totalCOLEGIATURA = data[0].COLEGIATURA
-                console.log(data[0].COLEGIATURA)
             }).catch((error) => {
                 console.log(error)
             })
@@ -86,18 +93,60 @@ export default {
             }
             await axios.post(`${valor}/getInscripcionesINFOCIP`, auth).then(({ data }) => {
                 this.totalINFOCIP = data[0].INFOCIP
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+        async getconstanciasINFOCIP () {
+            const valor = Main.url
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            await axios.post(`${valor}/getConstanciasINFOCIP`, auth).then(({ data }) => {
+                this.totalconstanciasINFOCIP = data[0].INFOCIP
                 console.log(data[0].INFOCIP)
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+        async getconstanciasISS () {
+            const valor = Main.url
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            await axios.post(`${valor}/getConstanciasISS`, auth).then(({ data }) => {
+                this.totalconstanciasISS = data[0].ISS
+                console.log(data[0].ISS)
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+        async getconstanciasIEPI () {
+            const valor = Main.url
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            await axios.post(`${valor}/getConstanciasIEPI`, auth).then(({ data }) => {
+                this.getconstanciasIEPI = data[0].IEPI
+                console.log(data[0].IEPI)
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+        async getconstanciasCOLEGIATURA () {
+            const valor = Main.url
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            await axios.post(`${valor}/getConstanciasCOLEGIATURA`, auth).then(({ data }) => {
+                this.totalconstanciasCOLEGIATURA = data[0].COLEGIATURA
+                console.log(data[0].COLEGIATURA)
             }).catch((error) => {
                 console.log(error)
             })
         },
 
         BarrasReporte () {
-            console.log(this.totalISS)
-            console.log(this.totalIEPI)
-            console.log(this.totalCOLEGIATURA)
-            console.log(this.totalINFOCIP)
-
             const iepi = this.totalIEPI
             console.log(iepi)
             this.$nextTick(function () {
@@ -124,7 +173,7 @@ export default {
                                 fill: false,
                                 backgroundColor: '#202020',
                                 borderColor: '#202020',
-                                data: [27, 68, 86, 74],
+                                data: [this.totalconstanciasINFOCIP, this.totalconstanciasISS, this.totalconstanciasIEPI, this.totalconstanciasCOLEGIATURA],
                                 barThickness: 8
                             }
                         ]
