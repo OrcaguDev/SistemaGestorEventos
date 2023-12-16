@@ -198,7 +198,7 @@ export default {
 
         // Funcion de obtener Eventos
         getTotal () {
-          let valor = Main.url
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.evento.api_token = objeto
@@ -215,7 +215,7 @@ export default {
 
         // Funcion de eliminar Evento
         eliminarEvento (id) {
-          let valor = Main.url
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.evento.api_token = objeto

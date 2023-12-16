@@ -70,7 +70,7 @@ onMounted(() => {
 })
 
 const getCalendar = () => {
-    let valor = Main.url
+    const valor = Main.url
     const calendar = new Calendar('#calendar', {
         defaultView: 'month',
         isReadOnly: true,

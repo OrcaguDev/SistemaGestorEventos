@@ -87,7 +87,7 @@ export default {
     },
     methods: {
         storePagos () {
-            let valor = Main.url
+            const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }

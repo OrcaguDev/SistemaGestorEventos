@@ -6,7 +6,7 @@
                     <h6 class="text-xl font-bold text-blueGray-700">Inscripción</h6>
                 </div>
             </div>
-            
+
             <div class="flex-auto px-4 py-10 pt-0 lg:px-10">
                 <div>
                     <img src="../../assets/img/EVENTOS.jpg" alt=""><br>
@@ -227,7 +227,7 @@ export default {
     methods: {
 
         getEditEvento (id) {
-            let valor = Main.url
+            const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
@@ -250,7 +250,7 @@ export default {
             })
         },
         storeInscripcion () {
-            let valor = Main.url
+            const valor = Main.url
             this.inscripcion.url_id = this.$route.params.id
             const fechaInscripcion = this.evento.fechaInscripcion
             const fechaInscripcionFin = this.evento.fechaInscripcionFin
@@ -262,8 +262,8 @@ export default {
             const día = fechaActual.getDate()
             const fechaFormateada = `${año}-${mes < 10 ? '0' : ''}${mes}-${día < 10 ? '0' : ''}${día}`
             const auth = {
-                    headers: { 'Content-Type': 'application/json' }
-                }
+                headers: { 'Content-Type': 'application/json' }
+            }
 
             if (fechaFormateada >= fechaInscripcion && fechaFormateada <= fechaInscripcionFin) {
                 // eslint-disable-next-line camelcase

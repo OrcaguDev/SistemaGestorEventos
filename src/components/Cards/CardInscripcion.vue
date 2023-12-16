@@ -6,7 +6,7 @@
           <h6 class="text-xl font-bold text-blueGray-700">Inscripción de colegiados</h6>
         </div>
       </div>
-      
+
       <div class="flex-auto px-4 py-10 pt-0 lg:px-10">
         <div>
           <img src="../../assets/img/EVENTOS.jpg" alt=""><br>
@@ -260,8 +260,8 @@ export default {
         }
     },
     mounted () {
-            this.url_id = this.$route.params.id
-            this.getEvento(this.url_id)
+        this.url_id = this.$route.params.id
+        this.getEvento(this.url_id)
     },
     methods: {
         async validarDni () {
@@ -275,7 +275,7 @@ export default {
             this.isVisible = 1
         },
         validarHabilidad () {
-          let valor = Main.url
+            const valor = Main.url
             this.inscripcion.url_id = this.$route.params.id
             axios.post(`${valor}/obtenerReglaEvento/${this.inscripcion.url_id}`).then((data) => {
                 // eslint-disable-next-line camelcase
@@ -294,7 +294,7 @@ export default {
         },
 
         getEvento  (id) {
-          let valor = Main.url
+            const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
@@ -318,7 +318,7 @@ export default {
         },
 
         storeInscripcion () {
-            let valor = Main.url
+            const valor = Main.url
             this.inscripcion.url_id = this.$route.params.id
             const fechaInscripcion = this.evento.fechaInscripcion
             const fechaInscripcionFin = this.evento.fechaInscripcionFin
@@ -366,7 +366,7 @@ export default {
                 icon: $icon
             })
         }
-        
+
     }
 }
 </script>

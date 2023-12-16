@@ -158,7 +158,7 @@ const routes = [
         component: InscripcionPublica
 
     },
-    
+
     { path: '/:pathMatch(.*)*', redirect: '/' }
 ]
 
@@ -170,7 +170,7 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     const token = localStorage.getItem('token')
     const objeto = JSON.parse(token)
-    let valor = Main.url
+    const valor = Main.url
     const apitoken = {
         api_token: objeto
     }

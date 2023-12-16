@@ -308,7 +308,7 @@ export default {
     },
     methods: {
         getTotal () {
-            let valor = Main.url
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
@@ -326,7 +326,7 @@ export default {
             this.mensaje = nuevoMensaje
         },
         storeUsuario () {
-            let valor = Main.url
+            const valor = Main.url
             if (this.usuario.name === '' && this.usuario.email === '' && this.usuario.password === '' && this.usuario.area === 0 && this.usuario.rol === 0) {
                 this.alert_password = 'Faltan campos por rellenar, por favor ingresa los datos correctamente.'
             } else {
@@ -374,7 +374,7 @@ export default {
             this.usuario.rol = 0
         },
         eliminarUsuario (id) {
-            let valor = Main.url
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.usuario.api_token = objeto
@@ -391,7 +391,7 @@ export default {
             })
         },
         getUSuario (id) {
-            let valor = Main.url
+            const valor = Main.url
             this.isVisible = 2
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
@@ -410,7 +410,7 @@ export default {
             this.limpiar()
         },
         updateUsuario () {
-            let valor = Main.url
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.usuario.api_token = objeto

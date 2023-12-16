@@ -1,15 +1,15 @@
 <template>
-    <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
-        <div class="rounded-t mb-0 px-4 py-3 bg-transparent">
+    <div class="relative flex flex-col w-full min-w-0 mb-6 break-words bg-white rounded shadow-lg">
+        <div class="px-4 py-3 mb-0 bg-transparent rounded-t">
             <div class="flex flex-wrap items-center">
-                <div class="relative w-full max-w-full flex-grow flex-1">
-                    <h2 class="text-blueGray-700 text-xl font-semibold">
+                <div class="relative flex-1 flex-grow w-full max-w-full">
+                    <h2 class="text-xl font-semibold text-blueGray-700">
                         Reportes de Eventos por Areas
                     </h2>
                 </div>
             </div>
         </div>
-        <div class="p-4 flex-auto">
+        <div class="flex-auto p-4">
             <div class="relative h-350-px">
                 <canvas id="bar-chart"></canvas>
             </div>
@@ -21,68 +21,83 @@ import Chart from 'chart.js'
 import Main from '../../main.js'
 import axios from 'axios'
 export default {
-    data() {
+    data () {
         return {
-            totalISS: '',
-            totalIEPI: '',
-            totalCOLEGIATURA: '',
-            totalINFOCIP: '',
+            totalISS: 0,
+            totalIEPI: 0,
+            totalCOLEGIATURA: 0,
+            totalINFOCIP: 0
         }
     },
-    mounted() {
-        this.getContadorISS()
-        this.getContadorIEPI()
-        this.getContadorCOLEGIATURA()
-        this.getContadorINFOCIP()
-        this.BarrasReporte()
+    async mounted () {
+        try {
+            await Promise.all([
+                this.getContadorISS(),
+                this.getContadorIEPI(),
+                this.getContadorCOLEGIATURA(),
+                this.getContadorINFOCIP()
+            ])
+            this.BarrasReporte()
+        } catch (error) {
+            console.error('Error en mounted:', error)
+        }
     },
     methods: {
-        getContadorISS() {
-            let valor = Main.url;
+        async getContadorISS () {
+            const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`${valor}/getInscripcionesISS`, auth).then(({ data }) => {
+            await axios.post(`${valor}/getInscripcionesISS`, auth).then(({ data }) => {
                 this.totalISS = data[0].ISS
+                console.log(data[0].ISS)
             }).catch((error) => {
                 console.log(error)
             })
         },
-        getContadorIEPI() {
-            let valor = Main.url;
+        async getContadorIEPI () {
+            const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`${valor}/getInscripcionesIEPI`, auth).then(({ data }) => {
+            await axios.post(`${valor}/getInscripcionesIEPI`, auth).then(({ data }) => {
                 this.totalIEPI = data[0].IEPI
+                console.log(data[0].IEPI)
             }).catch((error) => {
                 console.log(error)
             })
         },
-        getContadorCOLEGIATURA() {
-            let valor = Main.url;
+        async getContadorCOLEGIATURA () {
+            const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`${valor}/getInscripcionesCOLEGIATURA`, auth).then(({ data }) => {
+            await axios.post(`${valor}/getInscripcionesCOLEGIATURA`, auth).then(({ data }) => {
                 this.totalCOLEGIATURA = data[0].COLEGIATURA
+                console.log(data[0].COLEGIATURA)
             }).catch((error) => {
                 console.log(error)
             })
         },
-        getContadorINFOCIP() {
-            let valor = Main.url;
+        async getContadorINFOCIP () {
+            const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`${valor}/getInscripcionesINFOCIP`, auth).then(({ data }) => {
+            await axios.post(`${valor}/getInscripcionesINFOCIP`, auth).then(({ data }) => {
                 this.totalINFOCIP = data[0].INFOCIP
+                console.log(data[0].INFOCIP)
             }).catch((error) => {
                 console.log(error)
             })
         },
 
-        BarrasReporte() {
+        BarrasReporte () {
+            console.log(this.totalISS)
+            console.log(this.totalIEPI)
+            console.log(this.totalCOLEGIATURA)
+            console.log(this.totalINFOCIP)
+
             const iepi = this.totalIEPI
             console.log(iepi)
             this.$nextTick(function () {
@@ -179,8 +194,7 @@ export default {
                 window.myBar = new Chart(ctx, config)
             })
         }
-    },
-
+    }
 
 }
 

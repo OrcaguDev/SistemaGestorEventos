@@ -63,7 +63,7 @@ export default {
             return formattedDate
         },
         gettimeline () {
-            let valor = Main.url
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto

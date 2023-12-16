@@ -295,7 +295,7 @@ export default {
         },
 
         getEditEvento (id) {
-            let valor = Main.url
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
@@ -318,7 +318,7 @@ export default {
             })
         },
         getInscripcionesTotal (id) {
-            let valor = Main.url
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
@@ -334,7 +334,7 @@ export default {
             })
         },
         updateAsistencia () {
-            let valor = Main.url
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
@@ -354,7 +354,7 @@ export default {
             })
         },
         updateRecibo (dni) {
-            let valor = Main.url
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto

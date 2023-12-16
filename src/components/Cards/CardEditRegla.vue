@@ -90,7 +90,7 @@ export default {
             window.history.back()
         },
         getEditRegla (id) {
-          let valor = Main.url
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
@@ -106,7 +106,7 @@ export default {
             })
         },
         updateRegla () {
-          let valor = Main.url
+            const valor = Main.url
             const objeroString = localStorage.getItem('token')
             const objeto = JSON.parse(objeroString)
             this.regla.api_token = objeto

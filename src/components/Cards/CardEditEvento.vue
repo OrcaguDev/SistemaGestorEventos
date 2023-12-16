@@ -202,7 +202,7 @@ export default {
             window.history.back()
         },
         storeEvento () {
-            let valor = Main.url
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.evento.api_token = objeto
@@ -215,7 +215,7 @@ export default {
             })
         },
         getEditEvento (id) {
-          let valor = Main.url
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
@@ -238,7 +238,7 @@ export default {
             })
         },
         updateEvento () {
-          let valor = Main.url
+            const valor = Main.url
             const objeroString = localStorage.getItem('token')
             const objeto = JSON.parse(objeroString)
             this.evento.api_token = objeto
@@ -255,7 +255,7 @@ export default {
             })
         },
         getPagos () {
-          let valor = Main.url
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
