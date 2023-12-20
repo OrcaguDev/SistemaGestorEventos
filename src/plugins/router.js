@@ -35,6 +35,16 @@ import timeLine from '@/views/admin/TimeLine.vue'
 import axios from 'axios'
 import Main from '../main.js'
 
+import Swal from 'sweetalert2'
+
+const Alertlogin = ($title, $text, $icon) => {
+    Swal.fire({
+        title: $title,
+        text: $text,
+        icon: $icon
+    })
+}
+
 const userRoles = [
 
     // { id: 1, name: 'Administrador' },
@@ -74,6 +84,11 @@ const routes = [
                     if (userRoles[0].id === userRol) {
                         next()
                     } else {
+                        Alertlogin(
+                            'Error!!',
+                            'No tienes permisos para acceder a esta ruta',
+                            'error'
+                        )
                         next('/admin/dashboard')
                     }
                 }
@@ -141,6 +156,11 @@ const routes = [
                     if (userRoles[0].id === userRol) {
                         next()
                     } else {
+                        Alertlogin(
+                            'Error!!',
+                            'No tienes permisos para acceder a esta ruta',
+                            'error'
+                        )
                         next('/admin/dashboard')
                     }
                 }
@@ -192,6 +212,7 @@ router.beforeEach(async (to, from, next) => {
                     })
                 })
             })
+            // eslint-disable-next-line n/handle-callback-err
             .catch(error => {
                 console.log('No logueado - Roles')
             })
