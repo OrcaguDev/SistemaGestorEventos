@@ -145,6 +145,7 @@ export default {
             })
         },
         eliminarRegla (id) {
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.regla.api_token = objeto

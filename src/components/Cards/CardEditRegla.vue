@@ -64,7 +64,7 @@
   </div>
 </template>
 
-<script>
+<script lang="js">
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import Main from '../../main.js'
@@ -115,7 +115,7 @@ export default {
             const auth = {
                 Headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`${valor}/actualizarRegla/?nombre=${this.regla.nombre}&descripcion=${this.regla.descripcion}&url=${this.regla.url}&id=${this.regla.codigo}`, this.regla, auth).then(() => {
+            axios.post(`${valor}/actualizarRegla?nombre=${this.regla.nombre}&descripcion=${this.regla.descripcion}&url=${this.regla.url}&id=${this.regla.codigo}`, this.regla, auth).then(() => {
                 this.AlertSwall('Editado!!', 'Ha sido editado correctamente!', 'success')
                 this.goBack()
             }).catch((error) => {
