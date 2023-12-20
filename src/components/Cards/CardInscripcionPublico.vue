@@ -1,3 +1,4 @@
+<!-- eslint-disable no-unused-vars -->
 <template>
     <div class="container px-4 mx-auto mt-6">
         <div class="relative flex flex-col w-full min-w-0 mb-6 break-words border-0 rounded-lg shadow-lg bg-blueGray-100">
@@ -173,7 +174,7 @@
                     <div class="w-full px-4 lg:w-3/12">
 
                     </div>
-                    <div v-if="BtnInscripcion ===1">
+                    <div v-if="BtnInscripcion === 1">
                         <button
                             class="w-full px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
                             type="submit">
@@ -193,7 +194,7 @@ import Swal from 'sweetalert2'
 import Main from '../../main.js'
 
 export default {
-    data() {
+    data () {
         return {
             evento: {
                 nombre: '',
@@ -219,16 +220,16 @@ export default {
             mensaje: '',
             isVisibleeee: 1,
             valoor: Main.url,
-            BtnInscripcion : 1
+            BtnInscripcion: 1
         }
     },
-    mounted() {
+    mounted () {
         this.url_id = this.$route.params.id
         this.getEditEvento(this.url_id)
     },
     methods: {
 
-        getEditEvento(id) {
+        getEditEvento (id) {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -251,69 +252,58 @@ export default {
                 console.log(error)
             })
         },
-        storeInscripcion() {
+        storeInscripcion () {
             this.BtnInscripcion = 0
             const valor = Main.url
             this.inscripcion.url_id = this.$route.params.id
             const fechaInscripcion = this.evento.fechaInscripcion
             const fechaInscripcionFin = this.evento.fechaInscripcionFin
             const dni = this.inscripcion.dni
-            // const id_evento = this.inscripcion.url_combinado
+            const id_evento = this.inscripcion.url_combinado
             const fechaActual = new Date()
-            const año = fechaActual.getFullYear()
-            const mes = fechaActual.getMonth() + 1 // Ten en cuenta que los meses comienzan desde 0
-            const día = fechaActual.getDate()
-            const hora = fechaActual.getHours()
-            const minutos = fechaActual.getMinutes()
-            const segundos = fechaActual.getSeconds()
-            const fechaFormateada = `${año}-${mes < 10 ? '0' : ''}${mes}-${día < 10 ? '0' : ''}${día} ${hora < 10 ? '0' : ''}${hora}:${minutos < 10 ? '0' : ''}${minutos}:${segundos < 10 ? '0' : ''}${segundos}`;
+
+            const fechaincripcionformateada = new Date(fechaInscripcion)
+
+            const fechaincripcionfinformateada = new Date(fechaInscripcionFin)
+
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
 
-            if (new Date(fechaInscripcion).getTime() <= new Date(fechaActual).getTime()) {
-                console.log("Inicio")
-                if (fechaFormateada < fechaInscripcionFin){
-                    console.log("Fin")
-                }
-            }else{
-                console.log("No")
-            }
+            if (fechaActual >= fechaincripcionformateada && fechaActual <= fechaincripcionfinformateada) {
                 // eslint-disable-next-line camelcase
-                // const url_combinado = `${valor}/validateInscripciones?dni=${dni}&id_evento=${this.inscripcion.url_id}`
-                // axios.post(url_combinado, this.inscripcion, auth).then((data) => {
-                //     if (data.data[0].cuentaInscripcion > 0) {
-                //         this.AlertSwall('Error!!', 'Ya se encuentra registrado en este evento.', 'error')
-                //     } else {
-                //         axios.post(`${valor}/storeInscripcion`, this.inscripcion).then(() => {
-                //             // eslint-disable-next-line no-unused-expressions
-                //             this.isVisibleeee === 0
-                //             this.AlertSwall('Registrado Correctamente!!', 'Registo completado satisfactoriamente!', 'success')
-                //             this.inscripcion.dni = ''
-                //             this.inscripcion.nombre = ''
-                //             this.inscripcion.apellido = ''
-                //             this.inscripcion.celular = ''
-                //             this.inscripcion.email = ''
-                //             this.inscripcion.certificacion = false
-                //             this.BtnInscripcion = 1
-
-                //         })
-                //     }
-                // })
-            // } else {
-            //     this.AlertSwall('Error!!', 'El evento ya no se encuentra disponible.', 'error')
-            //     this.BtnInscripcion = 1
-            // }
+                const url_combinado = `${valor}/validateInscripciones?dni=${dni}&id_evento=${this.inscripcion.url_id}`
+                axios.post(url_combinado, this.inscripcion, auth).then((data) => {
+                    if (data.data[0].cuentaInscripcion > 0) {
+                        this.AlertSwall('Error!!', 'Ya se encuentra registrado en este evento.', 'error')
+                    } else {
+                        axios.post(`${valor}/storeInscripcion`, this.inscripcion).then(() => {
+                            // eslint-disable-next-line no-unused-expressions
+                            this.isVisibleeee === 0
+                            this.AlertSwall('Registrado Correctamente!!', 'Registo completado satisfactoriamente!', 'success')
+                            this.inscripcion.dni = ''
+                            this.inscripcion.nombre = ''
+                            this.inscripcion.apellido = ''
+                            this.inscripcion.celular = ''
+                            this.inscripcion.email = ''
+                            this.inscripcion.certificacion = false
+                            this.BtnInscripcion = 1
+                        })
+                    }
+                })
+            } else {
+                this.AlertSwall('Error!!', 'El evento ya no se encuentra disponible.', 'error')
+                this.BtnInscripcion = 1
+            }
         },
-        AlertSwall($title, $text, $icon) {
+        AlertSwall ($title, $text, $icon) {
             Swal.fire({
                 title: $title,
                 text: $text,
                 icon: $icon
             })
         }
-    },
-
+    }
 
 }
 </script>
