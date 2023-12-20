@@ -247,7 +247,7 @@ export default {
             const auth = {
                 Headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`${valor}/actualizarEvento/?nombre=${this.evento.nombre}&descripcion=${this.evento.descripcion}&lugar=${this.evento.lugar}&id=${this.evento.codigo}&expositor=${this.evento.expositor}&fechaInicio=${this.evento.fechaInicio}&fechaFin=${this.evento.fechaFin}&aforo_total=${this.evento.aforo_total}&butacas_reservadas=${this.evento.butacas_reservadas}&fechaInscripcion=${this.evento.fechaInscripcion}&fechaInscripcionFin=${this.evento.fechaInscripcionFin}`, this.evento, auth).then(() => {
+            axios.post(`${valor}/actualizarEvento?nombre=${this.evento.nombre}&descripcion=${this.evento.descripcion}&lugar=${this.evento.lugar}&id=${this.evento.codigo}&expositor=${this.evento.expositor}&fechaInicio=${this.evento.fechaInicio}&fechaFin=${this.evento.fechaFin}&aforo_total=${this.evento.aforo_total}&butacas_reservadas=${this.evento.butacas_reservadas}&fechaInscripcion=${this.evento.fechaInscripcion}&fechaInscripcionFin=${this.evento.fechaInscripcionFin}`, this.evento, auth).then(() => {
                 this.AlertSwall('Editado!!', 'Ha sido editado correctamente!', 'success')
                 this.goBack()
             }).catch((error) => {

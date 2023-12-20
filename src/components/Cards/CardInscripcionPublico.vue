@@ -11,7 +11,7 @@
                 <div>
                     <img src="../../assets/img/EVENTOS.jpg" alt=""><br>
 
-                    <a :href="`${valor}/${evento.informe}`"
+                    <a :href="`${this.valoor}/public/informe/${evento.informe}`" target="_blank"
                         class="px-2 py-3 ml-4 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none">
                         DESCARGAR BROCHURE</a>
                 </div>
@@ -102,7 +102,8 @@
                                 <label class="block mb-2 font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                                     DNI
                                 </label>
-                                <input type="text" v-model="inscripcion.dni"
+                                <input type="text" v-model="inscripcion.dni" maxlength="8" minlength="8" pattern="[0-9]{8}"
+                                    title="Ingrese un DNI válido" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                                     class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                                     required />
                             </div>
@@ -113,7 +114,9 @@
                                 <label class="block mb-2 font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                                     Telefono
                                 </label>
-                                <input type="text" v-model="inscripcion.celular"
+                                <input type="text" v-model="inscripcion.celular" maxlength="9" minlength="9"
+                                    pattern="[0-9]{9}" title="Ingrese un número de celular válido"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                                     class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                                     required />
                             </div>
@@ -124,7 +127,7 @@
                                 <label class="block mb-2 font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                                     Email
                                 </label>
-                                <input type="text" v-model="inscripcion.email"
+                                <input type="email" v-model="inscripcion.email"
                                     class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                                     required />
                             </div>
@@ -164,27 +167,20 @@
 
                     </div>
 
-                    <hr class="mt-6 mb-4 border-b-1 border-blueGray-300" />
-
-                    <!-- Habilitar despues de validar sus datos con el DNI -->
-                    <div class="flex flex-wrap">
-
-                    </div>
-
-                    <hr class="mt-6 mb-4 border-b-1 border-blueGray-300" />
-
                     <span>{{ mensaje }}</span>
                     <!-- Despues de validar los datos de los inputs de arriba, mostrar este div para concluir con la inscripcion -->
 
                     <div class="w-full px-4 lg:w-3/12">
 
                     </div>
+                    <div v-if="BtnInscripcion ===1">
+                        <button
+                            class="w-full px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
+                            type="submit">
+                            Inscribirse
+                        </button>
+                    </div>
 
-                    <button
-                        class="w-full px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
-                        type="submit">
-                        Inscribirse
-                    </button>
                 </form>
             </div>
         </div>
@@ -197,7 +193,7 @@ import Swal from 'sweetalert2'
 import Main from '../../main.js'
 
 export default {
-    data () {
+    data() {
         return {
             evento: {
                 nombre: '',
@@ -221,12 +217,18 @@ export default {
             },
             url_id: '',
             mensaje: '',
-            isVisibleeee: 1
+            isVisibleeee: 1,
+            valoor: Main.url,
+            BtnInscripcion : 1
         }
+    },
+    mounted() {
+        this.url_id = this.$route.params.id
+        this.getEditEvento(this.url_id)
     },
     methods: {
 
-        getEditEvento (id) {
+        getEditEvento(id) {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -249,7 +251,8 @@ export default {
                 console.log(error)
             })
         },
-        storeInscripcion () {
+        storeInscripcion() {
+            this.BtnInscripcion = 0
             const valor = Main.url
             this.inscripcion.url_id = this.$route.params.id
             const fechaInscripcion = this.evento.fechaInscripcion
@@ -260,36 +263,49 @@ export default {
             const año = fechaActual.getFullYear()
             const mes = fechaActual.getMonth() + 1 // Ten en cuenta que los meses comienzan desde 0
             const día = fechaActual.getDate()
-            const fechaFormateada = `${año}-${mes < 10 ? '0' : ''}${mes}-${día < 10 ? '0' : ''}${día}`
+            const hora = fechaActual.getHours()
+            const minutos = fechaActual.getMinutes()
+            const segundos = fechaActual.getSeconds()
+            const fechaFormateada = `${año}-${mes < 10 ? '0' : ''}${mes}-${día < 10 ? '0' : ''}${día} ${hora < 10 ? '0' : ''}${hora}:${minutos < 10 ? '0' : ''}${minutos}:${segundos < 10 ? '0' : ''}${segundos}`;
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
 
-            if (fechaFormateada >= fechaInscripcion && fechaFormateada <= fechaInscripcionFin) {
-                // eslint-disable-next-line camelcase
-                const url_combinado = `${valor}/validateInscripciones?dni=${dni}&id_evento=${this.inscripcion.url_id}`
-                axios.post(url_combinado, this.inscripcion, auth).then((data) => {
-                    if (data.data[0].cuentaInscripcion > 0) {
-                        this.AlertSwall('Error!!', 'Ya se encuentra registrado en este evento.', 'error')
-                    } else {
-                        axios.post(`${valor}/storeInscripcion`, this.inscripcion).then(() => {
-                            // eslint-disable-next-line no-unused-expressions
-                            this.isVisibleeee === 0
-                            this.AlertSwall('Registrado Correctamente!!', 'Registo completado satisfactoriamente!', 'success')
-                            this.inscripcion.dni = ''
-                            this.inscripcion.nombre = ''
-                            this.inscripcion.apellido = ''
-                            this.inscripcion.celular = ''
-                            this.inscripcion.email = ''
-                            this.inscripcion.certificacion = false
-                        })
-                    }
-                })
-            } else {
-                this.AlertSwall('Error!!', 'El evento ya no se encuentra disponible.', 'error')
+            if (new Date(fechaInscripcion).getTime() <= new Date(fechaActual).getTime()) {
+                console.log("Inicio")
+                if (fechaFormateada < fechaInscripcionFin){
+                    console.log("Fin")
+                }
+            }else{
+                console.log("No")
             }
+                // eslint-disable-next-line camelcase
+                // const url_combinado = `${valor}/validateInscripciones?dni=${dni}&id_evento=${this.inscripcion.url_id}`
+                // axios.post(url_combinado, this.inscripcion, auth).then((data) => {
+                //     if (data.data[0].cuentaInscripcion > 0) {
+                //         this.AlertSwall('Error!!', 'Ya se encuentra registrado en este evento.', 'error')
+                //     } else {
+                //         axios.post(`${valor}/storeInscripcion`, this.inscripcion).then(() => {
+                //             // eslint-disable-next-line no-unused-expressions
+                //             this.isVisibleeee === 0
+                //             this.AlertSwall('Registrado Correctamente!!', 'Registo completado satisfactoriamente!', 'success')
+                //             this.inscripcion.dni = ''
+                //             this.inscripcion.nombre = ''
+                //             this.inscripcion.apellido = ''
+                //             this.inscripcion.celular = ''
+                //             this.inscripcion.email = ''
+                //             this.inscripcion.certificacion = false
+                //             this.BtnInscripcion = 1
+
+                //         })
+                //     }
+                // })
+            // } else {
+            //     this.AlertSwall('Error!!', 'El evento ya no se encuentra disponible.', 'error')
+            //     this.BtnInscripcion = 1
+            // }
         },
-        AlertSwall ($title, $text, $icon) {
+        AlertSwall($title, $text, $icon) {
             Swal.fire({
                 title: $title,
                 text: $text,
@@ -297,10 +313,7 @@ export default {
             })
         }
     },
-    mounted () {
-        this.url_id = this.$route.params.id
-        this.getEditEvento(this.url_id)
-    }
+
 
 }
 </script>
