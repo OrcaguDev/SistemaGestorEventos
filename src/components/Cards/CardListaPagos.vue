@@ -66,7 +66,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(pago, index) in displaydatapagos" :key="index">
+                    <tr v-for="(pago, index) in datospaginados" :key="index">
                         <td class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                             {{ index + 1 }}
                         </td>
@@ -94,22 +94,12 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="flex items-center p-4 space-x-2 btn-group col-md-2 offset-md-5">
-                <button type="button"
-                    class="px-4 py-2 font-bold text-gray-800 bg-gray-300 border-2 rounded-l hover:bg-gray-400"
-                    v-if="page != 1" @click="page--">
-                    &lt;&lt;
-                </button>
-                <div class="px-4 border-2 border-solid border-blueGray-100">
-                    <button type="button">
-                        {{ page }}
-                    </button>
-                </div>
-
-                <button type="button" @click="page++" v-if="page < pagos.length"
-                    class="px-4 py-2 font-bold text-gray-800 bg-gray-300 rounded-r hover:bg-gray-400">&#62;&#62;</button>
-            </div>
-
+            <nav class="flex p-4 space-x-4 border-2 border-solid">
+                <button class="px-2" v-on:click="getprev()">&lt;</button>
+                <button class="px-2" v-for="pagina in totalPaginas()" :key="pagina" v-on:click="getdatapagina(pagina)">{{
+                    pagina }}</button>
+                <button class="px-2" v-on:click="getnext()">&#62;</button>
+            </nav>
         </div>
     </div>
 </template>
@@ -120,23 +110,21 @@ import Swal from 'sweetalert2'
 import Main from '../../main.js'
 
 export default {
-    data () {
+    data() {
         return {
             pagos: [],
+            page: 1,
+            ElementforPage: 5,
+            datospaginados: [],
             pago: {
                 api_token: '',
                 id_pagos: '',
                 id_area: ''
-            },
-            page: 1,
-            perPage: 5
+            }
         }
     },
-    created () {
-        this.getTotal()
-    },
     methods: {
-        getTotal () {
+        getTotal() {
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
@@ -145,13 +133,17 @@ export default {
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`${valor}/getPagos`, this.pago, auth).then(({ data }) => {
-                this.pagos = data
-            }).catch((error) => {
-                console.log(error)
-            })
+
+            // Devuelve la promesa aquí
+            return axios.post(`${valor}/getPagos`, this.pago, auth)
+                .then(({ data }) => {
+                    this.pagos = data
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         },
-        eliminarPago (id) {
+        eliminarPago(id) {
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
@@ -165,31 +157,35 @@ export default {
                 this.getTotal()
             })
         },
-        AlertSwall ($title, $text, $icon) {
+        AlertSwall($title, $text, $icon) {
             Swal.fire({
                 title: $title,
                 text: $text,
                 icon: $icon
             })
         },
-        paginate (pagos) {
-            const page = this.page
-            const perPage = this.perPage
-            const from = (page * perPage) - perPage
-            const to = (page * perPage)
-            return pagos.slice(from, to)
+        totalPaginas() {
+            return Math.ceil(this.pagos.length / this.ElementforPage)
         },
-        setPagos () {
-            const numberOfPages = Math.ceil(this.pagos.length / this.perPage)
-            for (let i = 1; i <= numberOfPages; i++) {
-                this.pagos.push(i)
+        getdatapagina(pagina) {
+            this.page = pagina
+            const ini = (pagina * this.ElementforPage) - this.ElementforPage
+            const fin = (pagina * this.ElementforPage)
+            this.datospaginados = this.pagos.slice(ini, fin)
+        },
+        getprev() {
+            if (this.page > 1) {
+                this.page--
             }
+            this.getdatapagina(this.page)
+        },
+        getnext() {
+            if (this.page < this.totalPaginas()) {
+                this.page++
+            }
+            this.getdatapagina(this.page)
         }
-    },
-    computed: {
-        displaydatapagos: function () {
-            return this.paginate(this.pagos)
-        }
+
     },
     props: {
         color: {
@@ -200,10 +196,10 @@ export default {
             }
         }
     },
-    watch: {
-        Pagos () {
-            this.setPagos()
-        }
+    mounted() {
+        this.getTotal().then(() => {
+            this.getdatapagina(1)
+        })
     }
 }
 </script>

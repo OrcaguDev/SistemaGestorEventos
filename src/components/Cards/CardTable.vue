@@ -91,7 +91,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in eventos" :key="index">
+          <tr v-for="(item, index) in datospaginados" :key="index">
             <td class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
               {{ index + 1 }}
             </td>
@@ -166,6 +166,12 @@
           </tr>
         </tbody>
       </table>
+      <nav class="flex p-4 space-x-4 border-2 border-solid">
+                <button class="px-2" v-on:click="getprev()">&lt;</button>
+                <button class="px-2" v-for="pagina in totalPaginas()" :key="pagina" v-on:click="getdatapagina(pagina)">{{
+                    pagina }}</button>
+                <button class="px-2" v-on:click="getnext()">&#62;</button>
+            </nav>
     </div>
 
   </div>
@@ -178,6 +184,9 @@ export default {
     data () {
         return {
             eventos: [],
+            page: 1,
+            ElementforPage: 5,
+            datospaginados: [],
             evento: {
                 api_token: '',
                 id_evento: '',
@@ -206,7 +215,7 @@ export default {
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`${valor}/eventos`, this.evento, auth).then(({ data }) => {
+            return axios.post(`${valor}/eventos`, this.evento, auth).then(({ data }) => {
                 this.eventos = data
             }).catch((error) => {
                 console.log(error)
@@ -237,10 +246,33 @@ export default {
                 text: $text,
                 icon: $icon
             })
+        },
+        totalPaginas() {
+            return Math.ceil(this.eventos.length / this.ElementforPage)
+        },
+        getdatapagina(pagina) {
+            this.page = pagina
+            const ini = (pagina * this.ElementforPage) - this.ElementforPage
+            const fin = (pagina * this.ElementforPage)
+            this.datospaginados = this.eventos.slice(ini, fin)
+        },
+        getprev() {
+            if (this.page > 1) {
+                this.page--
+            }
+            this.getdatapagina(this.page)
+        },
+        getnext() {
+            if (this.page < this.totalPaginas()) {
+                this.page++
+            }
+            this.getdatapagina(this.page)
         }
     },
-    created () {
-        this.getTotal()
+    mounted() {
+        this.getTotal().then(() => {
+            this.getdatapagina(1)
+        })
     }
 }
 </script>
