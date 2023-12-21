@@ -251,10 +251,10 @@ export default {
                 icon: $icon
             })
         },
-        totalPaginas() {
+        totalPaginas () {
             return Math.ceil(this.eventos.length / this.ElementforPage)
         },
-        getdatapagina(pagina) {
+        getdatapagina (pagina) {
             this.page = pagina
             const ini = (pagina * this.ElementforPage) - this.ElementforPage
             const fin = (pagina * this.ElementforPage)
@@ -262,20 +262,20 @@ export default {
                 .filter(eventos => eventos.nombre.toLowerCase().includes(this.busqueda.toLowerCase()))
                 .slice(ini, fin)
         },
-        getprev() {
+        getprev () {
             if (this.page > 1) {
                 this.page--
             }
             this.getdatapagina(this.page)
         },
-        getnext() {
+        getnext () {
             if (this.page < this.totalPaginas()) {
                 this.page++
             }
             this.getdatapagina(this.page)
         }
     },
-    mounted() {
+    mounted () {
         this.getTotal().then(() => {
             this.getdatapagina(1)
         })

@@ -401,7 +401,6 @@ export default {
             this.datospaginados = this.inscripciones
                 .filter(inscripcion => inscripcion.dni.toString().toLowerCase().includes(this.busqueda.toLowerCase()))
                 .slice(ini, fin)
-
         },
         getprev() {
             if (this.page > 1) {

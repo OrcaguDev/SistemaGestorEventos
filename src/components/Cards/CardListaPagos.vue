@@ -113,7 +113,7 @@ import Swal from 'sweetalert2'
 import Main from '../../main.js'
 
 export default {
-    data() {
+    data () {
         return {
             pagos: [],
             page: 1,
@@ -128,7 +128,7 @@ export default {
         }
     },
     methods: {
-        getTotal() {
+        getTotal () {
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
@@ -147,7 +147,7 @@ export default {
                     console.log(error)
                 })
         },
-        eliminarPago(id) {
+        eliminarPago (id) {
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
@@ -161,17 +161,17 @@ export default {
                 this.getTotal()
             })
         },
-        AlertSwall($title, $text, $icon) {
+        AlertSwall ($title, $text, $icon) {
             Swal.fire({
                 title: $title,
                 text: $text,
                 icon: $icon
             })
         },
-        totalPaginas() {
+        totalPaginas () {
             return Math.ceil(this.pagos.length / this.ElementforPage)
         },
-        getdatapagina(pagina) {
+        getdatapagina (pagina) {
             this.page = pagina
             const ini = (pagina * this.ElementforPage) - this.ElementforPage
             const fin = (pagina * this.ElementforPage)
@@ -179,18 +179,18 @@ export default {
                 .filter(pago => pago.nombre.toLowerCase().includes(this.busqueda.toLowerCase()))
                 .slice(ini, fin)
         },
-        getprev() {
+        getprev () {
             if (this.page > 1) {
                 this.page--
             }
             this.getdatapagina(this.page)
         },
-        getnext() {
+        getnext () {
             if (this.page < this.totalPaginas()) {
                 this.page++
             }
             this.getdatapagina(this.page)
-        },
+        }
 
     },
     props: {
@@ -202,7 +202,7 @@ export default {
             }
         }
     },
-    mounted() {
+    mounted () {
         this.getTotal().then(() => {
             this.getdatapagina(1)
         })
