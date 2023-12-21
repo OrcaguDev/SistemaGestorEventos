@@ -3,10 +3,13 @@
         :class="[color === 'light' ? 'bg-white' : 'bg-emerald-900 text-white']">
         <div class="px-4 py-3 mb-0 border-0 rounded-t">
             <div class="flex flex-wrap items-center">
-                <div class="relative flex-1 flex-grow w-full max-w-full px-4">
+                <div class="relative flex justify-between flex-grow w-full max-w-full px-4">
                     <h3 class="text-lg font-semibold" :class="[color === 'light' ? 'text-blueGray-700' : 'text-white']">
                         Lista de URL - PAGOS
                     </h3>
+                    <input type="text" v-model="busqueda" @input="getdatapagina(1)"
+                        class="w-6/12 px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
+                        id="buscarpagos" placeholder="Buscar Pagos" required />
                 </div>
             </div>
         </div>
@@ -29,7 +32,7 @@
                                     ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
                                     : 'bg-emerald-800 text-emerald-300 border-emerald-700',
                             ]">
-                            Evento
+                            Pagos
                         </th>
                         <th class="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap"
                             :class="[
@@ -110,12 +113,13 @@ import Swal from 'sweetalert2'
 import Main from '../../main.js'
 
 export default {
-    data() {
+    data () {
         return {
             pagos: [],
             page: 1,
             ElementforPage: 5,
             datospaginados: [],
+            busqueda: '',
             pago: {
                 api_token: '',
                 id_pagos: '',
@@ -124,7 +128,7 @@ export default {
         }
     },
     methods: {
-        getTotal() {
+        getTotal () {
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
@@ -143,7 +147,7 @@ export default {
                     console.log(error)
                 })
         },
-        eliminarPago(id) {
+        eliminarPago (id) {
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
@@ -157,29 +161,31 @@ export default {
                 this.getTotal()
             })
         },
-        AlertSwall($title, $text, $icon) {
+        AlertSwall ($title, $text, $icon) {
             Swal.fire({
                 title: $title,
                 text: $text,
                 icon: $icon
             })
         },
-        totalPaginas() {
+        totalPaginas () {
             return Math.ceil(this.pagos.length / this.ElementforPage)
         },
-        getdatapagina(pagina) {
+        getdatapagina (pagina) {
             this.page = pagina
             const ini = (pagina * this.ElementforPage) - this.ElementforPage
             const fin = (pagina * this.ElementforPage)
-            this.datospaginados = this.pagos.slice(ini, fin)
+            this.datospaginados = this.pagos
+                .filter(pago => pago.nombre.toLowerCase().includes(this.busqueda.toLowerCase()))
+                .slice(ini, fin)
         },
-        getprev() {
+        getprev () {
             if (this.page > 1) {
                 this.page--
             }
             this.getdatapagina(this.page)
         },
-        getnext() {
+        getnext () {
             if (this.page < this.totalPaginas()) {
                 this.page++
             }
@@ -196,7 +202,7 @@ export default {
             }
         }
     },
-    mounted() {
+    mounted () {
         this.getTotal().then(() => {
             this.getdatapagina(1)
         })

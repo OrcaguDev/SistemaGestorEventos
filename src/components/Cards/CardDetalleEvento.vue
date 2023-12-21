@@ -253,13 +253,18 @@
                         </tr>
                     </tbody>
                 </table>
-                <nav class="flex p-4 space-x-4 border-2 border-solid">
-                    <button class="px-2" v-on:click="getprev()">&lt;</button>
-                    <button class="px-2" v-for="pagina in totalPaginas()" :key="pagina"
-                        v-on:click="getdatapagina(pagina)">{{
-                            pagina }}</button>
-                    <button class="px-2" v-on:click="getnext()">&#62;</button>
-                </nav>
+                <div class="flex items-center justify-between py-4">
+                    <nav class="flex p-4 space-x-4 border-2 border-solid">
+                        <button class="px-2" v-on:click="getprev()">&lt;</button>
+                        <button class="px-2" v-for="pagina in totalPaginas()" :key="pagina"
+                            v-on:click="getdatapagina(pagina)">{{
+                                pagina }}</button>
+                        <button class="px-2" v-on:click="getnext()">&#62;</button>
+                    </nav>
+                    <input type="text" v-model="busqueda" @input="getdatapagina(1)"
+                        class="w-6/12 px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
+                        id="buscarpagos" placeholder="Buscar DNI" required />
+                </div>
             </div>
         </div>
     </div>
@@ -295,6 +300,7 @@ export default {
             dni: '',
             mostrarBoton: true,
             page: 1,
+            busqueda: '',
             ElementforPage: 10,
             datospaginados: []
         }
@@ -403,7 +409,9 @@ export default {
             this.page = pagina
             const ini = (pagina * this.ElementforPage) - this.ElementforPage
             const fin = (pagina * this.ElementforPage)
-            this.datospaginados = this.inscripciones.slice(ini, fin)
+            this.datospaginados = this.inscripciones
+                .filter(inscripcion => inscripcion.dni.toString().toLowerCase().includes(this.busqueda.toLowerCase()))
+                .slice(ini, fin)
         },
         getprev() {
             if (this.page > 1) {
