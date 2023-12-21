@@ -58,7 +58,7 @@ export default {
             window.history.back()
         },
         formatDate (dateString) {
-            const options = { year: 'numeric', month: 'long', day: 'numeric' }
+            const options = {  day: '2-digit', month: 'short', year: 'numeric' }
             const formattedDate = new Date(dateString).toLocaleDateString(undefined, options)
             return formattedDate
         },
@@ -72,7 +72,6 @@ export default {
             }
             axios.post(`${valor}/getTimeline`, this.apii, auth).then(({ data }) => {
                 this.timeline = data
-                console.log(this.timeline[0])
 
                 this.items[0].title = this.formatDate(this.timeline[0].Fecharegistro)
                 this.items[1].title = this.timeline[0].cantidadregistrados_total
@@ -87,7 +86,6 @@ export default {
     mounted () {
         this.apii.id_timeline = this.$route.params.id
         this.gettimeline()
-        console.log(this.timeline)
     }
 }
 </script>

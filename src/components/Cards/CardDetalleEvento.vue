@@ -30,7 +30,8 @@
                                 htmlFor="grid-password">
                                 Buscar Participante por DNI
                             </label>
-                            <input type="text" v-model="dni"
+                            <input type="text" v-model="dni" id="inputDNI" pattern="[0-9]{8}"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g,'')" maxlength="8" 
                                 class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring">
                         </div>
 
@@ -261,7 +262,8 @@
                                 pagina }}</button>
                         <button class="px-2" v-on:click="getnext()">&#62;</button>
                     </nav>
-                    <input type="text" v-model="busqueda" @input="getdatapagina(1)"
+                    <input type="text" v-model="busqueda" @input="getdatapagina(1)"  pattern="[0-9]{8}"
+                                    title="Ingrese un DNI válido" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                         class="w-6/12 px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                         id="buscarpagos" placeholder="Buscar DNI" required />
                 </div>
@@ -273,6 +275,8 @@
 <script>
 import axios from 'axios'
 import Main from '../../main.js'
+import Swal from 'sweetalert2'
+
 
 export default {
     data() {
@@ -372,10 +376,15 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             // eslint-disable-next-line camelcase
-            const url_concatenado = `${valor}/updateAsistencia/?dni=${dni}&id_evento=${id_evento}`
+            const url_concatenado = `${valor}/updateAsistencia?dni=${dni}&id_evento=${id_evento}`
             return axios.post(url_concatenado, this.apii, auth).then(() => {
                 this.getInscripcionesTotal(this.url_id)
                 this.dni = ''
+                this.AlertSwall('Asistencia', 'Se registro la asistencia correctamente!', 'success')
+                    setTimeout(function() {
+                    location.reload();
+                    }, 1000);
+                
             }).catch((error) => {
                 console.log(error)
             })
@@ -393,15 +402,26 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             // eslint-disable-next-line camelcase
-            const url_concatenado = `${valor}/updateRecibo/?recibo=${recibo}&id_evento=${id_evento}&dni=${dni}`
+            const url_concatenado = `${valor}/updateRecibo?recibo=${recibo}&id_evento=${id_evento}&dni=${dni}`
             return axios.post(url_concatenado, this.apii, auth).then(() => {
                 this.getInscripcionesTotal(this.url_id)
                 this.mostrarBoton = false
-                window.alert('Se registro el recibo correctamente!')
+                this.AlertSwall('Recibo', 'Se registro el recibo correctamente!', 'success')
+                setTimeout(function() {
+                    location.reload();
+                    }, 1000);
             }).catch((error) => {
                 console.log(error)
             })
         },
+        AlertSwall($title, $text, $icon) {
+            Swal.fire({
+            title: $title,
+            text: $text,
+            icon: $icon
+        })
+        },
+
         totalPaginas() {
             return Math.ceil(this.inscripciones.length / this.ElementforPage)
         },
