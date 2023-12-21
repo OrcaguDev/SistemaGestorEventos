@@ -66,7 +66,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(pago, index) in pagos" :key="index">
+                    <tr v-for="(pago, index) in displaydatapagos" :key="index">
                         <td class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                             {{ index + 1 }}
                         </td>
@@ -94,6 +94,22 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="flex items-center p-4 space-x-2 btn-group col-md-2 offset-md-5">
+                <button type="button"
+                    class="px-4 py-2 font-bold text-gray-800 bg-gray-300 border-2 rounded-l hover:bg-gray-400"
+                    v-if="page != 1" @click="page--">
+                    &lt;&lt;
+                </button>
+                <div class="px-4 border-2 border-solid border-blueGray-100">
+                    <button type="button">
+                        {{ page }}
+                    </button>
+                </div>
+
+                <button type="button" @click="page++" v-if="page < pagos.length"
+                    class="px-4 py-2 font-bold text-gray-800 bg-gray-300 rounded-r hover:bg-gray-400">&#62;&#62;</button>
+            </div>
+
         </div>
     </div>
 </template>
@@ -111,8 +127,13 @@ export default {
                 api_token: '',
                 id_pagos: '',
                 id_area: ''
-            }
+            },
+            page: 1,
+            perPage: 5
         }
+    },
+    created () {
+        this.getTotal()
     },
     methods: {
         getTotal () {
@@ -150,10 +171,25 @@ export default {
                 text: $text,
                 icon: $icon
             })
+        },
+        paginate (pagos) {
+            const page = this.page
+            const perPage = this.perPage
+            const from = (page * perPage) - perPage
+            const to = (page * perPage)
+            return pagos.slice(from, to)
+        },
+        setPagos () {
+            const numberOfPages = Math.ceil(this.pagos.length / this.perPage)
+            for (let i = 1; i <= numberOfPages; i++) {
+                this.pagos.push(i)
+            }
         }
     },
-    created () {
-        this.getTotal()
+    computed: {
+        displaydatapagos: function () {
+            return this.paginate(this.pagos)
+        }
     },
     props: {
         color: {
@@ -162,6 +198,11 @@ export default {
                 // The value must match one of these strings
                 return ['light', 'dark'].indexOf(value) !== -1
             }
+        }
+    },
+    watch: {
+        Pagos () {
+            this.setPagos()
         }
     }
 }
