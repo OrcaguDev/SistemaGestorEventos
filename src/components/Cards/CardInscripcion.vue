@@ -167,7 +167,7 @@
           <hr class="mt-6 mb-4 border-b-1 border-blueGray-300" />
 
           <!-- Habilitar despues de validar sus datos con el DNI -->
-          <div v-if="isVisible === 1">
+          <!-- <div v-if="isVisible === 1">
             <div class="flex flex-wrap">
 
               <div class="w-full px-4 lg:w-6/12">
@@ -179,20 +179,18 @@
                     class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                     v-model="inscripcion.habilidad" />
                 </div>
-              </div>
+              </div> -->
 
-              <div class="w-full px-4 lg:w-3/12">
+              <!-- <div class="w-full px-4 lg:w-3/12">
                 <button
                   class="w-full px-3 py-3 mt-6 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
                   type="button" @click="validarHabilidad()">
                   Validar
                 </button>
-              </div>
-
+              </div> -->
+<!-- 
             </div>
-          </div>
-
-          <hr class="mt-6 mb-4 border-b-1 border-blueGray-300" />
+          </div> -->
 
           <span>{{ mensaje }}</span>
           <!-- Despues de validar los datos de los inputs de arriba, mostrar este div para concluir con la inscripcion -->
@@ -266,33 +264,53 @@ export default {
     },
     methods: {
         async validarDni () {
-            const url = `https://app-cipcdll.com:81/obtener_persona_datos_xterceros/${this.inscripcion.dni}` // RUTA DEL API
-            const response = await fetch(url)
-            const data = await response.json()
-            this.inscripcion.nombre = data.data.nombres
-            this.inscripcion.apellido = data.data.paterno + ' ' + data.data.materno
-            this.inscripcion.celular = data.data.celular
-            this.inscripcion.email = data.data.email
-            this.isVisible = 1
-        },
-        validarHabilidad () {
-            const valor = Main.url
+            
+          const valor = Main.url
             this.inscripcion.url_id = this.$route.params.id
             axios.post(`${valor}/obtenerReglaEvento/${this.inscripcion.url_id}`).then((data) => {
                 // eslint-disable-next-line camelcase
                 const url_first = data.data[0].url
                 // eslint-disable-next-line camelcase
                 axios.get(`${url_first}/${this.inscripcion.habilidad}`).then((data) => {
+                  console.log(data)
                     if (data.data) {
-                        this.isVisiblee = 1
-                        this.mensaje = ''
+                      const url = `https://app-cipcdll.com:81/obtener_persona_datos_xterceros/${this.inscripcion.dni}` // RUTA DEL API
+                      const response = fetch(url)
+                      const data = response.json()
+                      this.inscripcion.nombre = data.data.nombres
+                      this.inscripcion.apellido = data.data.paterno + ' ' + data.data.materno
+                      this.inscripcion.celular = data.data.celular
+                      this.inscripcion.email = data.data.email
+                      this.isVisible = 1
+                      this.mensaje = ''
                     } else {
                         this.isVisiblee = 0
                         this.mensaje = 'No se encuentra habilitado.'
                     }
                 })
             })
+
+            
         },
+        // validarHabilidad () {
+        //     const valor = Main.url
+        //     this.inscripcion.url_id = this.$route.params.id
+        //     axios.post(`${valor}/obtenerReglaEvento/${this.inscripcion.url_id}`).then((data) => {
+        //         // eslint-disable-next-line camelcase
+        //         const url_first = data.data[0].url
+        //         // eslint-disable-next-line camelcase
+        //         axios.get(`${url_first}/${this.inscripcion.habilidad}`).then((data) => {
+        //           console.log(data)
+        //             if (data.data) {
+        //                 this.isVisiblee = 1
+        //                 this.mensaje = ''
+        //             } else {
+        //                 this.isVisiblee = 0
+        //                 this.mensaje = 'No se encuentra habilitado.'
+        //             }
+        //         })
+        //     })
+        // },
 
         getEvento  (id) {
             const valor = Main.url
