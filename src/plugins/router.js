@@ -16,6 +16,9 @@ import Login from '@/views/Login.vue'
 import regPagos from '@/views/admin/pagos/RegistroPagos.vue'
 import listPagos from '@/views/admin/pagos/ListaPagos.vue'
 
+//Actualizar datos
+import Contrasenia from '@/views/admin/Contrasenia.vue'
+
 // views for edit
 import editEvent from '@/views/admin/editar/EditEvento.vue'
 import editReglas from '@/views/admin/editar/EditRegla.vue'
@@ -165,6 +168,10 @@ const routes = [
                     }
                 }
 
+            },
+            {
+                path: '/admin/Contrasenia',
+                component: Contrasenia
             }
         ]
     },

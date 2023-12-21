@@ -104,7 +104,6 @@ export default {
             }
             await axios.post(`${valor}/getConstanciasINFOCIP`, auth).then(({ data }) => {
                 this.totalconstanciasINFOCIP = data[0].INFOCIP
-                console.log(data[0].INFOCIP)
             }).catch((error) => {
                 console.log(error)
             })
@@ -116,7 +115,6 @@ export default {
             }
             await axios.post(`${valor}/getConstanciasISS`, auth).then(({ data }) => {
                 this.totalconstanciasISS = data[0].ISS
-                console.log(data[0].ISS)
             }).catch((error) => {
                 console.log(error)
             })
@@ -128,7 +126,6 @@ export default {
             }
             await axios.post(`${valor}/getConstanciasIEPI`, auth).then(({ data }) => {
                 this.getconstanciasIEPI = data[0].IEPI
-                console.log(data[0].IEPI)
             }).catch((error) => {
                 console.log(error)
             })
@@ -140,7 +137,6 @@ export default {
             }
             await axios.post(`${valor}/getConstanciasCOLEGIATURA`, auth).then(({ data }) => {
                 this.totalconstanciasCOLEGIATURA = data[0].COLEGIATURA
-                console.log(data[0].COLEGIATURA)
             }).catch((error) => {
                 console.log(error)
             })
@@ -148,7 +144,6 @@ export default {
 
         BarrasReporte () {
             const iepi = this.totalIEPI
-            console.log(iepi)
             this.$nextTick(function () {
                 const config = {
                     type: 'bar',

@@ -259,7 +259,6 @@ export default {
             const fechaInscripcion = this.evento.fechaInscripcion
             const fechaInscripcionFin = this.evento.fechaInscripcionFin
             const dni = this.inscripcion.dni
-            const id_evento = this.inscripcion.url_combinado
             const fechaActual = new Date()
 
             const fechaincripcionformateada = new Date(fechaInscripcion)
