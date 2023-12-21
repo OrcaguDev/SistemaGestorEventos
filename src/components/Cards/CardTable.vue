@@ -3,10 +3,13 @@
     :class="[color === 'light' ? 'bg-white' : 'bg-emerald-900 text-white']">
     <div class="px-4 py-3 mb-0 border-0 rounded-t">
       <div class="flex flex-wrap items-center">
-        <div class="relative flex-1 flex-grow w-full max-w-full px-4">
+        <div class="relative flex justify-between flex-grow w-full max-w-full px-4">
           <h3 class="text-lg font-semibold" :class="[color === 'light' ? 'text-blueGray-700' : 'text-white']">
             Tabla de Eventos
           </h3>
+          <input type="text" v-model="busqueda" @input="getdatapagina(1)"
+                        class="w-6/12 px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
+                        id="buscarpagos" placeholder="Buscar eventos" required />
         </div>
       </div>
     </div>
@@ -187,6 +190,7 @@ export default {
             page: 1,
             ElementforPage: 5,
             datospaginados: [],
+            busqueda: '',
             evento: {
                 api_token: '',
                 id_evento: '',
@@ -254,7 +258,9 @@ export default {
             this.page = pagina
             const ini = (pagina * this.ElementforPage) - this.ElementforPage
             const fin = (pagina * this.ElementforPage)
-            this.datospaginados = this.eventos.slice(ini, fin)
+            this.datospaginados = this.eventos
+                .filter(eventos => eventos.nombre.toLowerCase().includes(this.busqueda.toLowerCase()))
+                .slice(ini, fin)
         },
         getprev() {
             if (this.page > 1) {
