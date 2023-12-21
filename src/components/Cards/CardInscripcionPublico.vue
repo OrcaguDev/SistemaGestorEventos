@@ -276,7 +276,7 @@ export default {
                     if (data.data[0].cuentaInscripcion > 0) {
                         this.AlertSwall('Error!!', 'Ya se encuentra registrado en este evento.', 'error')
                     } else {
-                        axios.post(`${valor}/storeInscripcion`, this.inscripcion).then(() => {
+                        axios.post(`${valor}/storeInscripcionPublic`, this.inscripcion).then(() => {
                             // eslint-disable-next-line no-unused-expressions
                             this.isVisibleeee === 0
                             this.AlertSwall('Registrado Correctamente!!', 'Registo completado satisfactoriamente!', 'success')
