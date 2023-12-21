@@ -155,6 +155,15 @@
                                         ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
                                         : 'bg-emerald-800 text-emerald-300 border-emerald-700',
                                 ]">
+                                Tipo
+                            </th>
+
+                            <th class="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap"
+                                :class="[
+                                    color === 'light'
+                                        ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                                        : 'bg-emerald-800 text-emerald-300 border-emerald-700',
+                                ]">
                                 Asistencia
                             </th>
 
@@ -166,15 +175,6 @@
                                 ]">
                                 Recibo
                             </th>
-
-                            <!-- <th class="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap"
-                                :class="[
-                                    color === 'light'
-                                        ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
-                                        : 'bg-emerald-800 text-emerald-300 border-emerald-700',
-                                ]">
-                                Acciones
-                            </th> -->
                         </tr>
                     </thead>
 
@@ -199,6 +199,16 @@
                             <td v-else
                                 class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                 No
+                            </td>
+
+                            <td v-if="inscripcion.tipo == 1"
+                                class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                Colegiado
+                            </td>
+
+                            <td v-else
+                                class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                Publico
                             </td>
 
                             <td v-if="inscripcion.asistencia == 1"
@@ -274,6 +284,7 @@ export default {
                 fechaInscripcion: '',
                 id_regla: '',
                 recibo: null,
+                tipo: '',
                 api_token: ''
             },
             apii: {
@@ -284,7 +295,7 @@ export default {
             dni: '',
             mostrarBoton: true,
             page: 1,
-            ElementforPage: 5,
+            ElementforPage: 10,
             datospaginados: []
         }
     },
@@ -328,6 +339,7 @@ export default {
             })
         },
         getInscripcionesTotal(id) {
+            const prueba = this.$route.params.id
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
@@ -335,10 +347,9 @@ export default {
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            return axios.post(`${valor}/getInscripcionesTotal/${id}`, this.apii, auth).then(({ data }) => {
+            return axios.post(`${valor}/getInscripcionesTotal/${prueba}`, this.apii, auth).then(({ data }) => {
                 this.inscripciones = data
                 // eslint-disable-next-line no-unused-expressions
-                console.this.inscripciones
             }).catch((error) => {
                 console.log(error)
             })

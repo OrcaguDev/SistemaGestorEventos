@@ -80,13 +80,11 @@ export default {
 
         updatePass() {
             if (this.password === this.password2) {
-                console.log(this.email)
-                console.log(this.password)
                 const auth = {
                 headers: { 'Content-Type': 'application/json' }
                 }
-                axios.post(`${this.valor}/updatePass?email=${this.email}&password=${this.password}`)
-                this.AlertSwall('Editado!!', 'Ha sido editado correctamente!', 'success')
+                axios.post(`${this.valor}/actualizarContrasenia?email=${this.email}&password=${this.password}`, auth)
+                this.AlertSwall('Actualizado !', 'Ha sido editado correctamente!', 'success')
                 this.email= ''
                 this.password= ''
                 this.password2= ''
