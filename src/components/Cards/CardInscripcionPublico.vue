@@ -12,7 +12,9 @@
                 <div>
                     <img src="../../assets/img/EVENTOS.jpg" alt=""><br>
 
-                    <a :href="`${this.valoor}/public/informe/${evento.informe}`" target="_blank"
+                    <a 
+                    :href="`${this.valoor}/informe/${evento.informe}`" 
+                    target="_blank"
                         class="px-2 py-3 ml-4 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none">
                         DESCARGAR BROCHURE</a>
                 </div>
