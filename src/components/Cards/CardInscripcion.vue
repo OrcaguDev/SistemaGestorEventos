@@ -255,7 +255,8 @@ export default {
             mensaje: '',
             isVisibleeee: 1,
             alert: '',
-            valoor: Main.url
+            valoor: Main.url,
+            validacion:''
         }
     },
     mounted () {
@@ -264,34 +265,41 @@ export default {
     },
     methods: {
         async validarDni () {
-            
+          
           const valor = Main.url
             this.inscripcion.url_id = this.$route.params.id
-            axios.post(`${valor}/obtenerReglaEvento/${this.inscripcion.url_id}`).then((data) => {
-                // eslint-disable-next-line camelcase
-                const url_first = data.data[0].url
-                // eslint-disable-next-line camelcase
-                axios.get(`${url_first}/${this.inscripcion.habilidad}`).then((data) => {
-                  console.log(data)
-                    if (data.data) {
-                      const url = `https://app-cipcdll.com:81/obtener_persona_datos_xterceros/${this.inscripcion.dni}` // RUTA DEL API
-                      const response = fetch(url)
-                      const data = response.json()
-                      this.inscripcion.nombre = data.data.nombres
-                      this.inscripcion.apellido = data.data.paterno + ' ' + data.data.materno
-                      this.inscripcion.celular = data.data.celular
-                      this.inscripcion.email = data.data.email
-                      this.isVisible = 1
-                      this.mensaje = ''
-                    } else {
-                        this.isVisiblee = 0
-                        this.mensaje = 'No se encuentra habilitado.'
-                    }
-                })
+            await axios.post(`${valor}/obtenerReglaEvento/${this.inscripcion.url_id}`).then((data) => {
+            const url_validacion = data.data[0].url
+            axios.get(`${url_validacion}/${this.inscripcion.dni}`).then((data) => {
+              const validacion = data.data.data.habilidad.var_habilitacion_estado
+              this.validacion = validacion// console.log(validacion)
+            }).catch((error) => {
+              console.log(error)
             })
-
-            
+            console.log(this.validacion)
+              // eslint-disable-next-line camelcase
+                // const url_first = data.data[0].url
+                // eslint-disable-next-line camelcase
+                // axios.get(`${url_first}/${this.inscripcion.habilidad}`).then((data) => {
+                //   console.log(data)
+                //     if (data.data) {
+                //       const url = `https://app-cipcdll.com:81/obtener_persona_datos_xterceros/${this.inscripcion.dni}` // RUTA DEL API
+                //       const response = fetch(url)
+                //       const data = response.json()
+                //       this.inscripcion.nombre = data.data.nombres
+                //       this.inscripcion.apellido = data.data.paterno + ' ' + data.data.materno
+                //       this.inscripcion.celular = data.data.celular
+                //       this.inscripcion.email = data.data.email
+                //       this.isVisible = 1
+                //       this.mensaje = ''
+                //     } else {
+                //         this.isVisiblee = 0
+                //         this.mensaje = 'No se encuentra habilitado.'
+                //     }
+                // })
+            })
         },
+
         // validarHabilidad () {
         //     const valor = Main.url
         //     this.inscripcion.url_id = this.$route.params.id
@@ -300,7 +308,6 @@ export default {
         //         const url_first = data.data[0].url
         //         // eslint-disable-next-line camelcase
         //         axios.get(`${url_first}/${this.inscripcion.habilidad}`).then((data) => {
-        //           console.log(data)
         //             if (data.data) {
         //                 this.isVisiblee = 1
         //                 this.mensaje = ''
