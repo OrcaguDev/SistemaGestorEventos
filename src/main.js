@@ -13,14 +13,12 @@ import App from '@/App.vue'
 
 import 'material-icons/iconfont/material-icons.css'
 import 'material-symbols'
-
 // routes
 
 createApp(App)
     .use(router)
     .mount('#app')
 
-
 export default {
-    url: 'http://localhost:8000',
-    };
+    url: 'http://localhost:8000'
+}

@@ -30,7 +30,8 @@
                                 htmlFor="grid-password">
                                 Buscar Participante por DNI
                             </label>
-                            <input type="text" v-model="dni"
+                            <input type="text" v-model="dni" id="inputDNI" pattern="[0-9]{8}"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g,'')" maxlength="8" 
                                 class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring">
                         </div>
 
@@ -155,6 +156,15 @@
                                         ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
                                         : 'bg-emerald-800 text-emerald-300 border-emerald-700',
                                 ]">
+                                Tipo
+                            </th>
+
+                            <th class="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap"
+                                :class="[
+                                    color === 'light'
+                                        ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                                        : 'bg-emerald-800 text-emerald-300 border-emerald-700',
+                                ]">
                                 Asistencia
                             </th>
 
@@ -166,20 +176,11 @@
                                 ]">
                                 Recibo
                             </th>
-
-                            <!-- <th class="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap"
-                                :class="[
-                                    color === 'light'
-                                        ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
-                                        : 'bg-emerald-800 text-emerald-300 border-emerald-700',
-                                ]">
-                                Acciones
-                            </th> -->
                         </tr>
                     </thead>
 
                     <tbody>
-                        <tr v-for="(inscripcion, index) in inscripciones" :key="index">
+                        <tr v-for="(inscripcion, index) in datospaginados" :key="index">
                             <td class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                 {{ index + 1 }}
                             </td>
@@ -199,6 +200,16 @@
                             <td v-else
                                 class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                 No
+                            </td>
+
+                            <td v-if="inscripcion.tipo == 1"
+                                class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                Colegiado
+                            </td>
+
+                            <td v-else
+                                class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                Publico
                             </td>
 
                             <td v-if="inscripcion.asistencia == 1"
@@ -243,6 +254,19 @@
                         </tr>
                     </tbody>
                 </table>
+                <div class="flex items-center justify-between py-4">
+                    <nav class="flex p-4 space-x-4 border-2 border-solid">
+                        <button class="px-2" v-on:click="getprev()">&lt;</button>
+                        <button class="px-2" v-for="pagina in totalPaginas()" :key="pagina"
+                            v-on:click="getdatapagina(pagina)">{{
+                                pagina }}</button>
+                        <button class="px-2" v-on:click="getnext()">&#62;</button>
+                    </nav>
+                    <input type="text" v-model="busqueda" @input="getdatapagina(1)"  pattern="[0-9]{8}"
+                                    title="Ingrese un DNI válido" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                        class="w-6/12 px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
+                        id="buscarpagos" placeholder="Buscar DNI" required />
+                </div>
             </div>
         </div>
     </div>
@@ -251,9 +275,11 @@
 <script>
 import axios from 'axios'
 import Main from '../../main.js'
+import Swal from 'sweetalert2'
+
 
 export default {
-    data () {
+    data() {
         return {
             detalle: {
                 nombre: '',
@@ -267,6 +293,7 @@ export default {
                 fechaInscripcion: '',
                 id_regla: '',
                 recibo: null,
+                tipo: '',
                 api_token: ''
             },
             apii: {
@@ -275,7 +302,11 @@ export default {
             url_id: '',
             inscripciones: [],
             dni: '',
-            mostrarBoton: true
+            mostrarBoton: true,
+            page: 1,
+            busqueda: '',
+            ElementforPage: 10,
+            datospaginados: []
         }
     },
 
@@ -290,19 +321,19 @@ export default {
     },
 
     methods: {
-        goBack () {
+        goBack() {
             window.history.back()
         },
 
-        getEditEvento (id) {
-            let valor = Main.url
+        getEditEvento(id) {
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`${valor}/evento/${id}`, this.apii, auth).then(({ data }) => {
+            return axios.post(`${valor}/evento/${id}`, this.apii, auth).then(({ data }) => {
                 this.detalle.nombre = data[0].nombre
                 this.detalle.expositor = data[0].expositor
                 this.detalle.lugar = data[0].lugar
@@ -317,24 +348,24 @@ export default {
                 console.log(error)
             })
         },
-        getInscripcionesTotal (id) {
-            let valor = Main.url
+        getInscripcionesTotal(id) {
+            const prueba = this.$route.params.id
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`${valor}/getInscripcionesTotal/${id}`, this.apii, auth).then(({ data }) => {
+            return axios.post(`${valor}/getInscripcionesTotal/${prueba}`, this.apii, auth).then(({ data }) => {
                 this.inscripciones = data
                 // eslint-disable-next-line no-unused-expressions
-                console.this.inscripciones
             }).catch((error) => {
                 console.log(error)
             })
         },
-        updateAsistencia () {
-            let valor = Main.url
+        updateAsistencia() {
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
@@ -345,16 +376,21 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             // eslint-disable-next-line camelcase
-            const url_concatenado = `${valor}/updateAsistencia/?dni=${dni}&id_evento=${id_evento}`
-            axios.post(url_concatenado, this.apii, auth).then(() => {
+            const url_concatenado = `${valor}/updateAsistencia?dni=${dni}&id_evento=${id_evento}`
+            return axios.post(url_concatenado, this.apii, auth).then(() => {
                 this.getInscripcionesTotal(this.url_id)
                 this.dni = ''
+                this.AlertSwall('Asistencia', 'Se registro la asistencia correctamente!', 'success')
+                    setTimeout(function() {
+                    location.reload();
+                    }, 1000);
+                
             }).catch((error) => {
                 console.log(error)
             })
         },
-        updateRecibo (dni) {
-            let valor = Main.url
+        updateRecibo(dni) {
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
@@ -366,20 +402,59 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             // eslint-disable-next-line camelcase
-            const url_concatenado = `${valor}/updateRecibo/?recibo=${recibo}&id_evento=${id_evento}&dni=${dni}`
-            axios.post(url_concatenado, this.apii, auth).then(() => {
+            const url_concatenado = `${valor}/updateRecibo?recibo=${recibo}&id_evento=${id_evento}&dni=${dni}`
+            return axios.post(url_concatenado, this.apii, auth).then(() => {
                 this.getInscripcionesTotal(this.url_id)
                 this.mostrarBoton = false
-                window.alert('Se registro el recibo correctamente!')
+                this.AlertSwall('Recibo', 'Se registro el recibo correctamente!', 'success')
+                setTimeout(function() {
+                    location.reload();
+                    }, 1000);
             }).catch((error) => {
                 console.log(error)
             })
+        },
+        AlertSwall($title, $text, $icon) {
+            Swal.fire({
+            title: $title,
+            text: $text,
+            icon: $icon
+        })
+        },
+
+        totalPaginas() {
+            return Math.ceil(this.inscripciones.length / this.ElementforPage)
+        },
+        getdatapagina(pagina) {
+            this.page = pagina
+            const ini = (pagina * this.ElementforPage) - this.ElementforPage
+            const fin = (pagina * this.ElementforPage)
+            this.datospaginados = this.inscripciones
+                .filter(inscripcion => inscripcion.dni.toString().toLowerCase().includes(this.busqueda.toLowerCase()))
+                .slice(ini, fin)
+        },
+        getprev() {
+            if (this.page > 1) {
+                this.page--
+            }
+            this.getdatapagina(this.page)
+        },
+        getnext() {
+            if (this.page < this.totalPaginas()) {
+                this.page++
+            }
+            this.getdatapagina(this.page)
         }
     },
-    created () {
+    created() {
         this.url_id = this.$route.params.id
         this.getEditEvento(this.url_id)
         this.getInscripcionesTotal(this.url_id)
+    },
+    mounted() {
+        this.getInscripcionesTotal().then(() => {
+            this.getdatapagina(1)
+        })
     }
 }
 

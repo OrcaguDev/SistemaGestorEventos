@@ -1,3 +1,4 @@
+<!-- eslint-disable no-unused-vars -->
 <template>
     <div class="container px-4 mx-auto mt-6">
         <div class="relative flex flex-col w-full min-w-0 mb-6 break-words border-0 rounded-lg shadow-lg bg-blueGray-100">
@@ -6,11 +7,12 @@
                     <h6 class="text-xl font-bold text-blueGray-700">Inscripción</h6>
                 </div>
             </div>
+
             <div class="flex-auto px-4 py-10 pt-0 lg:px-10">
                 <div>
                     <img src="../../assets/img/EVENTOS.jpg" alt=""><br>
 
-                    <a :href="`${valor}/informe/${evento.informe}`" target="_blank"
+                    <a :href="`${this.valoor}/informe/${evento.informe}`" target="_blank"
                         class="px-2 py-3 ml-4 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none">
                         DESCARGAR BROCHURE</a>
                 </div>
@@ -101,7 +103,8 @@
                                 <label class="block mb-2 font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                                     DNI
                                 </label>
-                                <input type="text" v-model="inscripcion.dni"
+                                <input type="text" v-model="inscripcion.dni" maxlength="8" minlength="8" pattern="[0-9]{8}"
+                                    title="Ingrese un DNI válido" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                                     class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                                     required />
                             </div>
@@ -112,7 +115,9 @@
                                 <label class="block mb-2 font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                                     Telefono
                                 </label>
-                                <input type="text" v-model="inscripcion.celular"
+                                <input type="text" v-model="inscripcion.celular" maxlength="9" minlength="9"
+                                    pattern="[0-9]{9}" title="Ingrese un número de celular válido"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                                     class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                                     required />
                             </div>
@@ -123,7 +128,7 @@
                                 <label class="block mb-2 font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                                     Email
                                 </label>
-                                <input type="text" v-model="inscripcion.email"
+                                <input type="email" v-model="inscripcion.email"
                                     class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                                     required />
                             </div>
@@ -163,27 +168,20 @@
 
                     </div>
 
-                    <hr class="mt-6 mb-4 border-b-1 border-blueGray-300" />
-
-                    <!-- Habilitar despues de validar sus datos con el DNI -->
-                    <div class="flex flex-wrap">
-
-                    </div>
-
-                    <hr class="mt-6 mb-4 border-b-1 border-blueGray-300" />
-
                     <span>{{ mensaje }}</span>
                     <!-- Despues de validar los datos de los inputs de arriba, mostrar este div para concluir con la inscripcion -->
 
                     <div class="w-full px-4 lg:w-3/12">
 
                     </div>
+                    <div v-if="BtnInscripcion === 1">
+                        <button
+                            class="w-full px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
+                            type="submit">
+                            Inscribirse
+                        </button>
+                    </div>
 
-                    <button
-                        class="w-full px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
-                        type="submit">
-                        Inscribirse
-                    </button>
                 </form>
             </div>
         </div>
@@ -218,25 +216,25 @@ export default {
                 certificacion: false,
                 url_id: ''
             },
-            apii: {
-                api_token: ''
-            },
             url_id: '',
             mensaje: '',
-            isVisibleeee: 1
+            isVisibleeee: 1,
+            valoor: Main.url,
+            BtnInscripcion: 1
         }
+    },
+    mounted () {
+        this.url_id = this.$route.params.id
+        this.getEditEvento(this.url_id)
     },
     methods: {
 
         getEditEvento (id) {
-            let valor = Main.url
-            const objetoString = localStorage.getItem('token')
-            const objeto = JSON.parse(objetoString)
-            this.apii.api_token = objeto
+            const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`${valor}/evento/${id}`, this.apii, auth).then(({ data }) => {
+            axios.post(`${valor}/evento/${id}`, auth).then(({ data }) => {
                 this.evento.nombre = data[0].nombre
                 this.evento.expositor = data[0].expositor
                 this.evento.lugar = data[0].lugar
@@ -255,41 +253,46 @@ export default {
             })
         },
         storeInscripcion () {
-            let valor = Main.url
+            this.BtnInscripcion = 0
+            const valor = Main.url
             this.inscripcion.url_id = this.$route.params.id
-            const objetoString = localStorage.getItem('token')
-            const objeto = JSON.parse(objetoString)
-            this.inscripcion.api_token = objeto
             const fechaInscripcion = this.evento.fechaInscripcion
             const fechaInscripcionFin = this.evento.fechaInscripcionFin
             const dni = this.inscripcion.dni
-            // eslint-disable-next-line camelcase
-            const id_evento = this.inscripcion.url_combinado
             const fechaActual = new Date()
-            const año = fechaActual.getFullYear()
-            const mes = fechaActual.getMonth() + 1 // Ten en cuenta que los meses comienzan desde 0
-            const día = fechaActual.getDate()
-            const fechaFormateada = `${año}-${mes < 10 ? '0' : ''}${mes}-${día < 10 ? '0' : ''}${día}`
 
-            if (fechaFormateada >= fechaInscripcion && fechaFormateada <= fechaInscripcionFin) {
-                const auth = {
-                    headers: { 'Content-Type': 'application/json' }
-                }
+            const fechaincripcionformateada = new Date(fechaInscripcion)
+
+            const fechaincripcionfinformateada = new Date(fechaInscripcionFin)
+
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+
+            if (fechaActual >= fechaincripcionformateada && fechaActual <= fechaincripcionfinformateada) {
                 // eslint-disable-next-line camelcase
-                const url_combinado = `${valor}/validateInscripciones/?dni=${dni}&id_evento=${this.inscripcion.url_id}`
+                const url_combinado = `${valor}/validateInscripciones?dni=${dni}&id_evento=${this.inscripcion.url_id}`
                 axios.post(url_combinado, this.inscripcion, auth).then((data) => {
                     if (data.data[0].cuentaInscripcion > 0) {
                         this.AlertSwall('Error!!', 'Ya se encuentra registrado en este evento.', 'error')
                     } else {
-                        axios.post(`${valor}/storeInscripcion`, this.inscripcion).then(() => {
+                        axios.post(`${valor}/storeInscripcionPublic`, this.inscripcion).then(() => {
                             // eslint-disable-next-line no-unused-expressions
                             this.isVisibleeee === 0
                             this.AlertSwall('Registrado Correctamente!!', 'Registo completado satisfactoriamente!', 'success')
+                            this.inscripcion.dni = ''
+                            this.inscripcion.nombre = ''
+                            this.inscripcion.apellido = ''
+                            this.inscripcion.celular = ''
+                            this.inscripcion.email = ''
+                            this.inscripcion.certificacion = false
+                            this.BtnInscripcion = 1
                         })
                     }
                 })
             } else {
                 this.AlertSwall('Error!!', 'El evento ya no se encuentra disponible.', 'error')
+                this.BtnInscripcion = 1
             }
         },
         AlertSwall ($title, $text, $icon) {
@@ -299,10 +302,6 @@ export default {
                 icon: $icon
             })
         }
-    },
-    mounted () {
-        this.url_id = this.$route.params.id
-        this.getEditEvento(this.url_id)
     }
 
 }

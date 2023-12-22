@@ -71,7 +71,7 @@ export default {
     methods: {
 
         login () {
-            let valor = Main.url;
+            const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
@@ -92,7 +92,6 @@ export default {
                         'Tus Credenciales No son Correctas',
                         'error'
                     )
-                    // console.log("Las claves no son correctas.");
                     this.error = 'Las claves no son correctas.'
                 }
             })

@@ -16,6 +16,9 @@ import Login from '@/views/Login.vue'
 import regPagos from '@/views/admin/pagos/RegistroPagos.vue'
 import listPagos from '@/views/admin/pagos/ListaPagos.vue'
 
+//Actualizar datos
+import Contrasenia from '@/views/admin/Contrasenia.vue'
+
 // views for edit
 import editEvent from '@/views/admin/editar/EditEvento.vue'
 import editReglas from '@/views/admin/editar/EditRegla.vue'
@@ -34,6 +37,16 @@ import timeLine from '@/views/admin/TimeLine.vue'
 
 import axios from 'axios'
 import Main from '../main.js'
+
+import Swal from 'sweetalert2'
+
+const Alertlogin = ($title, $text, $icon) => {
+    Swal.fire({
+        title: $title,
+        text: $text,
+        icon: $icon
+    })
+}
 
 const userRoles = [
 
@@ -74,6 +87,11 @@ const routes = [
                     if (userRoles[0].id === userRol) {
                         next()
                     } else {
+                        Alertlogin(
+                            'Error!!',
+                            'No tienes permisos para acceder a esta ruta',
+                            'error'
+                        )
                         next('/admin/dashboard')
                     }
                 }
@@ -141,10 +159,19 @@ const routes = [
                     if (userRoles[0].id === userRol) {
                         next()
                     } else {
+                        Alertlogin(
+                            'Error!!',
+                            'No tienes permisos para acceder a esta ruta',
+                            'error'
+                        )
                         next('/admin/dashboard')
                     }
                 }
 
+            },
+            {
+                path: '/admin/Contrasenia',
+                component: Contrasenia
             }
         ]
     },
@@ -158,7 +185,7 @@ const routes = [
         component: InscripcionPublica
 
     },
-    
+
     { path: '/:pathMatch(.*)*', redirect: '/' }
 ]
 
@@ -170,7 +197,7 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     const token = localStorage.getItem('token')
     const objeto = JSON.parse(token)
-    let valor = Main.url
+    const valor = Main.url
     const apitoken = {
         api_token: objeto
     }
@@ -192,8 +219,9 @@ router.beforeEach(async (to, from, next) => {
                     })
                 })
             })
+            // eslint-disable-next-line n/handle-callback-err
             .catch(error => {
-                console.log('Error al obtener roles:', error)
+                console.log('No logueado - Roles')
             })
 
         // Continúa la navegación

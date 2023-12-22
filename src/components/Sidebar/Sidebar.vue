@@ -301,26 +301,6 @@
         </ul>
 
         <!-- Divider -->
-        <!-- <hr class="my-4 md:min-w-full" />
-        <h6
-          class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
-        >
-          Sand Box
-        </h6>
-
-        <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-          <li class="items-center">
-            <router-link
-              class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-              to="/inscripciones/pruebas"
-            >
-              <i class="fas fa-fingerprint text-blueGray-300 mr-2 text-sm"></i>
-              Pruebas
-            </router-link>
-          </li>
-        </ul> -->
-
-        <!-- Divider -->
         <hr class="my-4 md:min-w-full" />
         <!-- Heading -->
         <h6
@@ -341,6 +321,30 @@
             </router-link>
           </li>
         </ul>
+
+        <!-- Divider -->
+        <hr class="my-4 md:min-w-full" />
+        <!-- Heading -->
+        <h6
+          class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
+        >
+          Datos
+        </h6>
+        <!-- Navigation -->
+
+        <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
+          <li class="items-center">
+            <router-link
+              class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
+              to="/admin/Contrasenia"
+            >
+              <i class="fas fa-charts text-blueGray-300 mr-2 text-sm"></i>
+              Actualizar Contraseña
+            </router-link>
+          </li>
+        </ul>
+
+
       </div>
     </div>
   </nav>

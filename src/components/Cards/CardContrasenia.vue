@@ -1,46 +1,46 @@
 <template>
-    <div class="relative flex flex-col w-full min-w-0 mb-6 break-words border-0 rounded-lg shadow-lg bg-blueGray-100">
+    <div
+        class="relative flex flex-col w-full lg:w-6/12 min-w-0 mb-6 break-words border-0 rounded-lg shadow-lg bg-blueGray-100">
         <div class="px-6 py-6 mb-0 bg-white rounded-t">
-            <div class="flex justify-between text-center">
-                <h6 class="text-xl font-bold text-blueGray-700">Registro de Links de Pago</h6>
+            <div class="flex text-center">
+                <h6 class="text-xl font-bold text-blueGray-700">Actualizacion de datos</h6>
             </div>
         </div>
         <div class="flex-auto px-4 py-10 pt-0 lg:px-10">
-            <form @submit.prevent="storePagos()">
+            <form @submit.prevent="updatePass()">
                 <h6 class="mt-3 mb-6 text-sm font-bold uppercase text-blueGray-400">
-                    Información del Link
+                    Información de la cuenta
                 </h6>
                 <div class="flex flex-wrap">
-                    <div class="w-full px-4 lg:w-6/12">
+                    <div class="w-full px-4 ">
                         <div class="relative w-full mb-3">
                             <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600" htmlFor="grid-password">
-                                Nombre del Evento
+                                Correo Electronico
                             </label>
-                            <input type="text"
+                            <input type="email"
                                 class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
-                                v-model="pagos.nombre" required/>
+                                v-model="email" required />
                         </div>
                     </div>
-                    <div class="w-full px-4 lg:w-6/12">
+                    <div class="w-full px-4 ">
                         <div class="relative w-full mb-3">
                             <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600" htmlFor="grid-password">
-                                URL de pago
+                                Contraseña
                             </label>
-                            <input type="text"
+                            <input type="password" id="password"
                                 class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
-                                v-model="pagos.url" required/>
+                                v-model="password" required />
                         </div>
                     </div>
 
-                    <div class="w-full px-4 lg:w-12/12">
+                    <div class="w-full px-4 ">
                         <div class="relative w-full mb-3">
                             <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600" htmlFor="grid-password">
-                                Descripción
+                                Repita la contraseña
                             </label>
-                            <textarea type="text"
+                            <input type="password"
                                 class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
-                                v-model="pagos.descripcion" required>
-                            </textarea>
+                                v-model="password2" required />
                         </div>
                     </div>
 
@@ -52,7 +52,7 @@
                     <button
                         class="w-full px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
                         type="submit">
-                        Registrar Link
+                        Actualizar datos
                     </button>
                 </div>
 
@@ -61,50 +61,56 @@
     </div>
 </template>
 
-<script>
-import axios from 'axios'
-import Swal from 'sweetalert2'
-import Main from '../../main.js'
-export default {
-    data () {
-        return {
-            pagos: {
-                url: '',
-                nombre: '',
-                api_token: '',
-                descripcion: '',
-                id_area: 0
-            }
 
+<script>
+import Main from '../../main.js'
+import Swal from 'sweetalert2'
+import axios, { AxiosHeaders } from 'axios'
+export default {
+    data() {
+        return {
+            email: '',
+            password: '',
+            password2: '',
+            valor: Main.url
         }
     },
-    mounted () {
-        const objetoString = localStorage.getItem('token')
-        const objeto = JSON.parse(objetoString)
-        const idarea = localStorage.getItem('area')
-        this.pagos.api_token = objeto
-        this.pagos.id_area = idarea
-    },
+
     methods: {
-        storePagos () {
-            const valor = Main.url
-            const auth = {
+
+        updatePass() {
+            if (this.password === this.password2) {
+                const auth = {
                 headers: { 'Content-Type': 'application/json' }
+                }
+                axios.post(`${this.valor}/actualizarContrasenia?email=${this.email}&password=${this.password}`, auth)
+                this.AlertSwall('Actualizado !', 'Ha sido editado correctamente!', 'success')
+                this.email= ''
+                this.password= ''
+                this.password2= ''
+            } else {
+                this.AlertSwall('Error de credenciales', 'Contraseña erronea', 'error')
+                .then(() => {
+                        // Establecer el foco en el campo de contraseña después de cerrar la alerta
+                        this.focusPasswordInput();
+                    });
             }
-            axios.post(`${valor}/storePagos`, this.pagos, auth).then(() => {
-                this.AlertSwall(
-                    'Link de Pago Registrado',
-                    'Link de Pago Registrado Correctamente',
-                    'success')
-                this.$router.push('/admin/pagos/listPagos')
-            })
         },
         AlertSwall ($title, $text, $icon) {
-            Swal.fire({
+            return Swal.fire({
                 title: $title,
                 text: $text,
                 icon: $icon
             })
+        },
+        focusPasswordInput() {
+            // Obtener la referencia al elemento del campo de contraseña
+            var passwordInput = document.getElementById("password");
+
+            // Establecer el foco en el campo de contraseña
+            if (passwordInput) {
+                passwordInput.focus();
+            }
         }
     }
 }

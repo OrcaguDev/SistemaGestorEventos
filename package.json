@@ -5,8 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build && gulp licenses",
-    "lint": "eslint ./src/ --ext .js,.vue",
-    "lint:fix": "eslint --fix --ext .vue,.js ./src ",
+    "lint": "eslint ./src --ext .js,.vue",
+    "lint:fix": "eslint --fix --ext .vue,.js ./src",
     "build:tailwind": "tailwind build src/assets/styles/index.css -o src/assets/styles/tailwind.css",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm run build:tailwind && npm run serve"
   },
@@ -52,5 +52,5 @@
   ],
   "overrides": {
     "autoprefixer": "10.4.5"
-}
+  }
 }

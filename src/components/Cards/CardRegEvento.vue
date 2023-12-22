@@ -184,11 +184,21 @@
                 v-model="evento.butacas_reservadas" required />
             </div>
           </div>
+          <div class="w-full px-4 lg:w-4/12">
+            <div class="relative w-full mb-3">
+              <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600" htmlFor="grid-password">
+                Cod. Tesoreria
+              </label>
+              <input type="number"
+                class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
+                v-model="evento.cod_tesoreria" required />
+            </div>
+          </div>
         </div>
 
         <hr class="mt-6 border-b-1 border-blueGray-300" />
 
-        <div>
+        <div v-if = "BtnRegistro === 1">
           <button
             class="w-full px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
             type="submit">
@@ -220,9 +230,11 @@ export default {
                 api_token: '',
                 id_regla: 0,
                 id_pagos: 0,
-                id_area: 0
+                id_area: 0,
+                cod_tesoreria: ''
             },
             reglas: [],
+            BtnRegistro: 1,
             pagos: [],
             apii: {
                 api_token: ''
@@ -242,7 +254,8 @@ export default {
             this.selectedFilePdf = event.target.files[0]
         },
         storeEvento () {
-          let valor = Main.url
+            this.BtnRegistro = 0
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.evento.api_token = objeto
@@ -266,6 +279,7 @@ export default {
             formData.append('id_pagos', this.evento.id_pagos)
             formData.append('api_token', this.evento.api_token)
             formData.append('id_area', this.evento.id_area)
+            formData.append('cod_tesoreria', this.evento.cod_tesoreria)
 
             axios.post(`${valor}/storeEvento`, formData, auth).then(() => {
                 this.AlertSwall(
@@ -277,7 +291,7 @@ export default {
             })
         },
         getReglas () {
-          let valor = Main.url
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
@@ -291,7 +305,7 @@ export default {
             })
         },
         getPagos () {
-          let valor = Main.url
+            const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
