@@ -98,8 +98,8 @@
                 <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                   Buscar Participante por Cod. CIP
                 </label>
-                <input type="text" maxlength="6" minlength="6" placeholder="Ingrese su Cod. CIP" pattern="[0-9]{8}"
-                                    title="Ingrese un DNI válido" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                <input type="text" maxlength="6" minlength="6" placeholder="Ingrese su Cod. CIP" pattern="[0-9]{6}"
+                  oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                   class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                   v-model="inscripcion.dni">
               </div>
@@ -181,11 +181,13 @@
               </div>
             </div>
 
-            <button
-              class="w-full px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
-              type="submit">
-              Inscribirse
-            </button>
+            <div v-if="BtnInscripcion === 1">
+              <button
+                class="w-full px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
+                type="submit">
+                Inscribirse
+              </button>
+            </div>
           </div>
         </form>
       </div>
@@ -229,7 +231,8 @@ export default {
       isVisibleeee: 1,
       alert: '',
       valoor: Main.url,
-      validacion: ''
+      validacion: '',
+      BtnInscripcion: 1
     }
   },
   mounted() {
@@ -292,13 +295,13 @@ export default {
     },
 
     storeInscripcion() {
+      this.BtnInscripcion = 0
       const valor = Main.url
       this.inscripcion.url_id = this.$route.params.id
       const fechaInscripcion = this.evento.fechaInscripcion
       const fechaInscripcionFin = this.evento.fechaInscripcionFin
       const dni = this.inscripcion.dni
       // eslint-disable-next-line camelcase
-      const id_evento = this.inscripcion.url_id
       const fechaActual = new Date()
       const año = fechaActual.getFullYear()
       const mes = fechaActual.getMonth() + 1 // Ten en cuenta que los meses comienzan desde 0
@@ -326,6 +329,7 @@ export default {
               this.inscripcion.celular = ''
               this.inscripcion.email = ''
               this.inscripcion.certificacion = false
+            this.BtnInscripcion = 1
             })
           }
         })
