@@ -54,6 +54,13 @@
                 <h6 class="mt-3 mb-6 text-sm font-bold uppercase text-blueGray-400">
                     Resumen del Evento
                 </h6>
+                <button @click="updateListRecibo(1)" v-if="mostrarBoton"
+                class="w-full text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none lg:w-3/12"
+                type="button">
+                <span class="material-symbols-outlined">
+                    save
+                </span>
+                </button>
                 <div class="flex flex-wrap">
 
                     <div class="w-full px-4 lg:w-3/12">
@@ -222,27 +229,14 @@
                                 No
                             </td>
 
-                            <td>
+                            <td v-if="inscripcion.pago == 1"
+                                class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                Pagado
+                            </td>
 
-                                <template v-if="inscripcion.recibo === null">
-                                    <input type="text"
-                                        class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow lg:w-9/12 placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
-                                        v-model="recibo" />
-                                    <button @click="updateRecibo(inscripcion.dni)" v-if="mostrarBoton"
-                                        class="w-full text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none lg:w-3/12"
-                                        type="button">
-                                        <span class="material-symbols-outlined">
-                                            save
-                                        </span>
-                                    </button>
-                                </template>
-
-                                <template v-else>
-                                    <label>
-                                        {{ inscripcion.recibo }}
-                                    </label>
-                                </template>
-
+                            <td v-else
+                                class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                                Debiendo
                             </td>
                             <!-- <td v-if="inscripcion.recibo == 1" class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                 Si
@@ -292,8 +286,8 @@ export default {
                 fechaFin: '',
                 fechaInscripcion: '',
                 id_regla: '',
-                recibo: null,
                 tipo: '',
+                cod_tesoreria:'',
                 api_token: ''
             },
             apii: {
@@ -344,6 +338,7 @@ export default {
                 this.detalle.fechaFin = data[0].fechaFin
                 this.detalle.id_regla = data[0].id_regla
                 this.detalle.fechaInscripcion = data[0].fechaInscripcion
+                this.detalle.cod_tesoreria = data[0].cod_tesoreria
             }).catch((error) => {
                 console.log(error)
             })
@@ -363,6 +358,40 @@ export default {
             }).catch((error) => {
                 console.log(error)
             })
+        },
+
+        updateListRecibo() {
+            const valor = Main.url
+            this.getEditEvento(this.url_id)
+            let cod_tesoreria = this.detalle.cod_tesoreria;
+            let url = "https://app-cipcdll.com:81/verpago-evento";
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            this.inscripciones.forEach(element => {
+                axios.get(`${url}/${cod_tesoreria}/${element.dni}`).then((dataaa) => {
+                    let resultado = dataaa.data.data.cod_result;
+                    console.log(resultado);
+                    if(resultado != null){
+                        element.hasRecibo = "SI";
+                        axios.post(`${valor}/updateReciboTesoreria?&inscripcion_id=${element.inscripcion_id}`,this.apii, auth).then(() => {
+                            this.AlertSwall('Actualizado', 'Se ha actualizado la lista correctamente', 'success')
+                            setTimeout(function() {
+                            location.reload();
+                            }, 1000);
+                        }
+                        ).catch((error) => {
+                            console.log(error)
+                        })
+                        
+                    }
+            });
+            });
+            
+            
         },
         updateAsistencia() {
             const valor = Main.url
@@ -389,38 +418,7 @@ export default {
                 console.log(error)
             })
         },
-        updateRecibo(dni) {
-            const valor = Main.url
-            const objetoString = localStorage.getItem('token')
-            const objeto = JSON.parse(objetoString)
-            this.apii.api_token = objeto
-            const recibo = this.recibo
-            // eslint-disable-next-line camelcase
-            const id_evento = this.url_id
 
-            const auth = {
-                headers: { 'Content-Type': 'application/json' }
-            }
-            // eslint-disable-next-line camelcase
-            const url_concatenado = `${valor}/updateRecibo?recibo=${recibo}&id_evento=${id_evento}&dni=${dni}`
-            return axios.post(url_concatenado, this.apii, auth).then(() => {
-                this.getInscripcionesTotal(this.url_id)
-                this.mostrarBoton = false
-                this.AlertSwall('Recibo', 'Se registro el recibo correctamente!', 'success')
-                setTimeout(function() {
-                    location.reload();
-                    }, 1000);
-            }).catch((error) => {
-                console.log(error)
-            })
-        },
-        AlertSwall($title, $text, $icon) {
-            Swal.fire({
-            title: $title,
-            text: $text,
-            icon: $icon
-        })
-        },
 
         totalPaginas() {
             return Math.ceil(this.inscripciones.length / this.ElementforPage)
@@ -444,12 +442,20 @@ export default {
                 this.page++
             }
             this.getdatapagina(this.page)
-        }
+        },
+        AlertSwall($title, $text, $icon) {
+        Swal.fire({
+        title: $title,
+        text: $text,
+        icon: $icon
+      })
+    }
     },
     created() {
         this.url_id = this.$route.params.id
         this.getEditEvento(this.url_id)
         this.getInscripcionesTotal(this.url_id)
+        this.updateListRecibo(1)
     },
     mounted() {
         this.getInscripcionesTotal().then(() => {
