@@ -161,6 +161,13 @@ export default {
             })
         },
         async ObtenerDatos () {
+            this.AlertSwall(
+                'Espera',
+                'Actualizando Datos',
+                'info',
+                3000,
+                false
+            )
             try {
                 await Promise.all([
                     this.getContadorISS(),
@@ -173,6 +180,13 @@ export default {
                     this.getconstanciasCOLEGIATURA()
 
                 ])
+                this.AlertSwall(
+                    'Actualizado',
+                    'Datos Actualizados',
+                    'success',
+                    1000,
+                    false
+                )
                 this.BarrasReporte()
             } catch (error) {
                 console.error('Error en mounted:', error)
