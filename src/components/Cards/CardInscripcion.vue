@@ -12,8 +12,8 @@
           <img src="../../assets/img/EVENTOS.jpg" alt=""><br>
 
           <a :href="`${this.valoor}/informe/${evento.informe}`" target="_blank"
-              class="px-2 py-3 ml-4 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none">
-              DESCARGAR BROCHURE</a>
+            class="px-2 py-3 ml-4 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none">
+            DESCARGAR BROCHURE</a>
         </div>
         <br>
         <form @submit.prevent="storeInscripcion()">
@@ -96,9 +96,10 @@
             <div class="w-full px-4 lg:w-6/12">
               <div class="relative w-full mb-3">
                 <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600" htmlFor="grid-password">
-                  Buscar Participante por DNI / Cod. CIP
+                  Buscar Participante por Cod. CIP
                 </label>
-                <input type="text"
+                <input type="text" maxlength="6" minlength="6" placeholder="Ingrese su Cod. CIP" pattern="[0-9]{6}"
+                  oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                   class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                   v-model="inscripcion.dni">
               </div>
@@ -188,7 +189,7 @@
                   Validar
                 </button>
               </div> -->
-<!--
+<!-- 
             </div>
           </div> -->
 
@@ -208,11 +209,13 @@
               </div>
             </div>
 
-            <button
-              class="w-full px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
-              type="submit">
-              Inscribirse
-            </button>
+            <div v-if="BtnInscripcion === 1">
+              <button
+                class="w-full px-6 py-3 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
+                type="submit">
+                Inscribirse
+              </button>
+            </div>
           </div>
         </form>
       </div>
@@ -256,7 +259,7 @@ export default {
             isVisibleeee: 1,
             alert: '',
             valoor: Main.url,
-            validacion: ''
+            validacion:''
         }
     },
     mounted () {
@@ -265,20 +268,19 @@ export default {
     },
     methods: {
         async validarDni () {
-            const valor = Main.url
+          
+          const valor = Main.url
             this.inscripcion.url_id = this.$route.params.id
             await axios.post(`${valor}/obtenerReglaEvento/${this.inscripcion.url_id}`).then((data) => {
-                // eslint-disable-next-line camelcase
-                const url_validacion = data.data[0].url
-                // eslint-disable-next-line camelcase
-                axios.get(`${url_validacion}/${this.inscripcion.dni}`).then((data) => {
-                    const validacion = data.data.data.habilidad.var_habilitacion_estado
-                    this.validacion = validacion// console.log(validacion)
-                }).catch((error) => {
-                    console.log(error)
-                })
-                console.log(this.validacion)
-                // eslint-disable-next-line camelcase
+            const url_validacion = data.data[0].url
+            axios.get(`${url_validacion}/${this.inscripcion.dni}`).then((data) => {
+              const validacion = data.data.data.habilidad.var_habilitacion_estado
+              this.validacion = validacion// console.log(validacion)
+            }).catch((error) => {
+              console.log(error)
+            })
+            console.log(this.validacion)
+              // eslint-disable-next-line camelcase
                 // const url_first = data.data[0].url
                 // eslint-disable-next-line camelcase
                 // axios.get(`${url_first}/${this.inscripcion.habilidad}`).then((data) => {
@@ -350,7 +352,7 @@ export default {
             const fechaInscripcion = this.evento.fechaInscripcion
             const fechaInscripcionFin = this.evento.fechaInscripcionFin
             const dni = this.inscripcion.dni
-            // eslint-disable-next-line camelcase, no-unused-vars
+            // eslint-disable-next-line camelcase
             const id_evento = this.inscripcion.url_id
             const fechaActual = new Date()
             const año = fechaActual.getFullYear()
@@ -358,42 +360,43 @@ export default {
             const día = fechaActual.getDate()
             const fechaFormateada = `${año}-${mes < 10 ? '0' : ''}${mes}-${día < 10 ? '0' : ''}${día}`
 
-            if (fechaFormateada >= fechaInscripcion && fechaFormateada <= fechaInscripcionFin) {
-                const auth = {
-                    headers: { 'Content-Type': 'application/json' }
-                }
-                // eslint-disable-next-line camelcase
-                const url_combinado = `${valor}/validateInscripciones?dni=${dni}&id_evento=${this.inscripcion.url_id}`
-                axios.post(url_combinado, this.inscripcion, auth).then((data) => {
-                    if (data.data[0].cuentaInscripcion > 0) {
-                        this.AlertSwall('Error!!', 'Ya se encuentra registrado a este evento', 'error')
-                        window.location.reload()
-                    } else {
-                        axios.post(`${valor}/storeInscripcion`, this.inscripcion, auth).then((data) => {
-                            this.AlertSwall('Registrado', 'Registo completado satisfactoriamente!', 'success')
-                            // eslint-disable-next-line no-unused-expressions
-                            this.isVisibleeee === 0
-                            this.inscripcion.dni = ''
-                            this.inscripcion.nombre = ''
-                            this.inscripcion.apellido = ''
-                            this.inscripcion.celular = ''
-                            this.inscripcion.email = ''
-                            this.inscripcion.certificacion = false
-                        })
-                    }
-                })
-            } else {
-                this.AlertSwall('Error!!', 'El evento ya no se encuentra disponible.', 'error')
-            }
-        },
-        AlertSwall ($title, $text, $icon) {
-            Swal.fire({
-                title: $title,
-                text: $text,
-                icon: $icon
-            })
+      if (fechaFormateada >= fechaInscripcion && fechaFormateada <= fechaInscripcionFin) {
+        const auth = {
+          headers: { 'Content-Type': 'application/json' }
         }
-
+        // eslint-disable-next-line camelcase
+        const url_combinado = `${valor}/validateInscripciones?dni=${dni}&id_evento=${this.inscripcion.url_id}`
+        axios.post(url_combinado, this.inscripcion, auth).then((data) => {
+          if (data.data[0].cuentaInscripcion > 0) {
+            this.AlertSwall('Error!!', 'Ya se encuentra registrado a este evento', 'error')
+            window.location.reload()
+          } else {
+            axios.post(`${valor}/storeInscripcion`, this.inscripcion, auth).then((data) => {
+              this.AlertSwall('Registrado', 'Registo completado satisfactoriamente!', 'success')
+              // eslint-disable-next-line no-unused-expressions
+              this.isVisibleeee === 0
+              this.inscripcion.dni = ''
+              this.inscripcion.nombre = ''
+              this.inscripcion.apellido = ''
+              this.inscripcion.celular = ''
+              this.inscripcion.email = ''
+              this.inscripcion.certificacion = false
+            this.BtnInscripcion = 1
+            })
+          }
+        })
+      } else {
+        this.AlertSwall('Error!!', 'El evento ya no se encuentra disponible.', 'error')
+      }
+    },
+    AlertSwall($title, $text, $icon) {
+      Swal.fire({
+        title: $title,
+        text: $text,
+        icon: $icon
+      })
     }
+
+  }
 }
 </script>

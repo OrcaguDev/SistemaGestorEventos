@@ -241,6 +241,9 @@ export default {
                     'Evento Eliminado',
                     'Evento Eliminado Correctamente',
                     'success')
+                    setTimeout(function() {
+                    location.reload();
+                    }, 1000);
                 this.getTotal()
             })
         },
