@@ -61,13 +61,12 @@
     </div>
 </template>
 
-
 <script>
 import Main from '../../main.js'
 import Swal from 'sweetalert2'
 import axios, { AxiosHeaders } from 'axios'
 export default {
-    data() {
+    data () {
         return {
             email: '',
             password: '',
@@ -78,22 +77,22 @@ export default {
 
     methods: {
 
-        updatePass() {
+        updatePass () {
             if (this.password === this.password2) {
                 const auth = {
-                headers: { 'Content-Type': 'application/json' }
+                    headers: { 'Content-Type': 'application/json' }
                 }
                 axios.post(`${this.valor}/actualizarContrasenia?email=${this.email}&password=${this.password}`, auth)
                 this.AlertSwall('Actualizado !', 'Ha sido editado correctamente!', 'success')
-                this.email= ''
-                this.password= ''
-                this.password2= ''
+                this.email = ''
+                this.password = ''
+                this.password2 = ''
             } else {
                 this.AlertSwall('Error de credenciales', 'Contraseña erronea', 'error')
-                .then(() => {
+                    .then(() => {
                         // Establecer el foco en el campo de contraseña después de cerrar la alerta
-                        this.focusPasswordInput();
-                    });
+                        this.focusPasswordInput()
+                    })
             }
         },
         AlertSwall ($title, $text, $icon) {
@@ -103,13 +102,13 @@ export default {
                 icon: $icon
             })
         },
-        focusPasswordInput() {
+        focusPasswordInput () {
             // Obtener la referencia al elemento del campo de contraseña
-            var passwordInput = document.getElementById("password");
+            const passwordInput = document.getElementById('password')
 
             // Establecer el foco en el campo de contraseña
             if (passwordInput) {
-                passwordInput.focus();
+                passwordInput.focus()
             }
         }
     }

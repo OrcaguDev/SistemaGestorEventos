@@ -188,7 +188,7 @@
                   Validar
                 </button>
               </div> -->
-<!-- 
+<!--
             </div>
           </div> -->
 
@@ -256,7 +256,7 @@ export default {
             isVisibleeee: 1,
             alert: '',
             valoor: Main.url,
-            validacion:''
+            validacion: ''
         }
     },
     mounted () {
@@ -265,19 +265,20 @@ export default {
     },
     methods: {
         async validarDni () {
-          
-          const valor = Main.url
+            const valor = Main.url
             this.inscripcion.url_id = this.$route.params.id
             await axios.post(`${valor}/obtenerReglaEvento/${this.inscripcion.url_id}`).then((data) => {
-            const url_validacion = data.data[0].url
-            axios.get(`${url_validacion}/${this.inscripcion.dni}`).then((data) => {
-              const validacion = data.data.data.habilidad.var_habilitacion_estado
-              this.validacion = validacion// console.log(validacion)
-            }).catch((error) => {
-              console.log(error)
-            })
-            console.log(this.validacion)
-              // eslint-disable-next-line camelcase
+                // eslint-disable-next-line camelcase
+                const url_validacion = data.data[0].url
+                // eslint-disable-next-line camelcase
+                axios.get(`${url_validacion}/${this.inscripcion.dni}`).then((data) => {
+                    const validacion = data.data.data.habilidad.var_habilitacion_estado
+                    this.validacion = validacion// console.log(validacion)
+                }).catch((error) => {
+                    console.log(error)
+                })
+                console.log(this.validacion)
+                // eslint-disable-next-line camelcase
                 // const url_first = data.data[0].url
                 // eslint-disable-next-line camelcase
                 // axios.get(`${url_first}/${this.inscripcion.habilidad}`).then((data) => {
@@ -349,7 +350,7 @@ export default {
             const fechaInscripcion = this.evento.fechaInscripcion
             const fechaInscripcionFin = this.evento.fechaInscripcionFin
             const dni = this.inscripcion.dni
-            // eslint-disable-next-line camelcase
+            // eslint-disable-next-line camelcase, no-unused-vars
             const id_evento = this.inscripcion.url_id
             const fechaActual = new Date()
             const año = fechaActual.getFullYear()

@@ -275,7 +275,7 @@ import axios from 'axios'
 import Main from '../../main.js'
 
 export default {
-    data() {
+    data () {
         return {
             detalle: {
                 nombre: '',
@@ -317,11 +317,11 @@ export default {
     },
 
     methods: {
-        goBack() {
+        goBack () {
             window.history.back()
         },
 
-        getEditEvento(id) {
+        getEditEvento (id) {
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
@@ -344,7 +344,7 @@ export default {
                 console.log(error)
             })
         },
-        getInscripcionesTotal(id) {
+        getInscripcionesTotal (id) {
             const prueba = this.$route.params.id
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
@@ -360,7 +360,7 @@ export default {
                 console.log(error)
             })
         },
-        updateAsistencia() {
+        updateAsistencia () {
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
@@ -380,7 +380,7 @@ export default {
                 console.log(error)
             })
         },
-        updateRecibo(dni) {
+        updateRecibo (dni) {
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
@@ -402,10 +402,10 @@ export default {
                 console.log(error)
             })
         },
-        totalPaginas() {
+        totalPaginas () {
             return Math.ceil(this.inscripciones.length / this.ElementforPage)
         },
-        getdatapagina(pagina) {
+        getdatapagina (pagina) {
             this.page = pagina
             const ini = (pagina * this.ElementforPage) - this.ElementforPage
             const fin = (pagina * this.ElementforPage)
@@ -413,25 +413,25 @@ export default {
                 .filter(inscripcion => inscripcion.dni.toString().toLowerCase().includes(this.busqueda.toLowerCase()))
                 .slice(ini, fin)
         },
-        getprev() {
+        getprev () {
             if (this.page > 1) {
                 this.page--
             }
             this.getdatapagina(this.page)
         },
-        getnext() {
+        getnext () {
             if (this.page < this.totalPaginas()) {
                 this.page++
             }
             this.getdatapagina(this.page)
         }
     },
-    created() {
+    created () {
         this.url_id = this.$route.params.id
         this.getEditEvento(this.url_id)
         this.getInscripcionesTotal(this.url_id)
     },
-    mounted() {
+    mounted () {
         this.getInscripcionesTotal().then(() => {
             this.getdatapagina(1)
         })

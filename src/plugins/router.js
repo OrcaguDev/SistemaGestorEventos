@@ -16,7 +16,7 @@ import Login from '@/views/Login.vue'
 import regPagos from '@/views/admin/pagos/RegistroPagos.vue'
 import listPagos from '@/views/admin/pagos/ListaPagos.vue'
 
-//Actualizar datos
+// Actualizar datos
 import Contrasenia from '@/views/admin/Contrasenia.vue'
 
 // views for edit
