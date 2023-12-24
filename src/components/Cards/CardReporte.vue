@@ -40,8 +40,9 @@
 import Chart from 'chart.js'
 import Main from '../../main.js'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 export default {
-    data () {
+    data() {
         return {
             totalISS: 0,
             totalIEPI: 0,
@@ -58,11 +59,20 @@ export default {
             fechaFin: ''
         }
     },
-    created () {
+    created() {
         this.ObtenerDatos()
     },
     methods: {
-        async getContadorISS () {
+        AlertSwall ($title, $text, $icon, $timer = 2000, $showConfirmButton = false) {
+            Swal.fire({
+                title: $title,
+                text: $text,
+                icon: $icon,
+                timer: $timer,
+                showConfirmButton: $showConfirmButton
+            })
+        },
+        async getContadorISS() {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -73,7 +83,7 @@ export default {
                 console.log(error)
             })
         },
-        async getContadorIEPI () {
+        async getContadorIEPI() {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -84,7 +94,7 @@ export default {
                 console.log(error)
             })
         },
-        async getContadorCOLEGIATURA () {
+        async getContadorCOLEGIATURA() {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -95,7 +105,7 @@ export default {
                 console.log(error)
             })
         },
-        async getContadorINFOCIP () {
+        async getContadorINFOCIP() {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -106,7 +116,7 @@ export default {
                 console.log(error)
             })
         },
-        async getconstanciasINFOCIP () {
+        async getconstanciasINFOCIP() {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -117,7 +127,7 @@ export default {
                 console.log(error)
             })
         },
-        async getconstanciasISS () {
+        async getconstanciasISS() {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -128,7 +138,7 @@ export default {
                 console.log(error)
             })
         },
-        async getconstanciasIEPI () {
+        async getconstanciasIEPI() {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -139,7 +149,7 @@ export default {
                 console.log(error)
             })
         },
-        async getconstanciasCOLEGIATURA () {
+        async getconstanciasCOLEGIATURA() {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -150,7 +160,7 @@ export default {
                 console.log(error)
             })
         },
-        async ObtenerDatos () {
+        async ObtenerDatos() {
             try {
                 await Promise.all([
                     this.getContadorISS(),
@@ -169,38 +179,54 @@ export default {
             }
         },
 
-        async actualizarDatos () {
+        async actualizarDatos() {
             if (this.fechaInicio === '' || this.fechaFin === '') {
-                alert('Debe ingresar las fechas')
+                this.AlertSwall(
+                    'Error Fechas',
+                    'Escoge una fecha de inicio y una fecha de fin',
+                    'error',
+                    3000,
+                    true
+                )
             } else {
+                this.AlertSwall(
+                    'Espera',
+                    'Actualizando Datos',
+                    'info',
+                    3000,
+                    false
+                )
                 try {
-                    try {
-                        this.totalINFOCIP = await this.obtenerEventostotales('1')
-                        this.totalISS = await this.obtenerEventostotales('2')
-                        this.totalIEPI = await this.obtenerEventostotales('3')
-                        this.totalCOLEGIATURA = await this.obtenerEventostotales('4')
+                    this.totalINFOCIP = await this.obtenerEventostotales('1')
+                    this.totalISS = await this.obtenerEventostotales('2')
+                    this.totalIEPI = await this.obtenerEventostotales('3')
+                    this.totalCOLEGIATURA = await this.obtenerEventostotales('4')
 
-                        this.totalconstanciasCOLEGIATURA = await this.obtenerconstanciastotales('4')
-                        this.totalconstanciasIEPI = await this.obtenerconstanciastotales('3')
-                        this.totalconstanciasINFOCIP = await this.obtenerconstanciastotales('1')
-                        this.totalconstanciasISS = await this.obtenerconstanciastotales('2')
+                    this.totalconstanciasCOLEGIATURA = await this.obtenerconstanciastotales('4')
+                    this.totalconstanciasIEPI = await this.obtenerconstanciastotales('3')
+                    this.totalconstanciasINFOCIP = await this.obtenerconstanciastotales('1')
+                    this.totalconstanciasISS = await this.obtenerconstanciastotales('2')
 
-                        console.log(this.totalconstanciasCOLEGIATURA)
-                        console.log(this.totalconstanciasIEPI)
-                        console.log(this.totalconstanciasINFOCIP)
-                        console.log(this.totalconstanciasISS)
+                    console.log(this.totalconstanciasCOLEGIATURA)
+                    console.log(this.totalconstanciasIEPI)
+                    console.log(this.totalconstanciasINFOCIP)
+                    console.log(this.totalconstanciasISS)
 
-                        console.log('Actualizado')
-                        this.BarrasReporte()
-                    } catch (error) {
-                        console.error('Error al actualizar datos:', error)
-                    }
+                    this.AlertSwall(
+                        'Actualizado',
+                        'Datos Actualizados',
+                        'success',
+                        1000,
+                        false
+                    )
+                    console.log('Actualizado')
+                    this.BarrasReporte()
                 } catch (error) {
-                    console.error('Error en mounted:', error)
+                    console.error('Error al actualizar datos:', error)
                 }
             }
         },
-        async obtenerconstanciastotales ($area) {
+        async obtenerconstanciastotales($area) {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -215,7 +241,7 @@ export default {
             // Devolver los datos
             return response.data[0].Constancias
         },
-        async obtenerEventostotales ($area) {
+        async obtenerEventostotales($area) {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -230,7 +256,7 @@ export default {
             // Devolver los datos
             return response.data[0].EventosTotales
         },
-        BarrasReporte () {
+        BarrasReporte() {
             this.$nextTick(function () {
                 if (window.myBar) {
                     window.myBar.destroy()
