@@ -189,7 +189,7 @@
                   Validar
                 </button>
               </div> -->
-<!-- 
+<!--
             </div>
           </div> -->
 
@@ -259,7 +259,7 @@ export default {
             isVisibleeee: 1,
             alert: '',
             valoor: Main.url,
-            validacion:''
+            validacion: ''
         }
     },
     mounted () {
@@ -268,19 +268,18 @@ export default {
     },
     methods: {
         async validarDni () {
-          
-          const valor = Main.url
+            const valor = Main.url
             this.inscripcion.url_id = this.$route.params.id
             await axios.post(`${valor}/obtenerReglaEvento/${this.inscripcion.url_id}`).then((data) => {
-            const url_validacion = data.data[0].url
-            axios.get(`${url_validacion}/${this.inscripcion.dni}`).then((data) => {
-              const validacion = data.data.data.habilidad.var_habilitacion_estado
-              this.validacion = validacion// console.log(validacion)
-            }).catch((error) => {
-              console.log(error)
-            })
-            console.log(this.validacion)
-              // eslint-disable-next-line camelcase
+                const url_validacion = data.data[0].url
+                axios.get(`${url_validacion}/${this.inscripcion.dni}`).then((data) => {
+                    const validacion = data.data.data.habilidad.var_habilitacion_estado
+                    this.validacion = validacion// console.log(validacion)
+                }).catch((error) => {
+                    console.log(error)
+                })
+                console.log(this.validacion)
+                // eslint-disable-next-line camelcase
                 // const url_first = data.data[0].url
                 // eslint-disable-next-line camelcase
                 // axios.get(`${url_first}/${this.inscripcion.habilidad}`).then((data) => {
@@ -360,43 +359,43 @@ export default {
             const día = fechaActual.getDate()
             const fechaFormateada = `${año}-${mes < 10 ? '0' : ''}${mes}-${día < 10 ? '0' : ''}${día}`
 
-      if (fechaFormateada >= fechaInscripcion && fechaFormateada <= fechaInscripcionFin) {
-        const auth = {
-          headers: { 'Content-Type': 'application/json' }
-        }
-        // eslint-disable-next-line camelcase
-        const url_combinado = `${valor}/validateInscripciones?dni=${dni}&id_evento=${this.inscripcion.url_id}`
-        axios.post(url_combinado, this.inscripcion, auth).then((data) => {
-          if (data.data[0].cuentaInscripcion > 0) {
-            this.AlertSwall('Error!!', 'Ya se encuentra registrado a este evento', 'error')
-            window.location.reload()
-          } else {
-            axios.post(`${valor}/storeInscripcion`, this.inscripcion, auth).then((data) => {
-              this.AlertSwall('Registrado', 'Registo completado satisfactoriamente!', 'success')
-              // eslint-disable-next-line no-unused-expressions
-              this.isVisibleeee === 0
-              this.inscripcion.dni = ''
-              this.inscripcion.nombre = ''
-              this.inscripcion.apellido = ''
-              this.inscripcion.celular = ''
-              this.inscripcion.email = ''
-              this.inscripcion.certificacion = false
-            this.BtnInscripcion = 1
+            if (fechaFormateada >= fechaInscripcion && fechaFormateada <= fechaInscripcionFin) {
+                const auth = {
+                    headers: { 'Content-Type': 'application/json' }
+                }
+                // eslint-disable-next-line camelcase
+                const url_combinado = `${valor}/validateInscripciones?dni=${dni}&id_evento=${this.inscripcion.url_id}`
+                axios.post(url_combinado, this.inscripcion, auth).then((data) => {
+                    if (data.data[0].cuentaInscripcion > 0) {
+                        this.AlertSwall('Error!!', 'Ya se encuentra registrado a este evento', 'error')
+                        window.location.reload()
+                    } else {
+                        axios.post(`${valor}/storeInscripcion`, this.inscripcion, auth).then((data) => {
+                            this.AlertSwall('Registrado', 'Registo completado satisfactoriamente!', 'success')
+                            // eslint-disable-next-line no-unused-expressions
+                            this.isVisibleeee === 0
+                            this.inscripcion.dni = ''
+                            this.inscripcion.nombre = ''
+                            this.inscripcion.apellido = ''
+                            this.inscripcion.celular = ''
+                            this.inscripcion.email = ''
+                            this.inscripcion.certificacion = false
+                            this.BtnInscripcion = 1
+                        })
+                    }
+                })
+            } else {
+                this.AlertSwall('Error!!', 'El evento ya no se encuentra disponible.', 'error')
+            }
+        },
+        AlertSwall ($title, $text, $icon) {
+            Swal.fire({
+                title: $title,
+                text: $text,
+                icon: $icon
             })
-          }
-        })
-      } else {
-        this.AlertSwall('Error!!', 'El evento ya no se encuentra disponible.', 'error')
-      }
-    },
-    AlertSwall($title, $text, $icon) {
-      Swal.fire({
-        title: $title,
-        text: $text,
-        icon: $icon
-      })
-    }
+        }
 
-  }
+    }
 }
 </script>

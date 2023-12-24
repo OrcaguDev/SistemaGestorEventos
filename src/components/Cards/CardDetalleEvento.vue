@@ -31,7 +31,7 @@
                                 Buscar Participante por DNI
                             </label>
                             <input type="text" v-model="dni" id="inputDNI" pattern="[0-9]{8}"
-                                    oninput="this.value = this.value.replace(/[^0-9]/g,'')" maxlength="8" 
+                                    oninput="this.value = this.value.replace(/[^0-9]/g,'')" maxlength="8"
                                 class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring">
                         </div>
 
@@ -271,7 +271,6 @@ import axios from 'axios'
 import Main from '../../main.js'
 import Swal from 'sweetalert2'
 
-
 export default {
     data () {
         return {
@@ -287,7 +286,7 @@ export default {
                 fechaInscripcion: '',
                 id_regla: '',
                 tipo: '',
-                cod_tesoreria:'',
+                cod_tesoreria: '',
                 api_token: ''
             },
             apii: {
@@ -360,11 +359,11 @@ export default {
             })
         },
 
-        updateListRecibo() {
+        updateListRecibo () {
             const valor = Main.url
             this.getEditEvento(this.url_id)
-            let cod_tesoreria = this.detalle.cod_tesoreria;
-            let url = "https://app-cipcdll.com:81/verpago-evento";
+            const cod_tesoreria = this.detalle.cod_tesoreria
+            const url = 'https://app-cipcdll.com:81/verpago-evento'
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
@@ -373,27 +372,24 @@ export default {
             }
             this.inscripciones.forEach(element => {
                 axios.get(`${url}/${cod_tesoreria}/${element.dni}`).then((dataaa) => {
-                    let resultado = dataaa.data.data.cod_result;
-                    console.log(resultado);
-                    if(resultado != null){
-                        element.hasRecibo = "SI";
-                        axios.post(`${valor}/updateReciboTesoreria?&inscripcion_id=${element.inscripcion_id}`,this.apii, auth).then(() => {
+                    const resultado = dataaa.data.data.cod_result
+                    console.log(resultado)
+                    if (resultado != null) {
+                        element.hasRecibo = 'SI'
+                        axios.post(`${valor}/updateReciboTesoreria?&inscripcion_id=${element.inscripcion_id}`, this.apii, auth).then(() => {
                             this.AlertSwall('Actualizado', 'Se ha actualizado la lista correctamente', 'success')
-                            setTimeout(function() {
-                            location.reload();
-                            }, 1000);
+                            setTimeout(function () {
+                                location.reload()
+                            }, 1000)
                         }
                         ).catch((error) => {
                             console.log(error)
                         })
-                        
                     }
-            });
-            });
-            
-            
+                })
+            })
         },
-        updateAsistencia() {
+        updateAsistencia () {
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
@@ -413,7 +409,7 @@ export default {
                 console.log(error)
             })
         },
-        updateRecibo(dni) {
+        updateRecibo (dni) {
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
@@ -435,7 +431,7 @@ export default {
                 console.log(error)
             })
         },
-        totalPaginas() {
+        totalPaginas () {
             return Math.ceil(this.inscripciones.length / this.ElementforPage)
         },
         getdatapagina (pagina) {
@@ -458,13 +454,13 @@ export default {
             }
             this.getdatapagina(this.page)
         },
-        AlertSwall($title, $text, $icon) {
-        Swal.fire({
-        title: $title,
-        text: $text,
-        icon: $icon
-      })
-    }
+        AlertSwall ($title, $text, $icon) {
+            Swal.fire({
+                title: $title,
+                text: $text,
+                icon: $icon
+            })
+        }
     },
     created () {
         this.url_id = this.$route.params.id

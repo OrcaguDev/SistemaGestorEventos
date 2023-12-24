@@ -42,7 +42,7 @@ import Main from '../../main.js'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 export default {
-    data() {
+    data () {
         return {
             totalISS: 0,
             totalIEPI: 0,
@@ -59,7 +59,7 @@ export default {
             fechaFin: ''
         }
     },
-    created() {
+    created () {
         this.ObtenerDatos()
     },
     methods: {
@@ -72,7 +72,7 @@ export default {
                 showConfirmButton: $showConfirmButton
             })
         },
-        async getContadorISS() {
+        async getContadorISS () {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -83,7 +83,7 @@ export default {
                 console.log(error)
             })
         },
-        async getContadorIEPI() {
+        async getContadorIEPI () {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -94,7 +94,7 @@ export default {
                 console.log(error)
             })
         },
-        async getContadorCOLEGIATURA() {
+        async getContadorCOLEGIATURA () {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -105,7 +105,7 @@ export default {
                 console.log(error)
             })
         },
-        async getContadorINFOCIP() {
+        async getContadorINFOCIP () {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -116,7 +116,7 @@ export default {
                 console.log(error)
             })
         },
-        async getconstanciasINFOCIP() {
+        async getconstanciasINFOCIP () {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -127,7 +127,7 @@ export default {
                 console.log(error)
             })
         },
-        async getconstanciasISS() {
+        async getconstanciasISS () {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -138,7 +138,7 @@ export default {
                 console.log(error)
             })
         },
-        async getconstanciasIEPI() {
+        async getconstanciasIEPI () {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -149,7 +149,7 @@ export default {
                 console.log(error)
             })
         },
-        async getconstanciasCOLEGIATURA() {
+        async getconstanciasCOLEGIATURA () {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -160,7 +160,7 @@ export default {
                 console.log(error)
             })
         },
-        async ObtenerDatos() {
+        async ObtenerDatos () {
             try {
                 await Promise.all([
                     this.getContadorISS(),
@@ -179,7 +179,7 @@ export default {
             }
         },
 
-        async actualizarDatos() {
+        async actualizarDatos () {
             if (this.fechaInicio === '' || this.fechaFin === '') {
                 this.AlertSwall(
                     'Error Fechas',
@@ -226,7 +226,7 @@ export default {
                 }
             }
         },
-        async obtenerconstanciastotales($area) {
+        async obtenerconstanciastotales ($area) {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -241,7 +241,7 @@ export default {
             // Devolver los datos
             return response.data[0].Constancias
         },
-        async obtenerEventostotales($area) {
+        async obtenerEventostotales ($area) {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -256,7 +256,7 @@ export default {
             // Devolver los datos
             return response.data[0].EventosTotales
         },
-        BarrasReporte() {
+        BarrasReporte () {
             this.$nextTick(function () {
                 if (window.myBar) {
                     window.myBar.destroy()
