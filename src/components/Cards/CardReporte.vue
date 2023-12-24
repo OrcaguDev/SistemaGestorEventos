@@ -188,6 +188,8 @@ export default {
                     false
                 )
                 this.BarrasReporte()
+                this.fechaInicio = ''
+                this.fechaFin = ''
             } catch (error) {
                 console.error('Error en mounted:', error)
             }
