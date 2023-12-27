@@ -31,7 +31,7 @@
                                 Buscar Participante por DNI
                             </label>
                             <input type="text" v-model="dni" id="inputDNI" pattern="[0-9]{8}"
-                                    oninput="this.value = this.value.replace(/[^0-9]/g,'')" maxlength="8" 
+                                    oninput="this.value = this.value.replace(/[^0-9]/g,'')" maxlength="8"
                                 class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring">
                         </div>
 
@@ -271,9 +271,8 @@ import axios from 'axios'
 import Main from '../../main.js'
 import Swal from 'sweetalert2'
 
-
 export default {
-    data() {
+    data () {
         return {
             detalle: {
                 nombre: '',
@@ -287,7 +286,7 @@ export default {
                 fechaInscripcion: '',
                 id_regla: '',
                 tipo: '',
-                cod_tesoreria:'',
+                cod_tesoreria: '',
                 api_token: ''
             },
             apii: {
@@ -315,11 +314,11 @@ export default {
     },
 
     methods: {
-        goBack() {
+        goBack () {
             window.history.back()
         },
 
-        getEditEvento(id) {
+        getEditEvento (id) {
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
@@ -343,7 +342,7 @@ export default {
                 console.log(error)
             })
         },
-        getInscripcionesTotal(id) {
+        getInscripcionesTotal (id) {
             const prueba = this.$route.params.id
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
@@ -360,11 +359,11 @@ export default {
             })
         },
 
-        updateListRecibo() {
+        updateListRecibo () {
             const valor = Main.url
             this.getEditEvento(this.url_id)
-            let cod_tesoreria = this.detalle.cod_tesoreria;
-            let url = "https://app-cipcdll.com:81/verpago-evento";
+            const cod_tesoreria = this.detalle.cod_tesoreria
+            const url = 'https://app-cipcdll.com:81/verpago-evento'
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
             this.apii.api_token = objeto
@@ -373,27 +372,24 @@ export default {
             }
             this.inscripciones.forEach(element => {
                 axios.get(`${url}/${cod_tesoreria}/${element.dni}`).then((dataaa) => {
-                    let resultado = dataaa.data.data.cod_result;
-                    console.log(resultado);
-                    if(resultado != null){
-                        element.hasRecibo = "SI";
-                        axios.post(`${valor}/updateReciboTesoreria?&inscripcion_id=${element.inscripcion_id}`,this.apii, auth).then(() => {
+                    const resultado = dataaa.data.data.cod_result
+                    console.log(resultado)
+                    if (resultado != null) {
+                        element.hasRecibo = 'SI'
+                        axios.post(`${valor}/updateReciboTesoreria?&inscripcion_id=${element.inscripcion_id}`, this.apii, auth).then(() => {
                             this.AlertSwall('Actualizado', 'Se ha actualizado la lista correctamente', 'success')
-                            setTimeout(function() {
-                            location.reload();
-                            }, 1000);
+                            setTimeout(function () {
+                                location.reload()
+                            }, 1000)
                         }
                         ).catch((error) => {
                             console.log(error)
                         })
-                        
                     }
-            });
-            });
-            
-            
+                })
+            })
         },
-        updateAsistencia() {
+        updateAsistencia () {
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
@@ -409,21 +405,36 @@ export default {
             return axios.post(url_concatenado, this.apii, auth).then(() => {
                 this.getInscripcionesTotal(this.url_id)
                 this.dni = ''
-                this.AlertSwall('Asistencia', 'Se registro la asistencia correctamente!', 'success')
-                    setTimeout(function() {
-                    location.reload();
-                    }, 1000);
-                
             }).catch((error) => {
                 console.log(error)
             })
         },
+        updateRecibo (dni) {
+            const valor = Main.url
+            const objetoString = localStorage.getItem('token')
+            const objeto = JSON.parse(objetoString)
+            this.apii.api_token = objeto
+            const recibo = this.recibo
+            // eslint-disable-next-line camelcase
+            const id_evento = this.url_id
 
-
-        totalPaginas() {
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            // eslint-disable-next-line camelcase
+            const url_concatenado = `${valor}/updateRecibo/?recibo=${recibo}&id_evento=${id_evento}&dni=${dni}`
+            return axios.post(url_concatenado, this.apii, auth).then(() => {
+                this.getInscripcionesTotal(this.url_id)
+                this.mostrarBoton = false
+                window.alert('Se registro el recibo correctamente!')
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+        totalPaginas () {
             return Math.ceil(this.inscripciones.length / this.ElementforPage)
         },
-        getdatapagina(pagina) {
+        getdatapagina (pagina) {
             this.page = pagina
             const ini = (pagina * this.ElementforPage) - this.ElementforPage
             const fin = (pagina * this.ElementforPage)
@@ -431,33 +442,33 @@ export default {
                 .filter(inscripcion => inscripcion.dni.toString().toLowerCase().includes(this.busqueda.toLowerCase()))
                 .slice(ini, fin)
         },
-        getprev() {
+        getprev () {
             if (this.page > 1) {
                 this.page--
             }
             this.getdatapagina(this.page)
         },
-        getnext() {
+        getnext () {
             if (this.page < this.totalPaginas()) {
                 this.page++
             }
             this.getdatapagina(this.page)
         },
-        AlertSwall($title, $text, $icon) {
-        Swal.fire({
-        title: $title,
-        text: $text,
-        icon: $icon
-      })
-    }
+        AlertSwall ($title, $text, $icon) {
+            Swal.fire({
+                title: $title,
+                text: $text,
+                icon: $icon
+            })
+        }
     },
-    created() {
+    created () {
         this.url_id = this.$route.params.id
         this.getEditEvento(this.url_id)
         this.getInscripcionesTotal(this.url_id)
         this.updateListRecibo(1)
     },
-    mounted() {
+    mounted () {
         this.getInscripcionesTotal().then(() => {
             this.getdatapagina(1)
         })

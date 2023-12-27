@@ -165,6 +165,34 @@
 
           </div>
 
+          <hr class="mt-6 mb-4 border-b-1 border-blueGray-300" />
+
+          <!-- Habilitar despues de validar sus datos con el DNI -->
+          <!-- <div v-if="isVisible === 1">
+            <div class="flex flex-wrap">
+
+              <div class="w-full px-4 lg:w-6/12">
+                <div class="relative w-full mb-3">
+                  <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600" htmlFor="grid-password">
+                    Verificar si se cumple lo requerido para el evento. (Ingrese CODIGO)
+                  </label>
+                  <input type="text"
+                    class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
+                    v-model="inscripcion.habilidad" />
+                </div>
+              </div> -->
+
+              <!-- <div class="w-full px-4 lg:w-3/12">
+                <button
+                  class="w-full px-3 py-3 mt-6 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
+                  type="button" @click="validarHabilidad()">
+                  Validar
+                </button>
+              </div> -->
+<!--
+            </div>
+          </div> -->
+
           <span>{{ mensaje }}</span>
           <!-- Despues de validar los datos de los inputs de arriba, mostrar este div para concluir con la inscripcion -->
           <div v-if="isVisiblee === 1">
@@ -222,8 +250,7 @@ export default {
         email: '',
         certificacion: false,
         habilidad: '',
-        url_id: '',
-        cod: ''
+        url_id: ''
       },
       isVisiblee: 0,
       isVisible: 0,
@@ -246,20 +273,19 @@ export default {
       this.inscripcion.url_id = this.$route.params.id;
       axios.post(`${valor}/obtenerReglaEvento/${this.inscripcion.url_id}`).then((data) => {
         const url_validacion = data.data[0].url;
-        axios.get(`${url_validacion}/${this.inscripcion.cod}`).then((data) => {
+        axios.get(`${url_validacion}/${this.inscripcion.dni}`).then((data) => {
           const validacion = data.data.data.habilidad.var_habilitacion_estado;
           this.validacion = validacion;
           if (this.validacion === 'Habilitado') {
 
-            axios.get(`https://app-cipcdll.com:81/obtener_persona_datos_xterceros/${this.inscripcion.cod}`).then((data) => {
-              this.inscripcion.dni = data.data.data.dni;
+            axios.get(`https://app-cipcdll.com:81/obtener_persona_datos_xterceros/${this.inscripcion.dni}`).then((data) => {
               this.inscripcion.nombre = data.data.data.nombres;
               this.inscripcion.apellido = data.data.data.paterno + ' ' + data.data.data.materno;
               this.inscripcion.celular = data.data.data.celular;
               this.inscripcion.email = data.data.data.email;
               this.isVisiblee = 1;
             });
-            this.AlertSwall('Correcto!', 'Te encuentras habilitado para este evento.', 'success');
+            this.AlertSwall('Eureka!!', 'Te encuentras habilitado para este evento.', 'success');
           } else {
             this.inscripcion.nombre = '';
             this.inscripcion.apellido = '';
@@ -296,19 +322,19 @@ export default {
       })
     },
 
-    storeInscripcion() {
-      this.BtnInscripcion = 0
-      const valor = Main.url
-      this.inscripcion.url_id = this.$route.params.id
-      const fechaInscripcion = this.evento.fechaInscripcion
-      const fechaInscripcionFin = this.evento.fechaInscripcionFin
-      const dni = this.inscripcion.dni
-      // eslint-disable-next-line camelcase
-      const fechaActual = new Date()
-      const año = fechaActual.getFullYear()
-      const mes = fechaActual.getMonth() + 1 // Ten en cuenta que los meses comienzan desde 0
-      const día = fechaActual.getDate()
-      const fechaFormateada = `${año}-${mes < 10 ? '0' : ''}${mes}-${día < 10 ? '0' : ''}${día}`
+        storeInscripcion () {
+            const valor = Main.url
+            this.inscripcion.url_id = this.$route.params.id
+            const fechaInscripcion = this.evento.fechaInscripcion
+            const fechaInscripcionFin = this.evento.fechaInscripcionFin
+            const dni = this.inscripcion.dni
+            // eslint-disable-next-line camelcase
+            const id_evento = this.inscripcion.url_id
+            const fechaActual = new Date()
+            const año = fechaActual.getFullYear()
+            const mes = fechaActual.getMonth() + 1 // Ten en cuenta que los meses comienzan desde 0
+            const día = fechaActual.getDate()
+            const fechaFormateada = `${año}-${mes < 10 ? '0' : ''}${mes}-${día < 10 ? '0' : ''}${día}`
 
       if (fechaFormateada >= fechaInscripcion && fechaFormateada <= fechaInscripcionFin) {
         const auth = {
@@ -319,12 +345,13 @@ export default {
         axios.post(url_combinado, this.inscripcion, auth).then((data) => {
           if (data.data[0].cuentaInscripcion > 0) {
             this.AlertSwall('Error!!', 'Ya se encuentra registrado a este evento', 'error')
+            window.location.reload()
           } else {
             axios.post(`${valor}/storeInscripcion`, this.inscripcion, auth).then((data) => {
               this.AlertSwall('Registrado', 'Registo completado satisfactoriamente!', 'success')
               // eslint-disable-next-line no-unused-expressions
               this.isVisibleeee === 0
-              this.inscripcion.cod = ''
+              this.inscripcion.dni = ''
               this.inscripcion.nombre = ''
               this.inscripcion.apellido = ''
               this.inscripcion.celular = ''
@@ -346,6 +373,6 @@ export default {
       })
     }
 
-  }
+    }
 }
 </script>

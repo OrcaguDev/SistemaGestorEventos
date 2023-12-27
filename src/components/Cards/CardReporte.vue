@@ -2,10 +2,30 @@
     <div class="relative flex flex-col w-full min-w-0 mb-6 break-words bg-white rounded shadow-lg">
         <div class="px-4 py-3 mb-0 bg-transparent rounded-t">
             <div class="flex flex-wrap items-center">
-                <div class="relative flex-1 flex-grow w-full max-w-full">
+                <div class="relative justify-end flex-1 flex-grow w-full max-w-full space-y-8">
                     <h2 class="text-xl font-semibold text-blueGray-700">
                         Reportes de Eventos por Areas
                     </h2>
+                    <div class="flex items-center justify-end space-x-4 text-left">
+                        <!-- Agregar un componente de entrada de fecha -->
+                        <div class="flex mt-1 space-x-4">
+                            <input type="date" v-model="fechaInicio" class="block w-full rounded-md shadow-sm form-input">
+                            <input type="date" v-model="fechaFin" class="block w-full rounded-md shadow-sm form-input">
+                        </div>
+
+                        <div class="flex items-center justify-center space-x-2">
+                            <!-- Agregar un botón para actualizar los datos -->
+                            <button @click="actualizarDatos"
+                                class="px-4 py-2 text-xs font-bold uppercase transition-all duration-150 ease-linear bg-blue-500 rounded shadow outline-none active:bg-blue-800 hover:shadow-lg focus:outline-none">
+                                Actualizar Datos
+                            </button>
+                            <button @click="ObtenerDatos"
+                                class="px-4 py-2 text-xs font-bold uppercase transition-all duration-150 ease-linear bg-blue-500 rounded shadow outline-none active:bg-blue-800 hover:shadow-lg focus:outline-none">
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -20,6 +40,7 @@
 import Chart from 'chart.js'
 import Main from '../../main.js'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 export default {
     data () {
         return {
@@ -31,28 +52,26 @@ export default {
             totalconstanciasISS: 0,
             totalconstanciasIEPI: 0,
             totalconstanciasCOLEGIATURA: 0,
-            totalconstanciasINFOCIP: 0
+            totalconstanciasINFOCIP: 0,
+
+            // Datos Por Fechas
+            fechaInicio: '',
+            fechaFin: ''
         }
     },
-    async mounted () {
-        try {
-            await Promise.all([
-                this.getContadorISS(),
-                this.getContadorIEPI(),
-                this.getContadorCOLEGIATURA(),
-                this.getContadorINFOCIP(),
-
-                this.getconstanciasINFOCIP(),
-                this.getconstanciasISS(),
-                this.getconstanciasIEPI(),
-                this.getconstanciasCOLEGIATURA()
-            ])
-            this.BarrasReporte()
-        } catch (error) {
-            console.error('Error en mounted:', error)
-        }
+    created () {
+        this.ObtenerDatos()
     },
     methods: {
+        AlertSwall ($title, $text, $icon, $timer = 2000, $showConfirmButton = false) {
+            Swal.fire({
+                title: $title,
+                text: $text,
+                icon: $icon,
+                timer: $timer,
+                showConfirmButton: $showConfirmButton
+            })
+        },
         async getContadorISS () {
             const valor = Main.url
             const auth = {
@@ -141,10 +160,123 @@ export default {
                 console.log(error)
             })
         },
+        async ObtenerDatos () {
+            this.AlertSwall(
+                'Espera',
+                'Actualizando Datos',
+                'info',
+                3000,
+                false
+            )
+            try {
+                await Promise.all([
+                    this.getContadorISS(),
+                    this.getContadorIEPI(),
+                    this.getContadorCOLEGIATURA(),
+                    this.getContadorINFOCIP(),
+                    this.getconstanciasINFOCIP(),
+                    this.getconstanciasISS(),
+                    this.getconstanciasIEPI(),
+                    this.getconstanciasCOLEGIATURA()
 
+                ])
+                this.AlertSwall(
+                    'Actualizado',
+                    'Datos Actualizados',
+                    'success',
+                    1000,
+                    false
+                )
+                this.BarrasReporte()
+                this.fechaInicio = ''
+                this.fechaFin = ''
+            } catch (error) {
+                console.error('Error en mounted:', error)
+            }
+        },
+
+        async actualizarDatos () {
+            if (this.fechaInicio === '' || this.fechaFin === '') {
+                this.AlertSwall(
+                    'Error Fechas',
+                    'Escoge una fecha de inicio y una fecha de fin',
+                    'error',
+                    3000,
+                    true
+                )
+            } else {
+                this.AlertSwall(
+                    'Espera',
+                    'Actualizando Datos',
+                    'info',
+                    3000,
+                    false
+                )
+                try {
+                    this.totalINFOCIP = await this.obtenerEventostotales('1')
+                    this.totalISS = await this.obtenerEventostotales('2')
+                    this.totalIEPI = await this.obtenerEventostotales('3')
+                    this.totalCOLEGIATURA = await this.obtenerEventostotales('4')
+
+                    this.totalconstanciasCOLEGIATURA = await this.obtenerconstanciastotales('4')
+                    this.totalconstanciasIEPI = await this.obtenerconstanciastotales('3')
+                    this.totalconstanciasINFOCIP = await this.obtenerconstanciastotales('1')
+                    this.totalconstanciasISS = await this.obtenerconstanciastotales('2')
+
+                    console.log(this.totalconstanciasCOLEGIATURA)
+                    console.log(this.totalconstanciasIEPI)
+                    console.log(this.totalconstanciasINFOCIP)
+                    console.log(this.totalconstanciasISS)
+
+                    this.AlertSwall(
+                        'Actualizado',
+                        'Datos Actualizados',
+                        'success',
+                        1000,
+                        false
+                    )
+                    console.log('Actualizado')
+                    this.BarrasReporte()
+                } catch (error) {
+                    console.error('Error al actualizar datos:', error)
+                }
+            }
+        },
+        async obtenerconstanciastotales ($area) {
+            const valor = Main.url
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            // Hacer la llamada a la API
+            const response = await axios.post(`${valor}/getConstanciasTotal`, {
+                fechaInicio: this.fechaInicio,
+                fechaFin: this.fechaFin,
+                area: $area
+            }, auth)
+
+            // Devolver los datos
+            return response.data[0].Constancias
+        },
+        async obtenerEventostotales ($area) {
+            const valor = Main.url
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            // Hacer la llamada a la API
+            const response = await axios.post(`${valor}/getEventosTotales`, {
+                fechaInicio: this.fechaInicio,
+                fechaFin: this.fechaFin,
+                area: $area
+            }, auth)
+
+            // Devolver los datos
+            return response.data[0].EventosTotales
+        },
         BarrasReporte () {
-            const iepi = this.totalIEPI
             this.$nextTick(function () {
+                if (window.myBar) {
+                    window.myBar.destroy()
+                }
                 const config = {
                     type: 'bar',
                     data: {
