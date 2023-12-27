@@ -98,10 +98,10 @@
                 <label class="block mb-2 text-xs font-bold uppercase text-blueGray-600" htmlFor="grid-password">
                   Buscar Participante por Cod. CIP
                 </label>
-                <input type="text" maxlength="6" minlength="6" placeholder="Ingrese su Cod. CIP" pattern="[0-9]{6}"
+                <input type="text" maxlength="6" placeholder="Ingrese su Cod. CIP" pattern="[0-9]{6}"
                   oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                   class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
-                  v-model="inscripcion.dni">
+                  v-model="inscripcion.cod">
               </div>
             </div>
 
@@ -222,7 +222,8 @@ export default {
         email: '',
         certificacion: false,
         habilidad: '',
-        url_id: ''
+        url_id: '',
+        cod: ''
       },
       isVisiblee: 0,
       isVisible: 0,
@@ -245,19 +246,20 @@ export default {
       this.inscripcion.url_id = this.$route.params.id;
       axios.post(`${valor}/obtenerReglaEvento/${this.inscripcion.url_id}`).then((data) => {
         const url_validacion = data.data[0].url;
-        axios.get(`${url_validacion}/${this.inscripcion.dni}`).then((data) => {
+        axios.get(`${url_validacion}/${this.inscripcion.cod}`).then((data) => {
           const validacion = data.data.data.habilidad.var_habilitacion_estado;
           this.validacion = validacion;
           if (this.validacion === 'Habilitado') {
 
-            axios.get(`https://app-cipcdll.com:81/obtener_persona_datos_xterceros/${this.inscripcion.dni}`).then((data) => {
+            axios.get(`https://app-cipcdll.com:81/obtener_persona_datos_xterceros/${this.inscripcion.cod}`).then((data) => {
+              this.inscripcion.dni = data.data.data.dni;
               this.inscripcion.nombre = data.data.data.nombres;
               this.inscripcion.apellido = data.data.data.paterno + ' ' + data.data.data.materno;
               this.inscripcion.celular = data.data.data.celular;
               this.inscripcion.email = data.data.data.email;
               this.isVisiblee = 1;
             });
-            this.AlertSwall('Eureka!!', 'Te encuentras habilitado para este evento.', 'success');
+            this.AlertSwall('Correcto!', 'Te encuentras habilitado para este evento.', 'success');
           } else {
             this.inscripcion.nombre = '';
             this.inscripcion.apellido = '';
@@ -317,13 +319,12 @@ export default {
         axios.post(url_combinado, this.inscripcion, auth).then((data) => {
           if (data.data[0].cuentaInscripcion > 0) {
             this.AlertSwall('Error!!', 'Ya se encuentra registrado a este evento', 'error')
-            window.location.reload()
           } else {
             axios.post(`${valor}/storeInscripcion`, this.inscripcion, auth).then((data) => {
               this.AlertSwall('Registrado', 'Registo completado satisfactoriamente!', 'success')
               // eslint-disable-next-line no-unused-expressions
               this.isVisibleeee === 0
-              this.inscripcion.dni = ''
+              this.inscripcion.cod = ''
               this.inscripcion.nombre = ''
               this.inscripcion.apellido = ''
               this.inscripcion.celular = ''
