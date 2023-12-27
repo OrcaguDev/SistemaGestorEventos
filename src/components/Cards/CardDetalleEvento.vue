@@ -409,28 +409,6 @@ export default {
                 console.log(error)
             })
         },
-        updateRecibo (dni) {
-            const valor = Main.url
-            const objetoString = localStorage.getItem('token')
-            const objeto = JSON.parse(objetoString)
-            this.apii.api_token = objeto
-            const recibo = this.recibo
-            // eslint-disable-next-line camelcase
-            const id_evento = this.url_id
-
-            const auth = {
-                headers: { 'Content-Type': 'application/json' }
-            }
-            // eslint-disable-next-line camelcase
-            const url_concatenado = `${valor}/updateRecibo/?recibo=${recibo}&id_evento=${id_evento}&dni=${dni}`
-            return axios.post(url_concatenado, this.apii, auth).then(() => {
-                this.getInscripcionesTotal(this.url_id)
-                this.mostrarBoton = false
-                window.alert('Se registro el recibo correctamente!')
-            }).catch((error) => {
-                console.log(error)
-            })
-        },
         totalPaginas () {
             return Math.ceil(this.inscripciones.length / this.ElementforPage)
         },
