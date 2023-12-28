@@ -266,9 +266,7 @@ export default {
 
             const fechaincripcionfinformateada = new Date(fechaInscripcionFin)
 
-            const fechaincripcionactual = this.FormatearFechas(fechaActual)
-
-            this.inscripcion.fechainscripcion = fechaincripcionactual
+            this.inscripcion.fechainscripcion = this.FormatearFechas(fechaActual)
 
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
