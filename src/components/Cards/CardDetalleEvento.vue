@@ -231,9 +231,9 @@
 
                             <td v-if="inscripcion.pago == 1"
                                 class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                <a href="https://www.google.com" target="_blank">
+                                <a :href="inscripcion.recibo" target="_blank">
                                     <span class="material-symbols-outlined" >
-                                        pagos
+                                        picture_as_pdf
                                     </span>
                                 </a>
                             </td>
@@ -242,12 +242,6 @@
                                 class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                 Debiendo
                             </td>
-                            <!-- <td v-if="inscripcion.recibo == 1" class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                Si
-                            </td>
-                            <td v-else class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                No
-                            </td> -->
 
                         </tr>
                     </tbody>
@@ -375,17 +369,19 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             this.inscripciones.forEach(element => {
+                console.log(element.dni)
+                console.log(cod_tesoreria)
                 axios.get(`${url}/${cod_tesoreria}/${element.dni}`).then((dataaa) => {
-                    console.log(dataaa)
                     const resultado = dataaa.data.data.cod_result
-                    console.log(resultado)
+                    const recibo = dataaa.data.data.enlace_result
                     if (resultado != null) {
                         element.hasRecibo = 'SI'
-                        axios.post(`${valor}/updateReciboTesoreria?&inscripcion_id=${element.inscripcion_id}`, this.apii, auth).then(() => {
+                        console.log(recibo)
+                        axios.post(`${valor}/updateReciboTesoreria?&inscripcion_id=${element.inscripcion_id}&recibo=${recibo}`, this.apii, auth).then(() => {
                             this.AlertSwall('Actualizado', 'Se ha actualizado la lista correctamente', 'success')
-                            // setTimeout(function () {
-                            //     location.reload()
-                            // }, 1000)
+                            setTimeout(function () {
+                                location.reload()
+                            }, 1000)
                         }
                         ).catch((error) => {
                             console.log(error)
