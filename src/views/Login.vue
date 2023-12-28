@@ -75,26 +75,27 @@ export default {
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
             }
-            axios.post(`${valor}/login`, this.usuario, auth).then(result => {
-                if (result.data.res === true) {
-                    this.Alertlogin(
-                        'Bienvenido',
-                        'Iniciando sesión',
-                        'success'
-                    )
-                    localStorage.setItem('token', JSON.stringify(result.data.token))
-                    localStorage.setItem('rol', JSON.stringify(result.data.rol))
-                    localStorage.setItem('area', JSON.stringify(result.data.area))
-                    this.$router.push('/admin')
-                } else {
-                    this.Alertlogin(
-                        'Error!!',
-                        'Tus Credenciales No son Correctas',
-                        'error'
-                    )
-                    this.error = 'Las claves no son correctas.'
-                }
-            })
+
+            axios.post(`${valor}/login`, this.usuario, auth)
+                .then(result => {
+                    if (result.data.res === true) {
+                        this.Alertlogin('Bienvenido', 'Iniciando sesión', 'success')
+                        localStorage.setItem('token', JSON.stringify(result.data.token))
+                        localStorage.setItem('rol', JSON.stringify(result.data.rol))
+                        localStorage.setItem('area', JSON.stringify(result.data.area))
+                        this.$router.push('/admin')
+                    } else {
+                        this.Alertlogin('Error!!', 'Tus Credenciales No son Correctas', 'error')
+                        this.error = 'Las claves no son correctas.'
+                    }
+                })
+                .catch(error => {
+                    // Manejar el error y mostrar la alerta Swal
+                    console.error('Error en la solicitud:', error)
+
+                    // Muestra una alerta Swal con el mensaje personalizado
+                    this.Alertlogin('Error', 'Hubo un problema al procesar la solicitud', 'error')
+                })
         },
         Alertlogin ($title, $text, $icon) {
             Swal.fire({
