@@ -328,6 +328,7 @@ export default {
                     } else {
                         axios.post(`${valor}/storeInscripcion`, this.inscripcion, auth).then((data) => {
                             this.AlertSwall('Registrado', 'Registo completado satisfactoriamente!', 'success')
+                            this.isVisiblee = 0
                             this.isVisibleeee === 0
                             this.inscripcion.cod = ''
                             this.inscripcion.nombre = ''

@@ -31,7 +31,7 @@
                                 Buscar Participante por DNI
                             </label>
                             <input type="text" v-model="dni" id="inputDNI" pattern="[0-9]{8}"
-                                    oninput="this.value = this.value.replace(/[^0-9]/g,'')" maxlength="8"
+                                oninput="this.value = this.value.replace(/[^0-9]/g,'')" maxlength="8"
                                 class="w-full px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring">
                         </div>
 
@@ -55,11 +55,11 @@
                     Resumen del Evento
                 </h6>
                 <button @click="updateListRecibo(1)" v-if="mostrarBoton"
-                class="w-full text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none lg:w-3/12"
-                type="button">
-                <span class="material-symbols-outlined">
-                    save
-                </span>
+                    class="w-full text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none lg:w-3/12"
+                    type="button">
+                    <span class="material-symbols-outlined">
+                        save
+                    </span>
                 </button>
                 <div class="flex flex-wrap">
 
@@ -231,7 +231,11 @@
 
                             <td v-if="inscripcion.pago == 1"
                                 class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                Pagado
+                                <a href="https://www.google.com" target="_blank">
+                                    <span class="material-symbols-outlined" >
+                                        pagos
+                                    </span>
+                                </a>
                             </td>
 
                             <td v-else
@@ -256,8 +260,8 @@
                                 pagina }}</button>
                         <button class="px-2" v-on:click="getnext()">&#62;</button>
                     </nav>
-                    <input type="text" v-model="busqueda" @input="getdatapagina(1)"  pattern="[0-9]{8}"
-                                    title="Ingrese un DNI válido" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                    <input type="text" v-model="busqueda" @input="getdatapagina(1)" pattern="[0-9]{8}"
+                        title="Ingrese un DNI válido" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                         class="w-6/12 px-3 py-3 text-sm transition-all duration-150 ease-linear bg-white border-0 rounded shadow placeholder-blueGray-300 text-blueGray-600 focus:outline-none focus:ring"
                         id="buscarpagos" placeholder="Buscar DNI" required />
                 </div>
@@ -272,7 +276,7 @@ import Main from '../../main.js'
 import Swal from 'sweetalert2'
 
 export default {
-    data () {
+    data() {
         return {
             detalle: {
                 nombre: '',
@@ -314,11 +318,11 @@ export default {
     },
 
     methods: {
-        goBack () {
+        goBack() {
             window.history.back()
         },
 
-        getEditEvento (id) {
+        getEditEvento(id) {
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
@@ -342,7 +346,7 @@ export default {
                 console.log(error)
             })
         },
-        getInscripcionesTotal (id) {
+        getInscripcionesTotal(id) {
             const prueba = this.$route.params.id
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
@@ -359,7 +363,7 @@ export default {
             })
         },
 
-        updateListRecibo () {
+        updateListRecibo() {
             const valor = Main.url
             this.getEditEvento(this.url_id)
             const cod_tesoreria = this.detalle.cod_tesoreria
@@ -372,15 +376,16 @@ export default {
             }
             this.inscripciones.forEach(element => {
                 axios.get(`${url}/${cod_tesoreria}/${element.dni}`).then((dataaa) => {
+                    console.log(dataaa)
                     const resultado = dataaa.data.data.cod_result
                     console.log(resultado)
                     if (resultado != null) {
                         element.hasRecibo = 'SI'
                         axios.post(`${valor}/updateReciboTesoreria?&inscripcion_id=${element.inscripcion_id}`, this.apii, auth).then(() => {
                             this.AlertSwall('Actualizado', 'Se ha actualizado la lista correctamente', 'success')
-                            setTimeout(function () {
-                                location.reload()
-                            }, 1000)
+                            // setTimeout(function () {
+                            //     location.reload()
+                            // }, 1000)
                         }
                         ).catch((error) => {
                             console.log(error)
@@ -389,7 +394,7 @@ export default {
                 })
             })
         },
-        updateAsistencia () {
+        updateAsistencia() {
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
@@ -409,10 +414,10 @@ export default {
                 console.log(error)
             })
         },
-        totalPaginas () {
+        totalPaginas() {
             return Math.ceil(this.inscripciones.length / this.ElementforPage)
         },
-        getdatapagina (pagina) {
+        getdatapagina(pagina) {
             this.page = pagina
             const ini = (pagina * this.ElementforPage) - this.ElementforPage
             const fin = (pagina * this.ElementforPage)
@@ -420,19 +425,19 @@ export default {
                 .filter(inscripcion => inscripcion.dni.toString().toLowerCase().includes(this.busqueda.toLowerCase()))
                 .slice(ini, fin)
         },
-        getprev () {
+        getprev() {
             if (this.page > 1) {
                 this.page--
             }
             this.getdatapagina(this.page)
         },
-        getnext () {
+        getnext() {
             if (this.page < this.totalPaginas()) {
                 this.page++
             }
             this.getdatapagina(this.page)
         },
-        AlertSwall ($title, $text, $icon) {
+        AlertSwall($title, $text, $icon) {
             Swal.fire({
                 title: $title,
                 text: $text,
@@ -440,13 +445,13 @@ export default {
             })
         }
     },
-    created () {
+    created() {
         this.url_id = this.$route.params.id
         this.getEditEvento(this.url_id)
         this.getInscripcionesTotal(this.url_id)
         this.updateListRecibo(1)
     },
-    mounted () {
+    mounted() {
         this.getInscripcionesTotal().then(() => {
             this.getdatapagina(1)
         })
