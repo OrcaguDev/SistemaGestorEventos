@@ -283,7 +283,7 @@ export default {
                     } else {
                         axios.post(`${valor}/storeInscripcionPublic`, this.inscripcion).then(() => {
                             // eslint-disable-next-line no-unused-expressions
-                            this.isVisibleeee === 0
+                            this.isVisible === 0
                             this.AlertSwall('Registrado Correctamente!!', 'Registo completado satisfactoriamente!', 'success')
                             this.inscripcion.dni = ''
                             this.inscripcion.nombre = ''

@@ -38,10 +38,21 @@
                         <div class="relative w-5/12 pl-8 mt-6 mb-3">
                             <div class="flex px-4 lg:w-12/12">
                                 <label class="block mt-6 mb-2 text-xs font-bold uppercase text-blueGray-600 "></label>
-                                <button @click="updateAsistencia()"
+                                <button
                                     class="w-full px-3 py-3 mt-6 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
-                                    type="button">
+                                    type="submit">
                                     Asistencia
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="relative w-5/12 pl-8 mt-6 mb-3">
+                            <div class="flex px-4 lg:w-12/12">
+                                <label class="block mt-6 mb-2 text-xs font-bold uppercase text-blueGray-600 "></label>
+                                <button @click="updateListRecibo(1)" v-if="mostrarBoton"
+                                    class="w-full px-3 py-3 mt-6 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-emerald-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
+                                    type="button">
+                                    PAGOS
                                 </button>
                             </div>
                         </div>
@@ -54,13 +65,6 @@
                 <h6 class="mt-3 mb-6 text-sm font-bold uppercase text-blueGray-400">
                     Resumen del Evento
                 </h6>
-                <button @click="updateListRecibo(1)" v-if="mostrarBoton"
-                    class="w-full text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-blueGray-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none lg:w-3/12"
-                    type="button">
-                    <span class="material-symbols-outlined">
-                        save
-                    </span>
-                </button>
                 <div class="flex flex-wrap">
 
                     <div class="w-full px-4 lg:w-3/12">
@@ -232,7 +236,7 @@
                             <td v-if="inscripcion.pago == 1"
                                 class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                 <a :href="inscripcion.recibo" target="_blank">
-                                    <span class="material-symbols-outlined" >
+                                    <span class="material-symbols-outlined">
                                         picture_as_pdf
                                     </span>
                                 </a>
@@ -369,26 +373,24 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
             this.inscripciones.forEach(element => {
-                console.log(element.dni)
-                console.log(cod_tesoreria)
                 axios.get(`${url}/${cod_tesoreria}/${element.dni}`).then((dataaa) => {
                     const resultado = dataaa.data.data.cod_result
                     const recibo = dataaa.data.data.enlace_result
                     if (resultado != null) {
                         element.hasRecibo = 'SI'
-                        console.log(recibo)
                         axios.post(`${valor}/updateReciboTesoreria?&inscripcion_id=${element.inscripcion_id}&recibo=${recibo}`, this.apii, auth).then(() => {
-                            this.AlertSwall('Actualizado', 'Se ha actualizado la lista correctamente', 'success')
-                            setTimeout(function () {
-                                location.reload()
-                            }, 1000)
                         }
                         ).catch((error) => {
                             console.log(error)
                         })
                     }
+                    
                 })
             })
+            this.AlertSwall('Actualizado', 'Se ha actualizado la lista correctamente', 'success')
+                    setTimeout(function () {
+                        location.reload()
+                    }, 2000)
         },
         updateAsistencia() {
             const valor = Main.url
@@ -406,8 +408,12 @@ export default {
             return axios.post(url_concatenado, this.apii, auth).then(() => {
                 this.getInscripcionesTotal(this.url_id)
                 this.dni = ''
+                this.AlertSwall('Actualizado', 'Se ha actualizado la lista correctamente', 'success')
+                setTimeout(function () {
+                    location.reload()
+                }, 1000)
             }).catch((error) => {
-                console.log(error)
+                this.AlertSwall('Error', 'No se ha podido actualizar la lista', 'error')
             })
         },
         totalPaginas() {
@@ -445,7 +451,6 @@ export default {
         this.url_id = this.$route.params.id
         this.getEditEvento(this.url_id)
         this.getInscripcionesTotal(this.url_id)
-        this.updateListRecibo(1)
     },
     mounted() {
         this.getInscripcionesTotal().then(() => {

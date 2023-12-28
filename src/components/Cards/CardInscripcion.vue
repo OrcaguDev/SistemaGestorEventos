@@ -214,7 +214,8 @@ export default {
         img: '',
         informe: '',
         fechaInscripcion: '',
-        fechaInscripcionFin: ''
+        fechaInscripcionFin: '',
+        estado: ''
       },
       inscripcion: {
         dni: '',
@@ -294,6 +295,7 @@ export default {
         this.evento.fechaInscripcionFin = data[0].fechaInscripcionFin
         this.evento.img = data[0].img
         this.evento.informe = data[0].informe
+        this.evento.estado = data[0].estado
       }).catch((error) => {
         console.log(error)
       })
@@ -317,7 +319,7 @@ export default {
             const día = fechaActual.getDate()
             const fechaFormateada = `${año}-${mes < 10 ? '0' : ''}${mes}-${día < 10 ? '0' : ''}${día}`
 
-            if (fechaFormateada >= fechaInscripcion && fechaFormateada <= fechaInscripcionFin) {
+            if (this.evento.estado === 1 && fechaFormateada >= fechaInscripcion && fechaFormateada <= fechaInscripcionFin) {
                 const auth = {
                     headers: { 'Content-Type': 'application/json' }
                 }
