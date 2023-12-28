@@ -225,7 +225,8 @@ export default {
         certificacion: false,
         habilidad: '',
         url_id: '',
-        cod: ''
+        cod: '',
+        fechaInscripcionini: ''
       },
       isVisiblee: 0,
       isVisible: 0,
@@ -297,17 +298,19 @@ export default {
         console.log(error)
       })
     },
-
         storeInscripcion () {
             this.BtnInscripcion = 0
-            
+            const fechainscripcion = new Date()
+            const añoini = fechainscripcion.getFullYear();
+            const mesini = fechainscripcion.getMonth() + 1; // Los meses van de 0 a 11, así que suma 1
+            const diaini = fechainscripcion.getDate();
+            const fechaFormateadaini = diaini + "/" + mesini + "/" + añoini;
+            this.inscripcion.fechaInscripcionini = fechaFormateadaini;
             const valor = Main.url
             this.inscripcion.url_id = this.$route.params.id
             const fechaInscripcion = this.evento.fechaInscripcion
             const fechaInscripcionFin = this.evento.fechaInscripcionFin
             const dni = this.inscripcion.dni
-            // eslint-disable-next-line camelcase
-            const id_evento = this.inscripcion.url_id
             const fechaActual = new Date()
             const año = fechaActual.getFullYear()
             const mes = fechaActual.getMonth() + 1 // Ten en cuenta que los meses comienzan desde 0
@@ -318,7 +321,6 @@ export default {
                 const auth = {
                     headers: { 'Content-Type': 'application/json' }
                 }
-                // eslint-disable-next-line camelcase
                 const url_combinado = `${valor}/validateInscripciones?dni=${dni}&id_evento=${this.inscripcion.url_id}`
                 axios.post(url_combinado, this.inscripcion, auth).then((data) => {
                     if (data.data[0].cuentaInscripcion > 0) {
@@ -326,7 +328,6 @@ export default {
                     } else {
                         axios.post(`${valor}/storeInscripcion`, this.inscripcion, auth).then((data) => {
                             this.AlertSwall('Registrado', 'Registo completado satisfactoriamente!', 'success')
-                            // eslint-disable-next-line no-unused-expressions
                             this.isVisibleeee === 0
                             this.inscripcion.cod = ''
                             this.inscripcion.nombre = ''
