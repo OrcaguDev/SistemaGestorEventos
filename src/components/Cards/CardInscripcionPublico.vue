@@ -194,7 +194,7 @@ import Swal from 'sweetalert2'
 import Main from '../../main.js'
 
 export default {
-    data () {
+    data() {
         return {
             evento: {
                 nombre: '',
@@ -214,7 +214,8 @@ export default {
                 celular: '',
                 email: '',
                 certificacion: false,
-                url_id: ''
+                url_id: '',
+                fechainscripcion: ''
             },
             url_id: '',
             mensaje: '',
@@ -223,13 +224,13 @@ export default {
             BtnInscripcion: 1
         }
     },
-    mounted () {
+    mounted() {
         this.url_id = this.$route.params.id
         this.getEditEvento(this.url_id)
     },
     methods: {
 
-        getEditEvento (id) {
+        getEditEvento(id) {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -264,6 +265,10 @@ export default {
             const fechaincripcionformateada = new Date(fechaInscripcion)
 
             const fechaincripcionfinformateada = new Date(fechaInscripcionFin)
+
+            const fechaincripcionactual = this.FormatearFechas(fechaActual)
+
+            this.inscripcion.fechainscripcion = fechaincripcionactual
 
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
@@ -301,6 +306,17 @@ export default {
                 text: $text,
                 icon: $icon
             })
+        },
+        FormatearFechas (fechaActual) {
+            const formattedFechaActual =
+                fechaActual.getFullYear() +
+                '-' +
+                ('0' + (fechaActual.getMonth() + 1)).slice(-2) +
+                '-' +
+                ('0' + fechaActual.getDate()).slice(-2) +
+                ' ' +
+                ('0' + fechaActual.getHours()).slice(-2)
+            return formattedFechaActual
         }
     }
 
