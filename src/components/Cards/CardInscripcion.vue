@@ -273,7 +273,7 @@ export default {
           console.log(error);
         });
       })
-    },
+    }, 
     getEvento(id) {
       const valor = Main.url
       const auth = {
@@ -299,6 +299,8 @@ export default {
     },
 
         storeInscripcion () {
+            this.BtnInscripcion = 0
+            
             const valor = Main.url
             this.inscripcion.url_id = this.$route.params.id
             const fechaInscripcion = this.evento.fechaInscripcion
