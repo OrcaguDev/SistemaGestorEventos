@@ -223,11 +223,6 @@ export default {
                     this.totalconstanciasINFOCIP = await this.obtenerconstanciastotales('1')
                     this.totalconstanciasISS = await this.obtenerconstanciastotales('2')
 
-                    console.log(this.totalconstanciasCOLEGIATURA)
-                    console.log(this.totalconstanciasIEPI)
-                    console.log(this.totalconstanciasINFOCIP)
-                    console.log(this.totalconstanciasISS)
-
                     this.AlertSwall(
                         'Actualizado',
                         'Datos Actualizados',
@@ -235,7 +230,6 @@ export default {
                         1000,
                         false
                     )
-                    console.log('Actualizado')
                     this.BarrasReporte()
                 } catch (error) {
                     console.error('Error al actualizar datos:', error)
