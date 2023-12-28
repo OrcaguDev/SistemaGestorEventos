@@ -205,7 +205,8 @@ export default {
                 img: '',
                 informe: '',
                 fechaInscripcion: '',
-                fechaInscripcionFin: ''
+                fechaInscripcionFin: '',
+                estado: ''
             },
             inscripcion: {
                 dni: '',
@@ -249,6 +250,7 @@ export default {
                 this.evento.fechaInscripcionFin = data[0].fechaInscripcionFin
                 this.evento.img = data[0].img
                 this.evento.informe = data[0].informe
+                this.evento.estado = data[0].estado
             }).catch((error) => {
                 console.log(error)
             })
@@ -272,7 +274,7 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
 
-            if (fechaActual >= fechaincripcionformateada && fechaActual <= fechaincripcionfinformateada) {
+            if (this.evento.estado === 1 && fechaActual >= fechaincripcionformateada && fechaActual <= fechaincripcionfinformateada) {
                 // eslint-disable-next-line camelcase
                 const url_combinado = `${valor}/validateInscripciones?dni=${dni}&id_evento=${this.inscripcion.url_id}`
                 axios.post(url_combinado, this.inscripcion, auth).then((data) => {
