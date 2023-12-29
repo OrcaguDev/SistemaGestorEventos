@@ -117,7 +117,7 @@
 
                 <hr class="mt-6 mb-4 border-b-1 border-blueGray-300" />
 
-                <table class="items-center w-full bg-transparent ">
+                <table class="items-center w-full">
                     <thead>
                         <tr>
                             <th class="px-6 py-3 text-xs font-semibold text-left uppercase align-middle border border-l-0 border-r-0 border-solid whitespace-nowrap"
@@ -232,12 +232,12 @@
                                 class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
                                 No
                             </td>
-
                             <td v-if="inscripcion.pago == 1"
                                 class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
-                                <a :href="inscripcion.recibo" target="_blank">
-                                    <span class="material-symbols-outlined">
-                                        picture_as_pdf
+                                <a :href="inscripcion.recibo" target="_blank" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                                    <!-- Cambiado a verde -->
+                                    <span class="material-icons-outlined">
+                                        open_in_new
                                     </span>
                                 </a>
                             </td>
@@ -274,7 +274,7 @@ import Main from '../../main.js'
 import Swal from 'sweetalert2'
 
 export default {
-    data() {
+    data () {
         return {
             detalle: {
                 nombre: '',
@@ -316,11 +316,11 @@ export default {
     },
 
     methods: {
-        goBack() {
+        goBack () {
             window.history.back()
         },
 
-        getEditEvento(id) {
+        getEditEvento (id) {
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
@@ -344,7 +344,7 @@ export default {
                 console.log(error)
             })
         },
-        getInscripcionesTotal(id) {
+        getInscripcionesTotal (id) {
             const prueba = this.$route.params.id
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
@@ -361,7 +361,7 @@ export default {
             })
         },
 
-        updateListRecibo() {
+        updateListRecibo () {
             const valor = Main.url
             this.getEditEvento(this.url_id)
             const cod_tesoreria = this.detalle.cod_tesoreria
@@ -384,15 +384,14 @@ export default {
                             console.log(error)
                         })
                     }
-                    
                 })
             })
             this.AlertSwall('Actualizado', 'Se ha actualizado la lista correctamente', 'success')
-                    setTimeout(function () {
-                        location.reload()
-                    }, 2000)
+            setTimeout(function () {
+                location.reload()
+            }, 2000)
         },
-        updateAsistencia() {
+        updateAsistencia () {
             const valor = Main.url
             const objetoString = localStorage.getItem('token')
             const objeto = JSON.parse(objetoString)
@@ -416,10 +415,10 @@ export default {
                 this.AlertSwall('Error', 'No se ha podido actualizar la lista', 'error')
             })
         },
-        totalPaginas() {
+        totalPaginas () {
             return Math.ceil(this.inscripciones.length / this.ElementforPage)
         },
-        getdatapagina(pagina) {
+        getdatapagina (pagina) {
             this.page = pagina
             const ini = (pagina * this.ElementforPage) - this.ElementforPage
             const fin = (pagina * this.ElementforPage)
@@ -427,19 +426,19 @@ export default {
                 .filter(inscripcion => inscripcion.dni.toString().toLowerCase().includes(this.busqueda.toLowerCase()))
                 .slice(ini, fin)
         },
-        getprev() {
+        getprev () {
             if (this.page > 1) {
                 this.page--
             }
             this.getdatapagina(this.page)
         },
-        getnext() {
+        getnext () {
             if (this.page < this.totalPaginas()) {
                 this.page++
             }
             this.getdatapagina(this.page)
         },
-        AlertSwall($title, $text, $icon) {
+        AlertSwall ($title, $text, $icon) {
             Swal.fire({
                 title: $title,
                 text: $text,
@@ -447,12 +446,12 @@ export default {
             })
         }
     },
-    created() {
+    created () {
         this.url_id = this.$route.params.id
         this.getEditEvento(this.url_id)
         this.getInscripcionesTotal(this.url_id)
     },
-    mounted() {
+    mounted () {
         this.getInscripcionesTotal().then(() => {
             this.getdatapagina(1)
         })

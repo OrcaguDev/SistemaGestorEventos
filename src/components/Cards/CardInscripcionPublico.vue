@@ -194,7 +194,7 @@ import Swal from 'sweetalert2'
 import Main from '../../main.js'
 
 export default {
-    data() {
+    data () {
         return {
             evento: {
                 nombre: '',
@@ -225,13 +225,13 @@ export default {
             BtnInscripcion: 1
         }
     },
-    mounted() {
+    mounted () {
         this.url_id = this.$route.params.id
         this.getEditEvento(this.url_id)
     },
     methods: {
 
-        getEditEvento(id) {
+        getEditEvento (id) {
             const valor = Main.url
             const auth = {
                 headers: { 'Content-Type': 'application/json' }
