@@ -299,7 +299,7 @@ export default {
                 console.log(error)
             })
         },
-        storeInscripcion () {
+        async storeInscripcion () {
             this.BtnInscripcion = 0
             const fechainscripcion = new Date()
             const añoini = fechainscripcion.getFullYear()
@@ -317,6 +317,14 @@ export default {
             const mes = fechaActual.getMonth() + 1 // Ten en cuenta que los meses comienzan desde 0
             const día = fechaActual.getDate()
             const fechaFormateada = `${año}-${mes < 10 ? '0' : ''}${mes}-${día < 10 ? '0' : ''}${día}`
+            const auth = {
+                headers: { 'Content-Type': 'application/json' }
+            }
+            await axios.post(`${valor}/evento/${this.url_id}`, auth).then(({ data }) => {
+                this.evento.estado = data[0].estado
+            }).catch((error) => {
+                console.log(error)
+            })
 
             if (this.evento.estado === 1 && fechaFormateada >= fechaInscripcion && fechaFormateada <= fechaInscripcionFin) {
                 const auth = {
