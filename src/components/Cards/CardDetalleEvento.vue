@@ -49,7 +49,7 @@
                         <div class="relative w-5/12 pl-8 mt-6 mb-3">
                             <div class="flex px-4 lg:w-12/12">
                                 <label class="block mt-6 mb-2 text-xs font-bold uppercase text-blueGray-600 "></label>
-                                <button @click="updateListRecibo(1)" v-if="mostrarBoton"
+                                <button @click="updateListRecibo(1)" v-if="mostrarBoton" target="_blank"
                                     class="w-full px-3 py-3 mt-6 mb-1 mr-1 text-sm font-bold text-white uppercase transition-all duration-150 ease-linear rounded shadow outline-none bg-emerald-800 active:bg-blueGray-600 hover:shadow-lg focus:outline-none"
                                     type="button">
                                     PAGOS
@@ -237,7 +237,7 @@
                                 <a :href="inscripcion.recibo" target="_blank" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                                     <!-- Cambiado a verde -->
                                     <span class="material-icons-outlined">
-                                        open_in_new
+                                        picture_as_pdf
                                     </span>
                                 </a>
                             </td>
