@@ -255,7 +255,7 @@ export default {
                 console.log(error)
             })
         },
-        storeInscripcion () {
+        async storeInscripcion () {
             this.BtnInscripcion = 0
             const valor = Main.url
             this.inscripcion.url_id = this.$route.params.id
@@ -274,10 +274,16 @@ export default {
                 headers: { 'Content-Type': 'application/json' }
             }
 
+            await axios.post(`${valor}/evento/${this.url_id}`, auth).then(({ data }) => {
+                this.evento.estado = data[0].estado
+            }).catch((error) => {
+                console.log(error)
+            })
+
             if (this.evento.estado === 1 && fechaActual >= fechaincripcionformateada && fechaActual <= fechaincripcionfinformateada) {
                 // eslint-disable-next-line camelcase
                 const url_combinado = `${valor}/validateInscripciones?dni=${dni}&id_evento=${this.inscripcion.url_id}`
-                axios.post(url_combinado, this.inscripcion, auth).then((data) => {
+                await axios.post(url_combinado, this.inscripcion, auth).then((data) => {
                     if (data.data[0].cuentaInscripcion > 0) {
                         this.AlertSwall('Error!!', 'Ya se encuentra registrado en este evento.', 'error')
                     } else {
