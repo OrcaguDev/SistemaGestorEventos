@@ -1,1 +1,3 @@
-Hola :v
+Proyecto Sistema Gestor de Eventos
+
+
